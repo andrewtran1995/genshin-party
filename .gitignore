@@ -1,4 +1,5 @@
 .vscode/
 .yarn/
 .yarnrc
+index.js
 node_modules/

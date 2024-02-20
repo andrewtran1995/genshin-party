@@ -1,11 +1,10 @@
-import genshindb from 'genshin-db'
+import genshindb, { Enemy } from 'genshin-db'
 import { last, memoize, pick, range, sample, shuffle } from 'lodash/fp'
 import { Option, program } from '@commander-js/extra-typings'
 import chalk from 'chalk'
 import { ArrayValues } from 'type-fest'
 import select from '@inquirer/select'
 import { match } from 'ts-pattern'
-import { not } from 'ts-pattern/dist/patterns'
 
 const Rarities = ['4', '5'] as const
 type Rarity = ArrayValues<typeof Rarities>
@@ -17,6 +16,9 @@ interface PlayerChoice {
 
 function main (): void {
   program
+    .command('char', { isDefault: true })
+    .alias('c')
+    .description('Select a random character.')
     .option('-l, --list', 'List all elegible characters.', false)
     .addOption(new Option('-r, --rarity <rarity>', 'Rarity of the desired character.').choices(Rarities))
     .action(({ list, rarity }) => {
@@ -31,7 +33,30 @@ function main (): void {
     })
 
   program
+    .command('boss')
+    .alias('b')
+    .description('Select a random boss.')
+    .action(() => {
+      const weeklyBosses = genshindb.enemies('names', {matchCategories: true, verboseCategories: true})
+        .filter(_ => _.categoryType === 'CODEX_SUBTYPE_BOSS')
+        .filter(_ => _.name !== 'Stormterror')
+
+      const formatWeeklyBoss = ({description, name}: Enemy) => {
+        return [
+          chalk.bold.italic(name),
+          '',
+          ...description.split('\n')
+            .map(_ => chalk.gray(`> ${_}`)),
+        ]
+          .join('\n')
+      }
+
+      console.log(`Random boss: ${(formatWeeklyBoss(sample(weeklyBosses) as Enemy))}`)
+    })
+
+  program
     .command('order')
+    .alias('o')
     .description('Generate a random order in which to select characters.')
     .action(() => console.log(shuffle([1, 2, 3, 4])))
 
@@ -60,7 +85,9 @@ function main (): void {
               message: 'Accept character?',
               choices: [
                 { value: 'Accept' },
-                { value: 'Accept (and character is a main)' },
+                { 
+                  disabled: playerChoices.length === 3 ? '(choosing last character)' : false,
+                  value: 'Accept (and character is a main)'},
                 { value: 'Reroll' }
               ] as const
             })
