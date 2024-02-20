@@ -122,7 +122,7 @@ function main (): void {
       }
     })
 
-  program.name('genshin-party-roller').parse()
+  program.name('genshin-party').parse()
 }
 
 type Char = ReturnType<typeof getChars>[number]
