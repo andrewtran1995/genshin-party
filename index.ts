@@ -37,16 +37,16 @@ function main (): void {
     .alias('b')
     .description('Select a random boss.')
     .action(() => {
-      const weeklyBosses = genshindb.enemies('names', {matchCategories: true, verboseCategories: true})
+      const weeklyBosses = genshindb.enemies('names', { matchCategories: true, verboseCategories: true })
         .filter(_ => _.categoryType === 'CODEX_SUBTYPE_BOSS')
         .filter(_ => _.name !== 'Stormterror')
 
-      const formatWeeklyBoss = ({description, name}: Enemy) => {
+      const formatWeeklyBoss = ({ description, name }: Enemy): string => {
         return [
           chalk.bold.italic(name),
           '',
           ...description.split('\n')
-            .map(_ => chalk.gray(`> ${_}`)),
+            .map(_ => chalk.gray(`> ${_}`))
         ]
           .join('\n')
       }
@@ -85,9 +85,10 @@ function main (): void {
               message: 'Accept character?',
               choices: [
                 { value: 'Accept' },
-                { 
+                {
                   disabled: playerChoices.length === 3 ? '(choosing last character)' : false,
-                  value: 'Accept (and character is a main)'},
+                  value: 'Accept (and character is a main)'
+                },
                 { value: 'Reroll' }
               ] as const
             })
