@@ -1,0 +1,32 @@
+{
+  "name": "genshin-party-roller",
+  "version": "0.0.1",
+  "main": "index.ts",
+  "license": "MIT",
+  "files": [
+    "index.ts"
+  ],
+  "dependencies": {
+    "@commander-js/extra-typings": "^12.0.0",
+    "@inquirer/select": "^2.0.0",
+    "chalk": "^5.3.0",
+    "commander": "^12.0.0",
+    "genshin-db": "^5.0.8",
+    "lodash": "^4.17.21",
+    "ts-pattern": "^5.0.6",
+    "ts-standard": "^12.0.2",
+    "tsx": "^4.7.0",
+    "type-fest": "^4.10.2",
+    "typescript": "^5.3.3"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.202"
+  },
+  "scripts": {
+    "build": "tsc index.ts",
+    "dev": "tsx index.ts",
+    "lint": "ts-standard",
+    "lint:fix": "ts-standard --fix"
+  },
+  "packageManager": "yarn@4.1.0"
+}
