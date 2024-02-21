@@ -22,14 +22,20 @@
   "devDependencies": {
     "@ava/typescript": "^4.1.0",
     "@types/lodash": "^4.14.202",
-    "ava": "^6.1.1"
+    "ava": "^6.1.1",
+    "husky": "^9.0.11",
+    "sort-package-json": "^2.7.0"
   },
   "scripts": {
     "build": "tsc",
     "dev": "tsx src/index.ts",
     "lint": "ts-standard",
     "lint:fix": "ts-standard --fix",
-    "test": "ava"
+    "test": "ava",
+    "prepare": "husky",
+    "postinstall": "husky",
+    "prepack": "pinst --disable",
+    "postpack": "pinst --enable"
   },
   "packageManager": "yarn@4.1.0",
   "ava": {
