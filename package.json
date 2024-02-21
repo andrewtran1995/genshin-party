@@ -1,11 +1,32 @@
 {
   "name": "genshin-party",
   "version": "0.0.1",
-  "main": "index.ts",
   "license": "MIT",
+  "main": "src/index.ts",
   "files": [
-    "index.ts"
+    "index.ts",
+    "index.test.ts"
   ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/index.ts",
+    "postinstall": "husky",
+    "lint": "ts-standard",
+    "lint:fix": "ts-standard --fix",
+    "prepack": "pinst --disable",
+    "postpack": "pinst --enable",
+    "prepare": "husky",
+    "sort": "sort-package-json",
+    "test": "ava"
+  },
+  "ava": {
+    "typescript": {
+      "rewritePaths": {
+        "src/": "build/"
+      },
+      "compile": "tsc"
+    }
+  },
   "dependencies": {
     "@commander-js/extra-typings": "^12.0.0",
     "@inquirer/select": "^2.0.0",
@@ -26,24 +47,5 @@
     "husky": "^9.0.11",
     "sort-package-json": "^2.7.0"
   },
-  "scripts": {
-    "build": "tsc",
-    "dev": "tsx src/index.ts",
-    "lint": "ts-standard",
-    "lint:fix": "ts-standard --fix",
-    "test": "ava",
-    "prepare": "husky",
-    "postinstall": "husky",
-    "prepack": "pinst --disable",
-    "postpack": "pinst --enable"
-  },
-  "packageManager": "yarn@4.1.0",
-  "ava": {
-    "typescript": {
-      "rewritePaths": {
-        "src/": "build/"
-      },
-      "compile": "tsc"
-    }
-  }
+  "packageManager": "yarn@4.1.0"
 }
