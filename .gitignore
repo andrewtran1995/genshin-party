@@ -1,5 +1,6 @@
 .vscode/
 .yarn/
 .yarnrc
-index.js
+build/
 node_modules/
+tsconfig.tsbuildinfo

@@ -41,15 +41,13 @@ function main (): void {
         .filter(_ => _.categoryType === 'CODEX_SUBTYPE_BOSS')
         .filter(_ => _.name !== 'Stormterror')
 
-      const formatWeeklyBoss = ({ description, name }: Enemy): string => {
-        return [
-          chalk.bold.italic(name),
-          '',
-          ...description.split('\n')
-            .map(_ => chalk.gray(`> ${_}`))
-        ]
-          .join('\n')
-      }
+      const formatWeeklyBoss = ({ description, name }: Enemy): string => [
+        chalk.bold.italic(name),
+        '',
+        ...description.split('\n')
+          .map(_ => chalk.gray(`> ${_}`))
+      ]
+        .join('\n')
 
       console.log(`Random boss: ${(formatWeeklyBoss(sample(weeklyBosses) as Enemy))}`)
     })
