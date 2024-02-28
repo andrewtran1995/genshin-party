@@ -1,10 +1,22 @@
-import genshindb, { Enemy } from 'genshin-db'
-import { last, memoize, pick, range, sample, shuffle } from 'lodash/fp'
+import genshindb, { type Enemy } from 'genshin-db'
+import pkg, { sampleSize } from 'lodash/fp.js'
 import { Option, program } from '@commander-js/extra-typings'
 import chalk from 'chalk'
-import { ArrayValues } from 'type-fest'
+import { type ArrayValues } from 'type-fest'
 import select from '@inquirer/select'
 import { match } from 'ts-pattern'
+// import { run } from 'oclif'
+// import { run } from 'oclif'
+// run()
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+import oclif from '@oclif/core'
+import yargs from 'yargs'
+import type { Options } from 'yargs'
+export { run } from '@oclif/core'
+
+const { last, memoize, pick, range, sample, shuffle } = pkg
 
 const Rarities = ['4', '5'] as const
 type Rarity = ArrayValues<typeof Rarities>
@@ -16,57 +28,19 @@ interface PlayerChoice {
 
 function main (): void {
   program
-    .command('char', { isDefault: true })
-    .alias('c')
-    .description('Select a random character.')
-    .option('-l, --list', 'List all elegible characters.', false)
-    .addOption(new Option('-r, --rarity <rarity>', 'Rarity of the desired character.').choices(Rarities))
-    .action(({ list, rarity }) => {
-      const filteredChars = getChars(rarity)
-
-      if (list) {
-        console.log('Possible characters include:')
-        console.log(filteredChars.map(formatChar).join(', '))
-      }
-
-      console.log(`Random character: ${formatChar(sample(filteredChars) as Char)}`)
-    })
-
-  program
-    .command('boss')
-    .alias('b')
-    .description('Select a random boss.')
-    .action(() => {
-      const weeklyBosses = genshindb.enemies('names', { matchCategories: true, verboseCategories: true })
-        .filter(_ => _.categoryType === 'CODEX_SUBTYPE_BOSS')
-        .filter(_ => _.name !== 'Stormterror')
-
-      const formatWeeklyBoss = ({ description, name }: Enemy): string => [
-        chalk.bold.italic(name),
-        '',
-        ...description.split('\n')
-          .map(_ => chalk.gray(`> ${_}`))
-      ]
-        .join('\n')
-
-      console.log(`Random boss: ${(formatWeeklyBoss(sample(weeklyBosses) as Enemy))}`)
-    })
-
-  program
-    .command('order')
-    .alias('o')
-    .description('Generate a random order in which to select characters.')
-    .action(() => console.log(shuffle([1, 2, 3, 4])))
-
-  program
     .command('interactive')
     .alias('i')
     .description('Random, interactive party selection, balancing four and five star characters.')
-    .action(async () => {
+    .option('--only-teyvat', 'Exclude characters not of Teyvat (Traveller, Aloy).')
+    .action(async ({ onlyTeyvat }) => {
       const playerChoices: PlayerChoice[] = []
 
       for (const playerNumber of shuffle(range(1, 5))) {
         console.log(`Now choosing for ${formatPlayer(playerNumber)}.`)
+
+        // sampleSize(
+
+        // )
 
         while (true) {
           const char = sample(
@@ -116,12 +90,75 @@ function main (): void {
       }
 
       console.log('Chosen characters are:')
-      for (const { char, number } of playerChoices) {
-        console.log(`${formatPlayer(number)}: ${formatChar(char)}`)
-      }
+
+      playerChoices
+        .toSorted((a, b) => a.number - b.number)
+        .forEach(({ char, number }) => {
+          console.log(`${formatPlayer(number)}: ${formatChar(char)}`)
+        })
     })
 
-  program.name('genshin-party').parse()
+  program
+    .command('order')
+    .alias('o')
+    .description('Generate a random order in which to select characters.')
+    .action(() => {
+      console.log(shuffle([1, 2, 3, 4]))
+    })
+
+  program
+    .command('char', { isDefault: true })
+    .alias('c')
+    .description('Select a random character.')
+    .option('-l, --list', 'List all elegible characters.', false)
+    .addOption(new Option('-r, --rarity <rarity>', 'Rarity of the desired character.').choices(Rarities))
+    .action(({ list, rarity }) => {
+      const filteredChars = getChars(rarity)
+
+      if (list) {
+        console.log('Possible characters include:')
+        console.log(filteredChars.map(formatChar).join(', '))
+      }
+
+      console.log(`Random character: ${formatChar(sample(filteredChars) as Char)}`)
+    })
+
+  program
+    .command('boss')
+    .alias('b')
+    .description('Select a random boss.')
+    .option('-l, --list', 'List all eligible bosses.', false)
+    .action(({ list }) => {
+      const weeklyBosses = genshindb.enemies('names', { matchCategories: true, verboseCategories: true })
+        .filter(_ => _.categoryType === 'CODEX_SUBTYPE_BOSS')
+        .filter(_ => _.name !== 'Stormterror')
+
+      const formatWeeklyBoss = ({ description, name }: Enemy): string => [
+        chalk.bold.italic(name),
+        '',
+        ...description.split('\n')
+          .map(_ => chalk.gray(`> ${_}`))
+      ]
+        .join('\n')
+
+      if (list) {
+        console.log('Possible bosses include:')
+        console.log(weeklyBosses.map(_ => chalk.italic(_.name)).join(', '))
+      }
+
+      console.log(`Random boss: ${(formatWeeklyBoss(sample(weeklyBosses) as Enemy))}`)
+    })
+
+  program
+    .name('genshin-party')
+    .addHelpText('after', `
+Examples:
+  $ genshin-party interactive   Interactively select a random team.
+  $ genshin-party i
+  $ genshin-party char -r 4     Get a random four-star character.
+  $ genshin-party boss          Select a random weekly boss.
+    `)
+    .parse()
 }
 
 type Char = ReturnType<typeof getChars>[number]
@@ -143,7 +180,7 @@ const getChars = memoize(
 )
 
 const formatChar = (char: Char): string => {
-  const formatFn = (() => {
+  const formatFunction = (() => {
     switch (char.elementType) {
       case 'ELEMENT_ANEMO':
         return chalk.rgb(117, 194, 168)
@@ -164,7 +201,7 @@ const formatChar = (char: Char): string => {
     }
   })()
 
-  return formatFn(char.name)
+  return formatFunction(char.name)
 }
 
 const formatPlayer = (playerNumber: number): string => chalk.italic(`Player ${chalk.rgb(251, 217, 148)(playerNumber)}`)

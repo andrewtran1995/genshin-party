@@ -2,21 +2,24 @@
   "name": "genshin-party",
   "version": "0.0.1",
   "license": "MIT",
+  "type": "module",
   "main": "src/index.ts",
+  "bin": "build/index.js",
   "files": [
     "index.ts",
     "index.test.ts"
   ],
   "scripts": {
     "build": "tsc",
+    "build:tsup": "tsup --clean --format esm src/*",
     "dev": "tsx src/index.ts",
     "postinstall": "husky",
-    "lint": "ts-standard",
-    "lint:fix": "ts-standard --fix",
+    "lint": "ts-standard src",
+    "lint:fix": "ts-standard --fix src",
     "prepack": "pinst --disable",
     "postpack": "pinst --enable",
     "prepare": "husky",
-    "sort": "sort-package-json",
+    "sort-package-json": "sort-package-json",
     "test": "ava"
   },
   "ava": {
@@ -43,6 +46,7 @@
     "husky": "^9.0.11",
     "sort-package-json": "^2.7.0",
     "ts-standard": "^12.0.2",
+    "tsup": "^8.0.2",
     "tsx": "^4.7.1",
     "type-fest": "^4.10.2",
     "typescript": "^5.3.3"

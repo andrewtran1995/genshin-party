@@ -1,4 +1,4 @@
 yarn build
 yarn lint
 yarn test
-npx sort-package-json -c
+yarn sort-package-json -c
