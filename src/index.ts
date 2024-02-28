@@ -1,21 +1,10 @@
 import genshindb, { type Enemy } from 'genshin-db'
-import pkg, { sampleSize } from 'lodash/fp.js'
+import pkg from 'lodash/fp.js'
 import { Option, program } from '@commander-js/extra-typings'
 import chalk from 'chalk'
 import { type ArrayValues } from 'type-fest'
 import select from '@inquirer/select'
 import { match } from 'ts-pattern'
-// import { run } from 'oclif'
-// import { run } from 'oclif'
-// run()
-import path from 'path'
-import { fileURLToPath } from 'url'
-
-import oclif from '@oclif/core'
-import yargs from 'yargs'
-import type { Options } from 'yargs'
-export { run } from '@oclif/core'
-
 const { last, memoize, pick, range, sample, shuffle } = pkg
 
 const Rarities = ['4', '5'] as const
@@ -38,17 +27,16 @@ function main (): void {
       for (const playerNumber of shuffle(range(1, 5))) {
         console.log(`Now choosing for ${formatPlayer(playerNumber)}.`)
 
-        // sampleSize(
-
-        // )
-
         while (true) {
+          const chars = getChars(
+            last(playerChoices)?.isMain ?? false
+              ? '4'
+              : '5'
+          )
           const char = sample(
-            getChars(
-              last(playerChoices)?.isMain ?? false
-                ? '4'
-                : '5'
-            )
+            onlyTeyvat
+              ? chars.filter(_ => !['Aloy', 'Lumine'].includes(_.name))
+              : chars
           ) as Char
           console.log(`Rolled: ${formatChar(char)}.`)
 
