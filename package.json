@@ -11,7 +11,9 @@
   },
   "license": "MIT",
   "type": "module",
-  "bin": "dist/index.js",
+  "bin": {
+    "genshin-party": "dist/index.js"
+  },
   "files": [
     "dist/*"
   ],
