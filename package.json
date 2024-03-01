@@ -1,9 +1,19 @@
 {
   "name": "genshin-party",
   "version": "0.0.1",
+  "keywords": [
+    "cli",
+    "genshin",
+    "genshin-impact"
+  ],
+  "repository": {
+    "url": "git+https://github.com/andrewtran1995/genshin-party.git"
+  },
   "license": "MIT",
   "type": "module",
-  "bin": "dist/index.js",
+  "bin": {
+    "genshin-party": "dist/index.js"
+  },
   "files": [
     "dist/*"
   ],
