@@ -3,21 +3,17 @@
   "version": "0.0.1",
   "license": "MIT",
   "type": "module",
-  "main": "src/index.ts",
-  "bin": "build/index.js",
+  "bin": "dist/index.js",
   "files": [
-    "index.ts",
-    "index.test.ts"
+    "dist/*"
   ],
   "scripts": {
     "build": "tsc",
-    "build:tsup": "tsup --clean --format esm src/*",
+    "build:tsup": "tsup --clean --format cjs,esm src/index.ts --dts",
     "dev": "tsx src/index.ts",
     "postinstall": "husky",
     "lint": "ts-standard src",
     "lint:fix": "ts-standard --fix src",
-    "prepack": "pinst --disable",
-    "postpack": "pinst --enable",
     "prepare": "husky",
     "sort-package-json": "sort-package-json",
     "test": "ava"
