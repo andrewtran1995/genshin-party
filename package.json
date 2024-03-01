@@ -11,9 +11,7 @@
   },
   "license": "MIT",
   "type": "module",
-  "bin": {
-    "genshin-party": "dist/index.js"
-  },
+  "bin": "dist/index.js",
   "files": [
     "dist/*"
   ],
@@ -52,6 +50,7 @@
     "@types/lodash": "^4.14.202",
     "ava": "^6.1.1",
     "husky": "^9.0.11",
+    "pinst": "^3.0.0",
     "sort-package-json": "^2.7.0",
     "ts-standard": "^12.0.2",
     "tsup": "^8.0.2",
