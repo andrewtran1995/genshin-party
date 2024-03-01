@@ -24,6 +24,8 @@
     "postinstall": "husky",
     "lint": "ts-standard src",
     "lint:fix": "ts-standard --fix src",
+    "prepack": "pinst --disable",
+    "postpack": "pinst --enable",
     "prepare": "husky",
     "sort-package-json": "sort-package-json",
     "test": "ava"
