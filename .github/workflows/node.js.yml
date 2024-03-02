@@ -22,9 +22,5 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: corepack enable
-    - uses: borales/actions-yarn@v4
-      with:
-        cmd: install
-    - uses: borales/actions-yarn@v4
-      with:
-        cmd: test
+    - run: yarn install
+    - run: yarn test
