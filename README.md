@@ -1,6 +1,8 @@
 # genshin-party
 
 ![NPM](https://img.shields.io/npm/v/genshin-party?style=flat-square)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white)
+![Node](https://img.shields.io/badge/Node%20js-339933?style=flat-square&logo=nodedotjs&logoColor=white)
 
 Command line utility for randomly selecting team comps and other options for multiplayer fun!
 * Generate a random team composition balanced around how built the characters are.
