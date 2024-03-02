@@ -24,7 +24,7 @@
     "postinstall": "husky",
     "lint": "ts-standard src",
     "lint:fix": "ts-standard --fix src",
-    "prepack": "pinst --disable",
+    "prepack": "pinst --disable yarn run build:tsup",
     "postpack": "pinst --enable",
     "prepare": "husky",
     "sort-package-json": "sort-package-json",
