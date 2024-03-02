@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 import genshindb, { type Enemy } from 'genshin-db'
 import pkg from 'lodash/fp.js'
-import { Option, program } from '@commander-js/extra-typings'
+import { Command, Option } from '@commander-js/extra-typings'
 import chalk from 'chalk'
 import { type ArrayValues } from 'type-fest'
 import select from '@inquirer/select'
 import { match } from 'ts-pattern'
+import { fileURLToPath } from 'url'
 const { last, memoize, pick, range, sample, shuffle } = pkg
 
 const Rarities = ['4', '5'] as const
@@ -16,7 +17,10 @@ interface PlayerChoice {
   number: number
 }
 
-function main (): void {
+export const buildProgram = (): Command => {
+  const program = new Command('genshin-party')
+    .allowExcessArguments(false)
+
   program
     .command('interactive')
     .alias('i')
@@ -139,7 +143,7 @@ function main (): void {
     })
 
   program
-    .name('genshin-party')
+    // .name('genshin-party')
     .addHelpText('after', `
 Examples:
   $ genshin-party interactive   Interactively select a random team.
@@ -147,7 +151,12 @@ Examples:
   $ genshin-party char -r 4     Get a random four-star character.
   $ genshin-party boss          Select a random weekly boss.
     `)
-    .parse()
+
+  return program
+}
+
+function main (): void {
+  buildProgram().parse()
 }
 
 type Char = ReturnType<typeof getChars>[number]
@@ -195,4 +204,13 @@ const formatChar = (char: Char): string => {
 
 const formatPlayer = (playerNumber: number): string => chalk.italic(`Player ${chalk.rgb(251, 217, 148)(playerNumber)}`)
 
-main()
+if (import.meta.url.startsWith('file:')) {
+  const modulePath = fileURLToPath(import.meta.url)
+  if (process.argv[1] === modulePath) {
+    main()
+  }
+}
+
+// if (require.main === module) {
+//   main()
+// }
