@@ -17,7 +17,7 @@ interface PlayerChoice {
   number: number
 }
 
-export const buildProgram = (): Command => {
+export const buildProgram = (log = console.log): Command => {
   const program = new Command('genshin-party')
     .allowExcessArguments(false)
 
@@ -30,7 +30,7 @@ export const buildProgram = (): Command => {
       const playerChoices: PlayerChoice[] = []
 
       for (const playerNumber of shuffle(range(1, 5))) {
-        console.log(`Now choosing for ${formatPlayer(playerNumber)}.`)
+        log(`Now choosing for ${formatPlayer(playerNumber)}.`)
 
         while (true) {
           const chars = getChars(
@@ -43,7 +43,7 @@ export const buildProgram = (): Command => {
               ? chars.filter(_ => !['Aloy', 'Lumine'].includes(_.name))
               : chars
           ) as Char
-          console.log(`Rolled: ${formatChar(char)}.`)
+          log(`Rolled: ${formatChar(char)}.`)
 
           const choice = match(
             await select({
@@ -79,15 +79,15 @@ export const buildProgram = (): Command => {
           break
         }
 
-        console.log('\n')
+        log('\n')
       }
 
-      console.log('Chosen characters are:')
+      log('Chosen characters are:')
 
       playerChoices
         .toSorted((a, b) => a.number - b.number)
         .forEach(({ char, number }) => {
-          console.log(`${formatPlayer(number)}: ${formatChar(char)}`)
+          log(`${formatPlayer(number)}: ${formatChar(char)}`)
         })
     })
 
@@ -96,7 +96,7 @@ export const buildProgram = (): Command => {
     .alias('o')
     .description('Generate a random order in which to select characters.')
     .action(() => {
-      console.log(shuffle([1, 2, 3, 4]))
+      log(shuffle([1, 2, 3, 4]))
     })
 
   program
@@ -105,15 +105,15 @@ export const buildProgram = (): Command => {
     .description('Select a random character.')
     .option('-l, --list', 'List all elegible characters.', false)
     .addOption(new Option('-r, --rarity <rarity>', 'Rarity of the desired character.').choices(Rarities))
-    .action(({ list, rarity }) => {
+    .action(({ list, rarity }, sub) => {
       const filteredChars = getChars(rarity)
 
       if (list) {
-        console.log('Possible characters include:')
-        console.log(filteredChars.map(formatChar).join(', '))
+        log('Possible characters include:')
+        log(filteredChars.map(formatChar).join(', '))
       }
 
-      console.log(`Random character: ${formatChar(sample(filteredChars) as Char)}`)
+      log(`Random character: ${formatChar(sample(filteredChars) as Char)}`)
     })
 
   program
@@ -135,11 +135,11 @@ export const buildProgram = (): Command => {
         .join('\n')
 
       if (list) {
-        console.log('Possible bosses include:')
-        console.log(weeklyBosses.map(_ => chalk.italic(_.name)).join(', '))
+        log('Possible bosses include:')
+        log(weeklyBosses.map(_ => chalk.italic(_.name)).join(', '))
       }
 
-      console.log(`Random boss: ${(formatWeeklyBoss(sample(weeklyBosses) as Enemy))}`)
+      log(`Random boss: ${(formatWeeklyBoss(sample(weeklyBosses) as Enemy))}`)
     })
 
   program

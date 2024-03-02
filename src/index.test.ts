@@ -1,32 +1,29 @@
 import { expect, test } from 'vitest'
 import { buildProgram } from './index.js'
-import { Command } from '@commander-js/extra-typings'
-
-const testProgram = (): Command => buildProgram().exitOverride(() => { console.log('in exitOverride') })
+import { inspect } from 'util'
 
 const whenGivenInput = (input: string[], callback: (stream: { errStream: string, outStream: string }) => void): () => void => () => {
   expect.hasAssertions()
+
   let outStream = ''
   let errStream = ''
   try {
-    console.log('in the try')
-    testProgram()
+    buildProgram((args) => {
+      outStream = outStream + inspect(args)
+    })
+      .exitOverride()
       .configureOutput({
-        writeErr (str) {
+        writeErr: (str) => {
           errStream = errStream + str
         },
-        writeOut (str) {
-          console.log('inside writeOut')
+        writeOut: (str) => {
           outStream = outStream + str
         }
       })
       .parse(['', '', ...input])
   } catch (_) {
-    console.log('in the catch')
-  } finally {
-    console.log('in the finally')
+    // Do nothing.
   }
-  console.log('outside of try catch')
 
   const stream = {
     outStream,
@@ -35,18 +32,15 @@ const whenGivenInput = (input: string[], callback: (stream: { errStream: string,
   callback(stream)
 }
 
-test.fails('chooses random character', whenGivenInput(['char'], (out) => {
-  console.log(out)
+test('chooses random character', whenGivenInput(['char'], (out) => {
   expect(out.outStream).toMatch(/Random character: .*/)
 }))
 
-test.fails('chooses random boss', whenGivenInput(['boss'], (out) => {
-  console.log(out)
+test('chooses random boss', whenGivenInput(['boss'], (out) => {
   expect(out.outStream).toMatch(/Random boss: .*/)
 }))
 
 test('emits help', whenGivenInput(['--help'], ({ outStream }) => {
-  console.log('in the other test ')
   expect(outStream).toBe(`Usage: genshin-party [options] [command]
 
 Options:
