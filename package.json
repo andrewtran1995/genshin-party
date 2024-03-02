@@ -11,6 +11,9 @@
   },
   "license": "MIT",
   "type": "module",
+  "exports": {
+    "import": "./dist/index.js"
+  },
   "bin": {
     "genshin-party": "dist/index.js"
   },
@@ -19,12 +22,12 @@
   ],
   "scripts": {
     "build": "tsc",
-    "build:tsup": "tsup --clean --format cjs,esm src/index.ts --dts",
+    "build:tsup": "tsup --clean --format esm src/index.ts --dts",
     "dev": "tsx src/index.ts",
     "postinstall": "husky",
     "lint": "ts-standard src",
     "lint:fix": "ts-standard --fix src",
-    "prepack": "pinst --disable yarn run build:tsup",
+    "prepack": "pinst --disable",
     "postpack": "pinst --enable",
     "prepare": "husky",
     "sort-package-json": "sort-package-json",
