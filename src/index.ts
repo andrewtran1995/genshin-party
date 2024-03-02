@@ -143,7 +143,6 @@ export const buildProgram = (): Command => {
     })
 
   program
-    // .name('genshin-party')
     .addHelpText('after', `
 Examples:
   $ genshin-party interactive   Interactively select a random team.
@@ -210,7 +209,3 @@ if (import.meta.url.startsWith('file:')) {
     main()
   }
 }
-
-// if (require.main === module) {
-//   main()
-// }
