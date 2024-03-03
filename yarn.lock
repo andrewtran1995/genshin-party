@@ -12,12 +12,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@commander-js/extra-typings@npm:^12.0.0":
-  version: 12.0.0
-  resolution: "@commander-js/extra-typings@npm:12.0.0"
+"@commander-js/extra-typings@npm:^12.0.1":
+  version: 12.0.1
+  resolution: "@commander-js/extra-typings@npm:12.0.1"
   peerDependencies:
     commander: ~12.0.0
-  checksum: 10c0/e94579d7f3aabc32fb1421649ff21152cf70c5fa8af6ee2e47407be6a19858f4d451a9671a8617a1b1e128d642fe0df4af03e17cef7e6cc2fd979e61a2f53bf3
+  checksum: 10c0/cc3219c70df3ab5c9d3a1f34eda7bd982762b5f68add49067aa80a7ae56a42211c46984e638263bd598c50d2714ed2dbab71301e823970a6bcc14b0303c39d81
   languageName: node
   linkType: hard
 
@@ -2190,7 +2190,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "genshin-party@workspace:."
   dependencies:
-    "@commander-js/extra-typings": "npm:^12.0.0"
+    "@commander-js/extra-typings": "npm:^12.0.1"
     "@inquirer/select": "npm:^2.0.0"
     "@types/lodash": "npm:^4.14.202"
     chalk: "npm:^5.3.0"
