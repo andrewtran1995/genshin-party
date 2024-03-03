@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 import genshindb, { type Enemy } from 'genshin-db'
 import pkg from 'lodash/fp.js'
 import { Command, Option } from '@commander-js/extra-typings'
