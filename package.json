@@ -23,7 +23,7 @@
   "scripts": {
     "build": "tsc",
     "build:tsup": "tsup --clean --format esm src/index.ts src/bin.ts --dts",
-    "dev": "tsx src/index.ts",
+    "dev": "tsx src/bin.ts",
     "postinstall": "husky",
     "lint": "ts-standard src",
     "lint:fix": "ts-standard --fix src",
@@ -32,14 +32,6 @@
     "prepare": "husky",
     "sort-package-json": "sort-package-json",
     "test": "vitest --run --typecheck"
-  },
-  "ava": {
-    "typescript": {
-      "rewritePaths": {
-        "src/": "build/"
-      },
-      "compile": "tsc"
-    }
   },
   "dependencies": {
     "@commander-js/extra-typings": "^12.0.0",
