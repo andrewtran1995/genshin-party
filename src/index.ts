@@ -6,7 +6,6 @@ import chalk from 'chalk'
 import { type ArrayValues } from 'type-fest'
 import select from '@inquirer/select'
 import { match } from 'ts-pattern'
-import { fileURLToPath } from 'url'
 const { last, memoize, pick, range, sample, shuffle } = pkg
 
 const Rarities = ['4', '5'] as const
@@ -154,10 +153,6 @@ Examples:
   return program
 }
 
-function main (): void {
-  buildProgram().parse()
-}
-
 type Char = ReturnType<typeof getChars>[number]
 
 const getChars = memoize(
@@ -202,10 +197,3 @@ const formatChar = (char: Char): string => {
 }
 
 const formatPlayer = (playerNumber: number): string => chalk.italic(`Player ${chalk.rgb(251, 217, 148)(playerNumber)}`)
-
-if (import.meta.url.startsWith('file:')) {
-  const modulePath = fileURLToPath(import.meta.url)
-  if (process.argv[1] === modulePath) {
-    main()
-  }
-}
