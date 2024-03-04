@@ -6,9 +6,8 @@ import {beforeAll, expect, test} from 'vitest'
  * with the other unit tests right now for simplicity.
  */
 
-beforeAll(() => {
-	// eslint-disable-next-line @typescript-eslint/no-unused-expressions
-	$`yarn build`
+beforeAll(async () => {
+	await $`yarn build`
 })
 
 test('can run bin', async () => {
