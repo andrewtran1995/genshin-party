@@ -12,6 +12,8 @@ beforeAll(() => {
 })
 
 test('can run bin', async () => {
+	console.log($`ls`.stdout)
+	console.log($`ls dist`.stdout)
 	const command = await $`./dist/bin.js`
 	expect.soft(command.exitCode).toBe(0)
 	expect.soft(command.stdout).toMatch(/Random character: .*/)
