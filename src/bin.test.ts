@@ -8,6 +8,7 @@ import {beforeAll, expect, test} from 'vitest'
 
 beforeAll(async () => {
 	await $`yarn build`
+	await $`chmod +x dist/bin.js`
 })
 
 // Does not pass in pipeline.
