@@ -22,7 +22,6 @@
   ],
   "scripts": {
     "build": "tsc",
-    "build:tsup": "tsup --clean --format esm src/index.ts src/bin.ts --dts",
     "dev": "tsx src/bin.ts",
     "postinstall": "husky",
     "lint": "xo src",
@@ -52,7 +51,6 @@
     "husky": "^9.0.11",
     "pinst": "^3.0.0",
     "sort-package-json": "^2.8.0",
-    "tsup": "^8.0.2",
     "tsx": "^4.7.1",
     "type-fest": "^4.10.3",
     "typescript": "^5.3.3",
