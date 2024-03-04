@@ -1,47 +1,47 @@
-import { expect, test } from 'vitest'
-import { buildProgram } from './index.js'
-import { inspect } from 'util'
+import {inspect} from 'node:util'
+import {expect, test} from 'vitest'
+import {buildProgram} from './index.js'
 
-const whenGivenInput = (input: string[], callback: (stream: { errStream: string, outStream: string }) => void): () => void => () => {
-  expect.hasAssertions()
+const whenGivenInput = (input: string[], callback: (stream: {errStream: string; outStream: string}) => void): () => void => async () => {
+	expect.hasAssertions()
 
-  let outStream = ''
-  let errStream = ''
-  try {
-    buildProgram((args) => {
-      outStream = outStream + inspect(args)
-    })
-      .exitOverride()
-      .configureOutput({
-        writeErr: (str) => {
-          errStream = errStream + str
-        },
-        writeOut: (str) => {
-          outStream = outStream + str
-        }
-      })
-      .parse(['', '', ...input])
-  } catch (_) {
-    // Do nothing.
-  }
+	let outStream = ''
+	let errorStream = ''
+	try {
+		buildProgram(arguments_ => {
+			outStream += inspect(arguments_)
+		})
+			.exitOverride()
+			.configureOutput({
+				writeErr(string_) {
+					errorStream += string_
+				},
+				writeOut(string_) {
+					outStream += string_
+				},
+			})
+			.parse(['', '', ...input])
+	} catch {
+		// Do nothing.
+	}
 
-  const stream = {
-    outStream,
-    errStream
-  }
-  callback(stream)
+	const stream = {
+		outStream,
+		errStream: errorStream,
+	}
+	callback(stream)
 }
 
-test('chooses random character', whenGivenInput(['char'], (out) => {
-  expect(out.outStream).toMatch(/Random character: .*/)
+test('chooses random character', whenGivenInput(['char'], out => {
+	expect(out.outStream).toMatch(/Random character: .*/)
 }))
 
-test('chooses random boss', whenGivenInput(['boss'], (out) => {
-  expect(out.outStream).toMatch(/Random boss: .*/)
+test('chooses random boss', whenGivenInput(['boss'], out => {
+	expect(out.outStream).toMatch(/Random boss: .*/)
 }))
 
-test('emits help', whenGivenInput(['--help'], ({ outStream }) => {
-  expect(outStream).toBe(`Usage: genshin-party [options] [command]
+test('emits help', whenGivenInput(['--help'], ({outStream}) => {
+	expect(outStream).toBe(`Usage: genshin-party [options] [command]
 
 Options:
   -h, --help               display help for command

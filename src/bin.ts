@@ -1,4 +1,4 @@
 #!/usr/bin/env node
-import { buildProgram } from './index.js'
+import {buildProgram} from './index.js'
 
 buildProgram().parse()
