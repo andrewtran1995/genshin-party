@@ -13,9 +13,9 @@ beforeAll(async () => {
 // Does not pass in pipeline.
 test('can run bin', async () => {
 	// eslint-disable-next-line unicorn/no-await-expression-member
-	console.log((await $`ls`).stdout)
+	console.log((await $`ls -lrt`).stdout)
 	// eslint-disable-next-line unicorn/no-await-expression-member
-	console.log((await $`ls dist`).stdout)
+	console.log((await $`ls dist -lrt`).stdout)
 	const command = await $`./dist/bin.js`
 	expect.soft(command.exitCode).toBe(0)
 	expect.soft(command.stdout).toMatch(/Random character: .*/)
