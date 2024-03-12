@@ -14,9 +14,7 @@
   "exports": {
     "import": "./dist/index.js"
   },
-  "bin": {
-    "genshin-party": "dist/bin.js"
-  },
+  "bin": "dist/bin.js",
   "files": [
     "dist/*"
   ],
@@ -57,5 +55,5 @@
     "vitest": "^1.3.1",
     "xo": "^0.58.0"
   },
-  "packageManager": "yarn@4.1.0"
+  "packageManager": "yarn@4.1.1"
 }

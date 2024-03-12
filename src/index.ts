@@ -1,4 +1,4 @@
-import genshindb, {type Enemy} from 'genshin-db'
+import genshindb, {type Character, type Enemy} from 'genshin-db'
 import pkg from 'lodash/fp.js'
 import {Command, Option} from '@commander-js/extra-typings'
 import chalk from 'chalk'
@@ -10,6 +10,18 @@ const {last, memoize, pick, range, sample, shuffle} = pkg
 
 const rarities = ['4', '5'] as const
 type Rarity = ArrayValues<typeof rarities>
+
+const elements = [
+	'anemo',
+	'cryo',
+	'dendro',
+	'electro',
+	'geo',
+	'hydro',
+	'none',
+	'pyro',
+] as const
+
 type PlayerChoice = {
 	char: Char;
 	isMain: boolean;
@@ -31,19 +43,15 @@ export const buildProgram = (log = console.log): Command => {
 			for (const playerNumber of shuffle(range(1, 5))) {
 				log(`Now choosing for ${formatPlayer(playerNumber)}.`)
 
-				// eslint-disable-next-line no-constant-condition
-				while (true) {
-					const chars = getChars(
-						last(playerChoices)?.isMain ?? false
-							? '4'
-							: '5',
-					)
-					const char = sample(
-						onlyTeyvat
-							? chars.filter(_ => !['Aloy', 'Lumine'].includes(_.name))
-							: chars,
-					)!
-					log(`Rolled: ${formatChar(char)}.`)
+				const rarity = last(playerChoices)?.isMain ?? false
+					? '4'
+					: '5'
+				for (const char of randomCharacters({rarity})) {
+					if (onlyTeyvat && ['Aloy', 'Lumine'].includes(char.name)) {
+						continue
+					}
+
+					log(`Rolled: ${formatChar(char)}`)
 
 					const choice = match(
 						// eslint-disable-next-line no-await-in-loop
@@ -105,8 +113,12 @@ export const buildProgram = (log = console.log): Command => {
 		.description('Select a random character.')
 		.option('-l, --list', 'List all elegible characters.', false)
 		.addOption(new Option('-r, --rarity <rarity>', 'Rarity of the desired character.').choices(rarities))
-		.action(({list, rarity}) => {
-			const filteredChars = getChars(rarity)
+		.addOption(new Option('-e, --element <element>', 'Element of the desired character.').choices(elements))
+		.action(({element, list, rarity}) => {
+			const filteredChars = getChars({
+				element: element ? `ELEMENT_${element.toUpperCase()}` as Character['elementType'] : undefined,
+				rarity,
+			})
 
 			if (list) {
 				log('Possible characters include:')
@@ -157,21 +169,11 @@ Examples:
 type Char = ReturnType<typeof getChars>[number]
 
 const getChars = memoize(
-	(rarity?: Rarity) => genshindb
+	({element, rarity}: {element?: Character['elementType']; rarity?: Rarity}) => genshindb
 		.characters('names', {matchCategories: true, verboseCategories: true})
 		.map(pick(['elementType', 'name', 'rarity']))
-		.filter(_ => {
-			switch (rarity) {
-				case '4':
-				case '5': {
-					return _.rarity === Number(rarity)
-				}
-
-				default: {
-					return true
-				}
-			}
-		})
+		.filter(_ => rarity ? _.rarity === Number(rarity) : true)
+		.filter(_ => element ? _.elementType === element : true)
 		.filter(_ => _.name !== 'Aether'),
 )
 
@@ -213,6 +215,14 @@ const formatChar = (char: Char): string => {
 	})()
 
 	return formatFunction(char.name)
+}
+
+function * randomCharacters(filters: Parameters<typeof getChars>[0]) {
+	while (true) {
+		for (const char of shuffle(getChars(filters))) {
+			yield char
+		}
+	}
 }
 
 const formatPlayer = (playerNumber: number): string => chalk.italic(`Player ${chalk.rgb(251, 217, 148)(playerNumber)}`)
