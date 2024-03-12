@@ -21,6 +21,7 @@ const elements = [
 	'none',
 	'pyro',
 ] as const
+type ShorthandElement = ArrayValues<typeof elements>
 
 type PlayerChoice = {
 	char: Char;
@@ -116,7 +117,7 @@ export const buildProgram = (log = console.log): Command => {
 		.addOption(new Option('-e, --element <element>', 'Element of the desired character.').choices(elements))
 		.action(({element, list, rarity}) => {
 			const filteredChars = getChars({
-				element: element ? `ELEMENT_${element.toUpperCase()}` as Character['elementType'] : undefined,
+				element: element ? `ELEMENT_${element.toUpperCase() as Uppercase<ShorthandElement>}` : undefined,
 				rarity,
 			})
 
