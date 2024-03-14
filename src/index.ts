@@ -144,7 +144,6 @@ export const buildProgram = (log = console.log): Command => {
 
 			const formatWeeklyBoss = ({description, name}: Enemy): string => [
 				chalk.bold.italic(name),
-				'',
 				...description.split('\n')
 					.map(_ => chalk.gray(`> ${_}`)),
 			]
@@ -153,15 +152,13 @@ export const buildProgram = (log = console.log): Command => {
 			if (list) {
 				log('Possible bosses include:')
 				log(weeklyBosses.map(_ => chalk.italic(_.name)).join(', '))
+				log('')
 			}
 
-			if (gauntlet) {
-				for (const boss of sampleSize(3)(weeklyBosses)) {
-					log(`Random boss: ${(formatWeeklyBoss(sample(weeklyBosses)!))}`)
-				}
-			} else {
-				log(`Random boss: ${(formatWeeklyBoss(sample(weeklyBosses)!))}`)
-			}
+			const output = sampleSize(gauntlet ? 3 : 1)(weeklyBosses)
+				.map(boss => `Random boss: ${(formatWeeklyBoss(boss))}`)
+				.join('\n\n')
+			log(output)
 		})
 
 	program

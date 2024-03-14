@@ -2489,13 +2489,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"genshin-db@npm:^5.1.1":
-  version: 5.1.1
-  resolution: "genshin-db@npm:5.1.1"
+"genshin-db@npm:^5.1.2":
+  version: 5.1.2
+  resolution: "genshin-db@npm:5.1.2"
   dependencies:
     fuzzysort: "npm:^1.1.4"
     pako: "npm:^2.0.4"
-  checksum: 10c0/9f922a1d13dbdc36fbb41cc812f60d8c2f4919479ce82699b8f0644dd06e06aee20b419308f9c4df97b151d2ccca47cadc780c32883a21ed4564f10ba741fa86
+  checksum: 10c0/1c18b7bfb2655f1e7220633429d79498f4d2e2710c697a37111308ee6b2e4394fb3a2556d74765aabbcf48b7e8507ef97449a73de20b7eb9a6d373e6c11a36f1
   languageName: node
   linkType: hard
 
@@ -2511,7 +2511,7 @@ __metadata:
     commander: "npm:^12.0.0"
     dotenv: "npm:^16.4.5"
     execa: "npm:^8.0.1"
-    genshin-db: "npm:^5.1.1"
+    genshin-db: "npm:^5.1.2"
     husky: "npm:^9.0.11"
     lodash: "npm:^4.17.21"
     pinst: "npm:^3.0.0"
