@@ -1,3 +1,4 @@
+import process from 'node:process'
 import genshindb, {type Character, type Enemy} from 'genshin-db'
 import pkg from 'lodash/fp.js'
 import {Command, Option} from '@commander-js/extra-typings'
@@ -5,8 +6,9 @@ import chalk from 'chalk'
 import {type ArrayValues} from 'type-fest'
 import select from '@inquirer/select'
 import {match} from 'ts-pattern'
+import 'dotenv/config' // eslint-disable-line import/no-unassigned-import
 
-const {last, memoize, pick, range, sample, shuffle} = pkg
+const {last, memoize, pick, range, sample, sampleSize, shuffle} = pkg
 
 const rarities = ['4', '5'] as const
 type Rarity = ArrayValues<typeof rarities>
@@ -133,8 +135,9 @@ export const buildProgram = (log = console.log): Command => {
 		.command('boss')
 		.alias('b')
 		.description('Select a random boss.')
+		.option('-g, --gauntlet', 'Select three bosses, per weekly rotation.', false)
 		.option('-l, --list', 'List all eligible bosses.', false)
-		.action(({list}) => {
+		.action(({gauntlet, list}) => {
 			const weeklyBosses = genshindb.enemies('names', {matchCategories: true, verboseCategories: true})
 				.filter(_ => _.categoryType === 'CODEX_SUBTYPE_BOSS')
 				.filter(_ => _.name !== 'Stormterror')
@@ -152,7 +155,13 @@ export const buildProgram = (log = console.log): Command => {
 				log(weeklyBosses.map(_ => chalk.italic(_.name)).join(', '))
 			}
 
-			log(`Random boss: ${(formatWeeklyBoss(sample(weeklyBosses)!))}`)
+			if (gauntlet) {
+				for (const boss of sampleSize(3)(weeklyBosses)) {
+					log(`Random boss: ${(formatWeeklyBoss(sample(weeklyBosses)!))}`)
+				}
+			} else {
+				log(`Random boss: ${(formatWeeklyBoss(sample(weeklyBosses)!))}`)
+			}
 		})
 
 	program
@@ -226,4 +235,9 @@ function * randomCharacters(filters: Parameters<typeof getChars>[0]) {
 	}
 }
 
-const formatPlayer = (playerNumber: number): string => chalk.italic(`Player ${chalk.rgb(251, 217, 148)(playerNumber)}`)
+const formatPlayer = (playerNumber: number): string => {
+	const playerNames = process.env.PLAYERS?.split(',')
+	return playerNames
+		? chalk.italic.rgb(251, 217, 148)(playerNames[playerNumber - 1])
+		: chalk.italic(`Player ${chalk.rgb(251, 217, 148)(playerNumber)}`)
+}
