@@ -5,10 +5,16 @@ import {Command, Option} from '@commander-js/extra-typings'
 import chalk from 'chalk'
 import {type ArrayValues} from 'type-fest'
 import select from '@inquirer/select'
-import {match} from 'ts-pattern'
+import {P, match} from 'ts-pattern'
 import 'dotenv/config' // eslint-disable-line import/no-unassigned-import
+import {
+	InferEvent, assign, createActor, createMachine, log, setup,
+} from 'xstate'
+import {z} from 'zod'
+import {beforeAll} from 'vitest'
+import {$} from 'execa'
 
-const {last, memoize, pick, range, sample, sampleSize, shuffle} = pkg
+const {head, initial, last, memoize, pick, range, sample, sampleSize, shuffle, slice} = pkg
 
 const rarities = ['4', '5'] as const
 type Rarity = ArrayValues<typeof rarities>
@@ -41,22 +47,98 @@ export const buildProgram = (log = console.log): Command => {
 		.description('Random, interactive party selection, balancing four and five star characters.')
 		.option('--only-teyvat', 'Exclude characters not of Teyvat (Traveller, Aloy).')
 		.action(async ({onlyTeyvat}) => {
-			const playerChoices: PlayerChoice[] = []
+			const machine = setup({
+				actions: {
+					push: assign({
+						playerChoices: ({context}, choice: PlayerChoice) => [...context.playerChoices, choice],
+					}),
+					pop: assign({
+						playerChoices: ({context}) => initial(context.playerChoices),
+					}),
+				},
+				guards: {
+					isFull: ({context}) => context.playerChoices.length === 4,
+				},
+				types: {
+					// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+					context: {} as {
+						onNewChoiceFunction?: (playerNumber: number) => void;
+						playerChoices: PlayerChoice[];
+						playerOrder: number[];
+					},
+					// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+					events: {} as
+						| {type: 'PUSH'; choice: PlayerChoice}
+						| {type: 'POP'},
+					// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+					input: {} as {
+						onNewChoiceFunction: (playerNumber: number) => void;
+					},
+				},
+			}).createMachine({
+				initial: 'ready',
+				context: ({input: {onNewChoiceFunction}}) => ({
+					onNewChoiceFunction,
+					playerChoices: [],
+					playerOrder: shuffle(range(1, 5)),
+				}),
+				states: {
+					ready: {
+						entry: [
+							({context}) => {
+								context.onNewChoiceFunction?.(context.playerOrder[context.playerChoices.length])
+							},
+						],
+						on: {
+							// eslint-disable-next-line @typescript-eslint/naming-convention
+							PUSH:
+								{
+									target: 'checkIfDone',
+									actions: {type: 'push', params: ({event}) => event.choice},
+								},
+							// eslint-disable-next-line @typescript-eslint/naming-convention
+							POP:
+								{
+									target: 'checkIfDone',
+									actions: {type: 'pop'},
+								},
+						},
+					},
+					checkIfDone: {
+						always: [
+							{target: 'done', guard: 'isFull'},
+							{target: 'ready'},
+						],
+					},
+					done: {
+						type: 'final',
+					},
+				},
+			})
 
-			for (const playerNumber of shuffle(range(1, 5))) {
-				log(`Now choosing for ${formatPlayer(playerNumber)}.`)
+			const actor = createActor(machine, {
+				input: {
+					onNewChoiceFunction(playerNumber) {
+						log(`Now choosing for ${formatPlayer(playerNumber)}.`)
+					},
+				},
+			})
+				.start()
+			while (actor.getSnapshot().status !== 'done') {
+				const {playerChoices, playerOrder} = actor.getSnapshot().context
+				const playerNumber = playerOrder[playerChoices.length]
 
 				const rarity = last(playerChoices)?.isMain ?? false
 					? '4'
 					: '5'
-				for (const char of randomCharacters({rarity})) {
+				for (const char of randomChars({rarity})) {
 					if (onlyTeyvat && ['Aloy', 'Lumine'].includes(char.name)) {
 						continue
 					}
 
 					log(`Rolled: ${formatChar(char)}`)
 
-					const choice = match(
+					const event = match(
 						// eslint-disable-next-line no-await-in-loop
 						await select({
 							message: 'Accept character?',
@@ -67,36 +149,44 @@ export const buildProgram = (log = console.log): Command => {
 									value: 'Accept (and character is a main)',
 								},
 								{value: 'Reroll'},
+								...(playerChoices.length > 0 ? [{value: `Go back to ${formatPlayer(last(playerChoices)!.number)}`}] : []),
 							] as const,
 						}),
 					)
-						.returnType<PlayerChoice | undefined>()
+						.returnType<Parameters<typeof actor.send>[0] | undefined>()
 						.with('Accept', () => ({
-							char,
-							isMain: false,
-							number: playerNumber,
+							type: 'PUSH',
+							choice: {
+								char,
+								isMain: false,
+								number: playerNumber,
+							},
 						}))
-						.with('Accept (and character is a main)', () => ({
-							char,
-							isMain: true,
-							number: playerNumber,
+						.with('Accept (and character is a main)', t => ({
+							type: 'PUSH',
+							choice: {
+								char,
+								isMain: true,
+								number: playerNumber,
+							},
+						}))
+						.with(P.string.startsWith('Go back to'), () => ({
+							type: 'POP',
 						}))
 						.otherwise(() => undefined)
 
-					if (choice === undefined) {
+					if (event === undefined) {
 						continue
 					}
 
-					playerChoices.push(choice)
+					log('')
+					actor.send(event)
 					break
 				}
-
-				log('\n')
 			}
 
 			log('Chosen characters are:')
-
-			for (const {char, number} of playerChoices
+			for (const {char, number} of actor.getSnapshot().context.playerChoices
 				.toSorted((a, b) => a.number - b.number)) {
 				log(`${formatPlayer(number)}: ${formatChar(char)}`)
 			}
@@ -224,7 +314,7 @@ const formatChar = (char: Char): string => {
 	return formatFunction(char.name)
 }
 
-function * randomCharacters(filters: Parameters<typeof getChars>[0]) {
+function * randomChars(filters: Parameters<typeof getChars>[0]) {
 	while (true) {
 		for (const char of shuffle(getChars(filters))) {
 			yield char
@@ -233,8 +323,8 @@ function * randomCharacters(filters: Parameters<typeof getChars>[0]) {
 }
 
 const formatPlayer = (playerNumber: number): string => {
-	const playerNames = process.env.PLAYERS?.split(',')
-	return playerNames
-		? chalk.italic.rgb(251, 217, 148)(playerNames[playerNumber - 1])
+	const parsed = z.string().array().length(4).safeParse(process.env.PLAYERS?.split(','))
+	return parsed.success
+		? chalk.italic.rgb(251, 217, 148)(parsed.data[playerNumber - 1])
 		: chalk.italic(`Player ${chalk.rgb(251, 217, 148)(playerNumber)}`)
 }
