@@ -8,13 +8,11 @@ import select from '@inquirer/select'
 import {P, match} from 'ts-pattern'
 import 'dotenv/config' // eslint-disable-line import/no-unassigned-import
 import {
-	InferEvent, assign, createActor, createMachine, log, setup,
+	assign, createActor, setup,
 } from 'xstate'
 import {z} from 'zod'
-import {beforeAll} from 'vitest'
-import {$} from 'execa'
 
-const {head, initial, last, memoize, pick, range, sample, sampleSize, shuffle, slice} = pkg
+const {initial, last, memoize, pick, range, sample, sampleSize, shuffle} = pkg
 
 const rarities = ['4', '5'] as const
 type Rarity = ArrayValues<typeof rarities>
@@ -37,7 +35,11 @@ type PlayerChoice = {
 	number: number;
 }
 
-export const buildProgram = (log = console.log): Command => {
+const playerNames = match(z.string().array().length(4).safeParse(process.env.PLAYERS?.split(',')))
+	.with({success: true}, parsed => parsed.data)
+	.otherwise(() => undefined)
+
+export const buildProgram = (log = console.log) => {
 	const program = new Command('genshin-party')
 		.allowExcessArguments(false)
 
@@ -274,45 +276,15 @@ const getChars = memoize(
 		.filter(_ => _.name !== 'Aether'),
 )
 
-const formatChar = (char: Char): string => {
-	const formatFunction = (() => {
-		switch (char.elementType) {
-			case 'ELEMENT_ANEMO': {
-				return chalk.rgb(117, 194, 168)
-			}
-
-			case 'ELEMENT_CRYO': {
-				return chalk.rgb(160, 215, 228)
-			}
-
-			case 'ELEMENT_DENDRO': {
-				return chalk.rgb(165, 200, 56)
-			}
-
-			case 'ELEMENT_ELECTRO': {
-				return chalk.rgb(176, 143, 194)
-			}
-
-			case 'ELEMENT_GEO': {
-				return chalk.rgb(249, 182, 46)
-			}
-
-			case 'ELEMENT_HYDRO': {
-				return chalk.rgb(75, 195, 241)
-			}
-
-			case 'ELEMENT_PYRO': {
-				return chalk.rgb(239, 122, 53)
-			}
-
-			default: {
-				return chalk.white
-			}
-		}
-	})()
-
-	return formatFunction(char.name)
-}
+const formatChar = (char: Char) => match(char.elementType)
+	.with('ELEMENT_ANEMO', () => chalk.rgb(117, 194, 168))
+	.with('ELEMENT_CRYO', () => chalk.rgb(160, 215, 228))
+	.with('ELEMENT_DENDRO', () => chalk.rgb(165, 200, 56))
+	.with('ELEMENT_ELECTRO', () => chalk.rgb(176, 143, 194))
+	.with('ELEMENT_GEO', () => chalk.rgb(249, 182, 46))
+	.with('ELEMENT_HYDRO', () => chalk.rgb(75, 195, 241))
+	.with('ELEMENT_PYRO', () => chalk.rgb(239, 122, 53))
+	.otherwise(() => chalk.white)(char.name)
 
 function * randomChars(filters: Parameters<typeof getChars>[0]) {
 	while (true) {
@@ -322,9 +294,6 @@ function * randomChars(filters: Parameters<typeof getChars>[0]) {
 	}
 }
 
-const formatPlayer = (playerNumber: number): string => {
-	const parsed = z.string().array().length(4).safeParse(process.env.PLAYERS?.split(','))
-	return parsed.success
-		? chalk.italic.rgb(251, 217, 148)(parsed.data[playerNumber - 1])
-		: chalk.italic(`Player ${chalk.rgb(251, 217, 148)(playerNumber)}`)
-}
+const formatPlayer = (playerNumber: number) => playerNames
+	? chalk.italic.rgb(251, 217, 148)(playerNames[playerNumber - 1])
+	: chalk.italic(`Player ${chalk.rgb(251, 217, 148)(playerNumber)}`)
