@@ -26,6 +26,9 @@ jobs:
     - run: yarn test
 
   dependabot_auto_merge:
+    permissions:
+      contents: write
+      pull-requests: write
     needs: [build]
     runs-on: ubuntu-latest
     if: github.actor == 'dependabot[bot]'

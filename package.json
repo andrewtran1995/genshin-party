@@ -14,9 +14,7 @@
   "exports": {
     "import": "./dist/index.js"
   },
-  "bin": {
-    "genshin-party": "dist/bin.js"
-  },
+  "bin": "dist/bin.js",
   "files": [
     "dist/*"
   ],
