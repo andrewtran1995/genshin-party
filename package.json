@@ -46,7 +46,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.202",
+    "@types/lodash": "^4.17.0",
     "@types/xo": "^0",
     "execa": "^8.0.1",
     "husky": "^9.0.11",
