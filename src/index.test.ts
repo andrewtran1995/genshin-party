@@ -2,7 +2,7 @@ import {inspect} from 'node:util'
 import {describe, expect, it} from 'vitest'
 import {buildProgram} from './index.js'
 
-describe('index.ts', () => {
+describe.concurrent('index.ts', () => {
 	const runWithInput = (input: string) => {
 		let outStream = ''
 		let errorStream = ''
