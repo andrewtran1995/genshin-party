@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@commander-js/extra-typings": "^12.0.1",
-    "@inquirer/select": "^2.1.1",
+    "@inquirer/select": "^2.2.0",
     "chalk": "^5.3.0",
     "commander": "^12.0.0",
     "dotenv": "^16.4.5",
@@ -47,7 +47,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.202",
+    "@types/lodash": "^4.17.0",
     "@types/xo": "^0",
     "execa": "^8.0.1",
     "husky": "^9.0.11",
