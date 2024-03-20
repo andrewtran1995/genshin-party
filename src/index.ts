@@ -130,9 +130,7 @@ export const buildProgram = (log = console.log) => {
 				const {playerChoices, playerOrder} = actor.getSnapshot().context
 				const playerNumber = playerOrder[playerChoices.length]
 
-				const rarity = last(playerChoices)?.isMain ?? false
-					? '4'
-					: '5'
+				const rarity = last(playerChoices)?.isMain ? '4' : '5'
 				for (const char of randomChars({rarity})) {
 					if (onlyTeyvat && ['Aloy', 'Lumine'].includes(char.name)) {
 						continue
@@ -164,7 +162,7 @@ export const buildProgram = (log = console.log) => {
 								number: playerNumber,
 							},
 						}))
-						.with('Accept (and character is a main)', t => ({
+						.with('Accept (and character is a main)', () => ({
 							type: 'PUSH',
 							choice: {
 								char,
@@ -199,7 +197,7 @@ export const buildProgram = (log = console.log) => {
 		.alias('o')
 		.description('Generate a random order in which to select characters.')
 		.action(() => {
-			log(shuffle([1, 2, 3, 4]))
+			log(shuffle([1, 2, 3, 4]).map(_ => formatPlayer(_)).join(', '))
 		})
 
 	program
@@ -229,9 +227,11 @@ export const buildProgram = (log = console.log) => {
 		.description('Select a random boss.')
 		.option('-g, --gauntlet', 'Select three bosses, per weekly rotation.', false)
 		.option('-l, --list', 'List all eligible bosses.', false)
-		.action(({gauntlet, list}) => {
+		.option('--weekly', 'Restrict to weekly bosses.', true)
+		.option('--no-weekly', 'Select among all bosses.')
+		.action(({gauntlet, list, weekly}) => {
 			const weeklyBosses = genshindb.enemies('names', {matchCategories: true, verboseCategories: true})
-				.filter(_ => _.categoryType === 'CODEX_SUBTYPE_BOSS')
+				.filter(_ => weekly ? _.categoryType === 'CODEX_SUBTYPE_BOSS' : _.enemyType === 'BOSS')
 				.filter(_ => _.name !== 'Stormterror')
 
 			const formatWeeklyBoss = ({description, name}: Enemy): string => [

@@ -28,7 +28,8 @@
     "postpack": "pinst --enable",
     "prepare": "husky",
     "sort-package-json": "sort-package-json",
-    "test": "vitest --run --typecheck"
+    "test": "vitest --run --typecheck",
+    "test:watch": "vitest --typecheck"
   },
   "xo": {
     "semicolon": false

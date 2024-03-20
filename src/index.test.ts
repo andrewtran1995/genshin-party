@@ -2,7 +2,7 @@ import {inspect} from 'node:util'
 import {expect, test} from 'vitest'
 import {buildProgram} from './index.js'
 
-const whenGivenInput = (input: string[], callback: (stream: {errStream: string; outStream: string}) => void): () => void => async () => {
+const whenGivenInput = (input: string, callback: (stream: {errStream: string; outStream: string}) => void): () => void => async () => {
 	expect.hasAssertions()
 
 	let outStream = ''
@@ -20,27 +20,26 @@ const whenGivenInput = (input: string[], callback: (stream: {errStream: string; 
 					outStream += string_
 				},
 			})
-			.parse(['', '', ...input])
+			.parse(['', '', ...input.split(' ')])
 	} catch {
 		// Do nothing.
 	}
 
-	const stream = {
+	callback({
 		outStream,
 		errStream: errorStream,
-	}
-	callback(stream)
+	})
 }
 
-test('chooses random character', whenGivenInput(['char'], out => {
+test('chooses random character', whenGivenInput('char', out => {
 	expect(out.outStream).toMatch(/Random character: .*/)
 }))
 
-test('chooses random boss', whenGivenInput(['boss'], out => {
+test('chooses random boss', whenGivenInput('boss', out => {
 	expect(out.outStream).toMatch(/Random boss: .*/)
 }))
 
-test('emits help', whenGivenInput(['--help'], ({outStream}) => {
+test('emits help', whenGivenInput('--help', ({outStream}) => {
 	expect(outStream).toBe(`Usage: genshin-party [options] [command]
 
 Options:
