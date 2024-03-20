@@ -259,8 +259,7 @@ Examples:
   $ genshin-party interactive   Interactively select a random team.
   $ genshin-party i
   $ genshin-party char -r 4     Get a random four-star character.
-  $ genshin-party boss          Select a random weekly boss.
-    `)
+  $ genshin-party boss          Select a random weekly boss.`)
 
 	return program
 }
