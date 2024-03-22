@@ -1,5 +1,8 @@
 import {inspect} from 'node:util'
-import {describe, expect, it} from 'vitest'
+import {
+	describe, expect, expectTypeOf, it,
+} from 'vitest'
+import {StateMachine} from 'xstate'
 import {buildProgram} from './index.js'
 
 describe.concurrent('index.ts', () => {
@@ -34,6 +37,15 @@ describe.concurrent('index.ts', () => {
 		expect.hasAssertions()
 		callback(runWithInput(input))
 	}
+
+	it('has expected exports', async () => {
+		const exports = await import('./index.js')
+		expect(Object.keys(exports)).toHaveLength(4)
+		expectTypeOf(exports.buildProgram).toBeFunction()
+		expectTypeOf(exports.getChars).toBeFunction()
+		expectTypeOf(exports.playerSelectionStack).toBeObject()
+		expectTypeOf(exports.randomChars).toBeFunction()
+	})
 
 	it('chooses random character', whenGivenInput('char', out => {
 		expect(out.outStream).toMatch(/Random character: .*/)
