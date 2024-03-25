@@ -6,7 +6,7 @@ export {createPlayerSelectionStackActor, playerSelectionStack} from './player-se
 
 const {memoize, shuffle} = pkg
 
-const getCharsUnmemoized = ({element, rarity}: {element?: Character['elementType']; rarity?: Rarity}) => genshindb
+const getCharsUnmemoized = ({element, rarity}: {element?: Character['elementType']; rarity?: Rarity} = {}) => genshindb
 	.characters('names', {matchCategories: true, verboseCategories: true})
 	.filter(_ => rarity ? _.rarity === Number(rarity) : true)
 	.filter(_ => element ? _.elementType === element : true)
