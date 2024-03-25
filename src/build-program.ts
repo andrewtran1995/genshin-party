@@ -10,7 +10,7 @@ import select from '@inquirer/select'
 import {Command, Option} from '@commander-js/extra-typings'
 import {z} from 'zod'
 import {rarities} from './types.js'
-import {playerSelectionStack} from './player-selection-stack.js'
+import {createPlayerSelectionStackActor, playerSelectionStack} from './player-selection-stack.js'
 import {randomChars, getChars} from './index.js'
 
 const {last, shuffle, sample, sampleSize} = pkg
@@ -38,7 +38,7 @@ export const buildProgram = (log = console.log) => {
 		.option('--only-teyvat', 'Exclude characters not of Teyvat (Traveller, Aloy).')
 		.option('-u, --unique', 'Only select unique characters (no duplicates).')
 		.action(async ({onlyTeyvat, unique}) => {
-			const actor = createActor(playerSelectionStack, {
+			const actor = createPlayerSelectionStackActor({
 				input: {
 					onNewChoiceFunction(playerNumber) {
 						log(`Now choosing for ${formatPlayer(playerNumber)}.`)

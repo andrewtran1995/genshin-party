@@ -2,7 +2,7 @@ import genshindb, {type Character} from 'genshin-db'
 import pkg from 'lodash/fp.js'
 import {type Rarity} from './types.js'
 
-export {playerSelectionStack} from './player-selection-stack.js'
+export {createPlayerSelectionStackActor, playerSelectionStack} from './player-selection-stack.js'
 
 const {memoize, shuffle} = pkg
 

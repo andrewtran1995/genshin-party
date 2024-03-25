@@ -1,5 +1,7 @@
 import pkg from 'lodash/fp.js'
-import {setup, assign} from 'xstate'
+import {
+	setup, assign, createActor, ActorOptions, RequiredActorOptions, ActorLogic,
+} from 'xstate'
 import {type PlayerChoice} from './types.js'
 
 const {initial, range, shuffle} = pkg
@@ -72,3 +74,6 @@ export const playerSelectionStack = setup({
 		},
 	},
 })
+
+export const createPlayerSelectionStackActor = (options: Parameters<typeof createActor<typeof playerSelectionStack>>[1]) =>
+	createActor(playerSelectionStack, options)
