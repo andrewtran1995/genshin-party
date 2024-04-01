@@ -2515,7 +2515,7 @@ __metadata:
     lodash: "npm:^4.17.21"
     pinst: "npm:^3.0.0"
     sort-package-json: "npm:^2.10.0"
-    ts-pattern: "npm:^5.0.8"
+    ts-pattern: "npm:^5.1.0"
     tsx: "npm:^4.7.1"
     type-fest: "npm:^4.14.0"
     typescript: "npm:^5.4.3"
@@ -5138,10 +5138,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-pattern@npm:^5.0.8":
-  version: 5.0.8
-  resolution: "ts-pattern@npm:5.0.8"
-  checksum: 10c0/c0767f4a4ce960cc87e69274f750d4672e37e865b779f8aed472fb22566baaedd584caf7dfd454905c25138aabe88f3abb5c2351487b223e822a3affae9611eb
+"ts-pattern@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "ts-pattern@npm:5.1.0"
+  checksum: 10c0/c0aa72253492896f68db0649a1394a52d3270902a73fd13e6f979f2ea4667446c489711cdd857ed26ec5862fb0fcc048b880fa9807673bd677396f9c73c97dbe
   languageName: node
   linkType: hard
 
