@@ -2776,7 +2776,7 @@ __metadata:
     typescript: "npm:^5.4.4"
     vitest: "npm:^1.4.0"
     xo: "npm:^0.58.0"
-    xstate: "npm:^5.9.1"
+    xstate: "npm:^5.10.0"
     zod: "npm:^3.22.4"
   bin:
     genshin-party: dist/bin.js
@@ -5942,10 +5942,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"xstate@npm:^5.9.1":
-  version: 5.9.1
-  resolution: "xstate@npm:5.9.1"
-  checksum: 10c0/97b7e4051072917f29f32ea60823d66095ada320a86b6b1493e632bb8ea79ba6f93e2d0b310d282ad0dd152252894aa6043d81f351d7952263a73d6efd6d1e2e
+"xstate@npm:^5.10.0":
+  version: 5.10.0
+  resolution: "xstate@npm:5.10.0"
+  checksum: 10c0/76088876042f2048879c0c41e37cb8855c25542bc207952f65f7f391a16b95c58a9614a17ee778706969c27c88f727b1841278f86562c71ab4b0cf5f49da8740
   languageName: node
   linkType: hard
 
