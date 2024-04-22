@@ -455,11 +455,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@inquirer/core@npm:^8.0.0":
-  version: 8.0.0
-  resolution: "@inquirer/core@npm:8.0.0"
+"@inquirer/core@npm:^8.0.1":
+  version: 8.0.1
+  resolution: "@inquirer/core@npm:8.0.1"
   dependencies:
-    "@inquirer/figures": "npm:^1.0.0"
+    "@inquirer/figures": "npm:^1.0.1"
     "@inquirer/type": "npm:^1.3.0"
     "@types/mute-stream": "npm:^0.0.4"
     "@types/node": "npm:^20.12.7"
@@ -472,27 +472,27 @@ __metadata:
     signal-exit: "npm:^4.1.0"
     strip-ansi: "npm:^6.0.1"
     wrap-ansi: "npm:^6.2.0"
-  checksum: 10c0/54a65cefb65475e6ef533a414a77a6b7344cd1812239c62ccad1dcc63249088ed325c0e458c73b8681f559e49e95c628e288f46f2b230e20bbf269bd3137e078
+  checksum: 10c0/04b1c94c7ee5a075361279a73ea2ac5bd21371f8d3996052f8deb61d9d3d4b40b97aa66ba0cdf291ebaeee37edda761877c3e835552f870bf4d1006610a11b52
   languageName: node
   linkType: hard
 
-"@inquirer/figures@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@inquirer/figures@npm:1.0.0"
-  checksum: 10c0/18fb0f68968173e1425b5d7dbc3c01f2f43293f2cc957e6dfe6ee9b3e42d2eec450351192f4440c96d081fa7d094e75d8bc37e300f6fcad548b32635f556f56a
+"@inquirer/figures@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@inquirer/figures@npm:1.0.1"
+  checksum: 10c0/a1e9d3852e0d33c416eb39d7ee0e898971681a0a5a0d2fad5ebbb63047dd7e8b7bd32872cf2ef09578ce632bd9cc339f7e851dbd4640a9af11224481bf811e14
   languageName: node
   linkType: hard
 
-"@inquirer/select@npm:^2.3.0":
-  version: 2.3.0
-  resolution: "@inquirer/select@npm:2.3.0"
+"@inquirer/select@npm:^2.3.1":
+  version: 2.3.1
+  resolution: "@inquirer/select@npm:2.3.1"
   dependencies:
-    "@inquirer/core": "npm:^8.0.0"
-    "@inquirer/figures": "npm:^1.0.0"
+    "@inquirer/core": "npm:^8.0.1"
+    "@inquirer/figures": "npm:^1.0.1"
     "@inquirer/type": "npm:^1.3.0"
     ansi-escapes: "npm:^4.3.2"
     chalk: "npm:^4.1.2"
-  checksum: 10c0/38052e4ae709f18b70296aa69583ef1ce62656f530285b0f8ff2f0c7dac55a15e04a718e4a4023d05d6cba8cf0bace41127901221515805164146e45fd22f158
+  checksum: 10c0/494f03c1da25bf335c1d73ce2ac8398428cbbf94794b650dcc922ca247b3950c52f9072cf0d65c07dca5e6c38728dda3b7e07eae12ff423328e02397cad2afb9
   languageName: node
   linkType: hard
 
@@ -2756,7 +2756,7 @@ __metadata:
   resolution: "genshin-party@workspace:."
   dependencies:
     "@commander-js/extra-typings": "npm:^12.0.1"
-    "@inquirer/select": "npm:^2.3.0"
+    "@inquirer/select": "npm:^2.3.1"
     "@types/lodash": "npm:^4.17.0"
     "@types/xo": "npm:^0"
     chalk: "npm:^5.3.0"
