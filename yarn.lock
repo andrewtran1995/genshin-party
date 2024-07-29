@@ -496,14 +496,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@inquirer/core@npm:^9.0.5":
-  version: 9.0.5
-  resolution: "@inquirer/core@npm:9.0.5"
+"@inquirer/core@npm:^9.0.6":
+  version: 9.0.6
+  resolution: "@inquirer/core@npm:9.0.6"
   dependencies:
     "@inquirer/figures": "npm:^1.0.5"
     "@inquirer/type": "npm:^1.5.1"
     "@types/mute-stream": "npm:^0.0.4"
-    "@types/node": "npm:^20.14.11"
+    "@types/node": "npm:^20.14.13"
     "@types/wrap-ansi": "npm:^3.0.0"
     ansi-escapes: "npm:^4.3.2"
     cli-spinners: "npm:^2.9.2"
@@ -513,7 +513,7 @@ __metadata:
     strip-ansi: "npm:^6.0.1"
     wrap-ansi: "npm:^6.2.0"
     yoctocolors-cjs: "npm:^2.1.2"
-  checksum: 10c0/5cbf43b61213933c0704f80d867f2c854cae00f9c8b4304fa6d9332eb0d143952e65286ccc3fae48bd15095ea85486b556ae95151e7a05a87b770f1867f8257e
+  checksum: 10c0/17f3c9404d174cae3a49801436a586f445be244e72fd7a4a3aafd0bb6c712f7ef01c1feb715817c588691a2691908553a1f66e023e5f4fd92e93be53be69e06b
   languageName: node
   linkType: hard
 
@@ -524,16 +524,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@inquirer/select@npm:^2.4.2":
-  version: 2.4.2
-  resolution: "@inquirer/select@npm:2.4.2"
+"@inquirer/select@npm:^2.4.3":
+  version: 2.4.3
+  resolution: "@inquirer/select@npm:2.4.3"
   dependencies:
-    "@inquirer/core": "npm:^9.0.5"
+    "@inquirer/core": "npm:^9.0.6"
     "@inquirer/figures": "npm:^1.0.5"
     "@inquirer/type": "npm:^1.5.1"
     ansi-escapes: "npm:^4.3.2"
     yoctocolors-cjs: "npm:^2.1.2"
-  checksum: 10c0/49bbf7aab3447698486c027c2fc08191723a23a9e2e47361400ead58c18d702ea9843d71cb4e0e2414c258123716e15eebeb9314f68e26cd7caf0531f29d595d
+  checksum: 10c0/ad20c5fd89819e6da04a688bfc667f1ecc896d2c914dd5490daa64e747a2c560365795955e74a75ccb13438578120450dec00bae6e2809eeffbc99188f6df058
   languageName: node
   linkType: hard
 
@@ -854,12 +854,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^20.14.11":
-  version: 20.14.11
-  resolution: "@types/node@npm:20.14.11"
+"@types/node@npm:^20.14.13":
+  version: 20.14.13
+  resolution: "@types/node@npm:20.14.13"
   dependencies:
     undici-types: "npm:~5.26.4"
-  checksum: 10c0/5306becc0ff41d81b1e31524bd376e958d0741d1ce892dffd586b9ae0cb6553c62b0d62abd16da8bea6b9a2c17572d360450535d7c073794b0cef9cb4e39691e
+  checksum: 10c0/10bb3ece675308742301c652ab8c6cb88b1ebddebed22316103c58f94fe7eff131edd5f679e487c19077fadb6b5e6b1ad9a60a2cee2869aa1f20452b9761d570
   languageName: node
   linkType: hard
 
@@ -2859,7 +2859,7 @@ __metadata:
   resolution: "genshin-party@workspace:."
   dependencies:
     "@commander-js/extra-typings": "npm:^12.1.0"
-    "@inquirer/select": "npm:^2.4.2"
+    "@inquirer/select": "npm:^2.4.3"
     "@types/lodash": "npm:^4.17.7"
     "@types/xo": "npm:^0"
     chalk: "npm:^5.3.0"
