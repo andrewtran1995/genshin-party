@@ -59,7 +59,7 @@
     "type-fest": "^4.22.1",
     "typescript": "^5.5.3",
     "vitest": "^2.0.4",
-    "xo": "^0.59.0"
+    "xo": "^0.59.3"
   },
   "packageManager": "yarn@4.1.1"
 }
