@@ -798,7 +798,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/eslint@npm:*, @types/eslint@npm:^8.44.6":
+"@types/eslint@npm:8":
+  version: 8.56.11
+  resolution: "@types/eslint@npm:8.56.11"
+  dependencies:
+    "@types/estree": "npm:*"
+    "@types/json-schema": "npm:*"
+  checksum: 10c0/e47d2b8e0ce1aa7e1f2564555576fa55343e942ae8cba5940b4e2566f842810c007beff80a01d74d48c60a45ecf28150cbc5cbd53324b1e55cf672b24ccf4667
+  languageName: node
+  linkType: hard
+
+"@types/eslint@npm:^8.44.6":
   version: 8.56.5
   resolution: "@types/eslint@npm:8.56.5"
   dependencies:
@@ -878,11 +888,11 @@ __metadata:
   linkType: hard
 
 "@types/xo@npm:^0":
-  version: 0.39.8
-  resolution: "@types/xo@npm:0.39.8"
+  version: 0.39.9
+  resolution: "@types/xo@npm:0.39.9"
   dependencies:
-    "@types/eslint": "npm:*"
-  checksum: 10c0/7d06b70ff655ed3f79ffa91e2014a4561db7d04d58831e2f380ab8ae10c7dac3583e8efb5c9ac37bc069af05ce47b79492d4d43fc44fc3e09307acbb24cecbea
+    "@types/eslint": "npm:8"
+  checksum: 10c0/6427df6f1562bd11c8e20dbd5f81dcc17b50c33fd7fe5991a684de54f4daa83bf0a85fed28c0c5bdb57bf0cc964df33c96f2130365a45e3c960f8d3f1f3d69da
   languageName: node
   linkType: hard
 
