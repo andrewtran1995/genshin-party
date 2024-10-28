@@ -55,7 +55,7 @@
     "husky": "^9.1.6",
     "pinst": "^3.0.0",
     "sort-package-json": "^2.10.1",
-    "tsx": "^4.19.1",
+    "tsx": "^4.19.2",
     "type-fest": "^4.26.1",
     "typescript": "^5.6.3",
     "vitest": "^2.1.3",
