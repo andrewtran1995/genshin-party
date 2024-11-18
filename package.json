@@ -45,7 +45,7 @@
     "genshin-db": "^5.1.9",
     "lodash": "^4.17.21",
     "ts-pattern": "^5.5.0",
-    "xstate": "^5.18.2",
+    "xstate": "^5.19.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
