@@ -1,9 +1,13 @@
+import process from 'node:process'
 import {inspect} from 'node:util'
-import {describe, expect, it} from 'vitest'
+import {
+	afterEach, describe, expect, it, vi,
+} from 'vitest'
 import {buildProgram} from './build-program.js'
 
 describe('bin.ts', () => {
 	const runWithInput = (input: string) => {
+		vi.spyOn(process.stdout, 'columns', 'get').mockReturnValue(120)
 		let outStream = ''
 		let errorStream = ''
 		try {
@@ -34,6 +38,8 @@ describe('bin.ts', () => {
 		expect.hasAssertions()
 		callback(runWithInput(input))
 	}
+
+	afterEach(vi.restoreAllMocks)
 
 	it('chooses random character', whenGivenInput('char', out => {
 		expect(out.outStream).toMatch(/Random character: .*/)
