@@ -3,7 +3,6 @@ import chalk from 'chalk'
 import genshindb, {type Character, type Enemy} from 'genshin-db'
 import pkg from 'lodash/fp.js'
 import {match, P} from 'ts-pattern'
-import {createActor} from 'xstate'
 import 'dotenv/config' // eslint-disable-line import/no-unassigned-import
 import {type ArrayValues} from 'type-fest'
 import select from '@inquirer/select'
