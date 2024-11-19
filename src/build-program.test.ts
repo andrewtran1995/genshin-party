@@ -51,10 +51,8 @@ describe('bin.ts', () => {
 			  -h, --help               display help for command
 
 			Commands:
-			  interactive|i [options]  Random, interactive party selection, balancing four
-			                           and five star characters.
-			  order|o                  Generate a random order in which to select
-			                           characters.
+			  interactive|i [options]  Random, interactive party selection, balancing four and five star characters.
+			  order|o                  Generate a random order in which to select characters.
 			  char|c [options]         Select a random character.
 			  boss|b [options]         Select a random boss.
 			  help [command]           display help for command
