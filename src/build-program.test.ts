@@ -7,7 +7,11 @@ import {buildProgram} from './build-program.js'
 
 describe('bin.ts', () => {
 	const runWithInput = (input: string) => {
-		vi.spyOn(process.stdout, 'columns', 'get').mockReturnValue(120)
+		console.log(Object.entries(process.stdout))
+		if ('columns' in process.stdout) {
+			vi.spyOn(process.stdout, 'columns', 'get').mockReturnValue(120)
+		}
+
 		let outStream = ''
 		let errorStream = ''
 		try {
