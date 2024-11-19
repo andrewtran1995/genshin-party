@@ -7,9 +7,8 @@ import {buildProgram} from './build-program.js'
 
 describe('bin.ts', () => {
 	const runWithInput = (input: string) => {
-		console.log(Object.entries(process.stdout))
-		if ('columns' in process.stdout) {
-			vi.spyOn(process.stdout, 'columns', 'get').mockReturnValue(120)
+		if (Object.getOwnPropertyDescriptor(process.stdout, 'columns')) {
+			vi.spyOn(process.stdout, 'columns', 'get').mockReturnValue(80)
 		}
 
 		let outStream = ''
@@ -61,8 +60,10 @@ describe('bin.ts', () => {
 			  -h, --help               display help for command
 
 			Commands:
-			  interactive|i [options]  Random, interactive party selection, balancing four and five star characters.
-			  order|o                  Generate a random order in which to select characters.
+			  interactive|i [options]  Random, interactive party selection, balancing four
+			                           and five star characters.
+			  order|o                  Generate a random order in which to select
+			                           characters.
 			  char|c [options]         Select a random character.
 			  boss|b [options]         Select a random boss.
 			  help [command]           display help for command
