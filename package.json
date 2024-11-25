@@ -51,7 +51,7 @@
     "@types/node": "^22.9.0",
     "@types/xo": "^0",
     "execa": "^9.5.1",
-    "husky": "^9.1.6",
+    "husky": "^9.1.7",
     "pinst": "^3.0.0",
     "sort-package-json": "^2.10.1",
     "tsx": "^4.19.2",
