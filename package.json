@@ -40,7 +40,7 @@
     "chalk": "^5.3.0",
     "commander": "^12.1.0",
     "dotenv": "^16.4.5",
-    "genshin-db": "^5.1.9",
+    "genshin-db": "^5.1.10",
     "lodash": "^4.17.21",
     "ts-pattern": "^5.5.0",
     "xstate": "^5.19.0",
