@@ -3216,7 +3216,7 @@ __metadata:
     sort-package-json: "npm:^2.12.0"
     ts-pattern: "npm:^5.5.0"
     tsx: "npm:^4.19.2"
-    type-fest: "npm:^4.28.0"
+    type-fest: "npm:^4.29.1"
     typescript: "npm:^5.7.2"
     vitest: "npm:^2.1.7"
     webpack: "npm:^5.96.1"
@@ -6042,10 +6042,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"type-fest@npm:^4.28.0":
-  version: 4.28.0
-  resolution: "type-fest@npm:4.28.0"
-  checksum: 10c0/fbaf766ae002c2b97e22cd1f48f20d6ff05915f25cf04632591e9ab52ee716cf38b9554f6198625c07e3e8bdf5277c284f8889cfe1fbea6fc19374706f2c75f8
+"type-fest@npm:^4.29.1":
+  version: 4.29.1
+  resolution: "type-fest@npm:4.29.1"
+  checksum: 10c0/93019c35cedec6dc12a324edcf6bd71719881c944f70e6bf029fd2deb4132589439510f4043f82d7afa6238c0850becfe64fa299a0bca351bed9d839b65463e2
   languageName: node
   linkType: hard
 
