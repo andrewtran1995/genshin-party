@@ -50,7 +50,7 @@
     "@types/lodash": "^4.17.13",
     "@types/node": "^22.10.1",
     "@types/xo": "^0",
-    "execa": "^9.5.1",
+    "execa": "^9.5.2",
     "husky": "^9.1.7",
     "pinst": "^3.0.0",
     "sort-package-json": "^2.12.0",
