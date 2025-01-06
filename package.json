@@ -47,7 +47,7 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
-    "@types/lodash": "^4.17.13",
+    "@types/lodash": "^4.17.14",
     "@types/node": "^22.10.5",
     "@types/xo": "^0",
     "execa": "^9.5.2",
