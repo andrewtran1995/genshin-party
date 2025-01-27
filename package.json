@@ -35,7 +35,7 @@
     "semicolon": false
   },
   "dependencies": {
-    "@commander-js/extra-typings": "^13.0.0",
+    "@commander-js/extra-typings": "^13.1.0",
     "@inquirer/select": "^4.0.6",
     "chalk": "^5.4.1",
     "commander": "^13.1.0",
