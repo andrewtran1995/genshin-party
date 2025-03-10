@@ -55,7 +55,7 @@
     "pinst": "^3.0.0",
     "sort-package-json": "^2.15.1",
     "tsx": "^4.19.3",
-    "type-fest": "^4.36.0",
+    "type-fest": "^4.37.0",
     "typescript": "^5.8.2",
     "vitest": "^3.0.7",
     "webpack": "^5.98.0",
