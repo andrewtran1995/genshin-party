@@ -1,5 +1,6 @@
 *.tgz
 .env
+.idea
 .vscode/
 .yarn/
 .yarnrc
