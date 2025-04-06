@@ -1,23 +1,22 @@
 import genshindb, {type Character} from 'genshin-db'
-import pkg from 'lodash/fp.js'
+import * as R from 'remeda'
 import {type Rarity} from './types.js'
 
 export {createPlayerSelectionStackActor, playerSelectionStack} from './player-selection-stack.js'
 
-const {memoize, shuffle} = pkg
+const getAllChars = R.once(() => genshindb.characters('names', {matchCategories: true, verboseCategories: true}))
 
-const getCharsUnmemoized = ({element, rarity}: {element?: Character['elementType']; rarity?: Rarity} = {}) => genshindb
-	.characters('names', {matchCategories: true, verboseCategories: true})
-	.filter(_ => rarity ? _.rarity === Number(rarity) : true)
-	.filter(_ => element ? _.elementType === element : true)
-	.filter(_ => _.name !== 'Aether')
+type GetCharsOptions = {element?: Character['elementType']; rarity?: Rarity}
 
 /**
  * Get all characters in an array given the criteria.
  * Excludes "Aether" to prevent returning two copies of the traveller (both "Aether" and "Lumine").
  * @param filters - Filters to narrow down the eligible characters returned.
  */
-export const getChars = memoize(getCharsUnmemoized) as typeof getCharsUnmemoized
+export const getChars = ({element, rarity}: GetCharsOptions = {}) => getAllChars()
+	.filter(_ => rarity ? _.rarity === Number(rarity) : true)
+	.filter(_ => element ? _.elementType === element : true)
+	.filter(_ => _.name !== 'Aether')
 
 /**
  * Returns an iterator that steps through characters randomly.
@@ -28,7 +27,7 @@ export const getChars = memoize(getCharsUnmemoized) as typeof getCharsUnmemoized
  */
 export function * randomChars(filters: Parameters<typeof getChars>[0]) {
 	while (true) {
-		for (const char of shuffle(getChars(filters))) {
+		for (const char of R.pipe(filters, getChars, R.shuffle())) {
 			yield char
 		}
 	}

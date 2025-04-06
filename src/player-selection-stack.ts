@@ -1,10 +1,8 @@
-import pkg from 'lodash/fp.js'
 import {
-	setup, assign, createActor, ActorOptions, RequiredActorOptions, ActorLogic,
+	setup, assign, createActor,
 } from 'xstate'
+import {range, shuffle, take} from 'remeda'
 import {type PlayerChoice} from './types.js'
-
-const {initial, range, shuffle} = pkg
 
 export const playerSelectionStack = setup({
 	actions: {
@@ -12,7 +10,7 @@ export const playerSelectionStack = setup({
 			playerChoices: ({context}, choice: PlayerChoice) => [...context.playerChoices, choice],
 		}),
 		pop: assign({
-			playerChoices: ({context}) => initial(context.playerChoices),
+			playerChoices: ({context}) => take(context.playerChoices, context.playerChoices.length - 1),
 		}),
 	},
 	guards: {

@@ -1,18 +1,18 @@
 import process from 'node:process'
 import chalk from 'chalk'
 import genshindb, {type Character, type Enemy} from 'genshin-db'
-import pkg from 'lodash/fp.js'
 import {match, P} from 'ts-pattern'
 import 'dotenv/config' // eslint-disable-line import/no-unassigned-import
 import {type ArrayValues} from 'type-fest'
 import select from '@inquirer/select'
 import {Command, Option} from '@commander-js/extra-typings'
 import {z} from 'zod'
+import {
+	first, join, map, pipe, sample, shuffle,
+} from 'remeda'
 import {rarities} from './types.js'
 import {createPlayerSelectionStackActor, playerSelectionStack} from './player-selection-stack.js'
 import {randomChars, getChars} from './index.js'
-
-const {last, shuffle, sample, sampleSize} = pkg
 
 const elements = [
 	'anemo',
@@ -49,7 +49,7 @@ export const buildProgram = (log = console.log) => {
 				const {playerChoices, playerOrder} = actor.getSnapshot().context
 				const playerNumber = playerOrder[playerChoices.length]
 
-				const rarity = last(playerChoices)?.isMain ? '4' : '5'
+				const rarity = playerChoices.at(-1)?.isMain ? '4' : '5'
 				for (const char of randomChars({rarity})) {
 					if (onlyTeyvat && ['Aloy', 'Lumine'].includes(char.name)) {
 						continue
@@ -72,7 +72,7 @@ export const buildProgram = (log = console.log) => {
 									value: 'Accept (and character is a main)',
 								},
 								{value: 'Reroll'},
-								...(playerChoices.length > 0 ? [{value: `Go back to ${formatPlayer(last(playerChoices)!.number)}`}] : []),
+								...(playerChoices.length > 0 ? [{value: `Go back to ${formatPlayer(playerChoices.at(-1)!.number)}`}] : []),
 							] as const,
 						}),
 					)
@@ -120,7 +120,14 @@ export const buildProgram = (log = console.log) => {
 		.alias('o')
 		.description('Generate a random order in which to select characters.')
 		.action(() => {
-			log(shuffle([1, 2, 3, 4]).map(_ => formatPlayer(_)).join(', '))
+			log(
+				pipe(
+					[1, 2, 3, 4],
+					shuffle(),
+					map(formatPlayer),
+					join(', '),
+				),
+			)
 		})
 
 	program
@@ -141,7 +148,13 @@ export const buildProgram = (log = console.log) => {
 				log(filteredChars.map(_ => formatChar(_)).join(', '))
 			}
 
-			log(`Random character: ${formatChar(sample(filteredChars)!)}`)
+			const randomChar = sample(filteredChars, 1).at(0)
+			if (!randomChar) {
+				log('Could not find a character matching criteria.')
+				return
+			}
+
+			log(`Random character: ${formatChar(randomChar)}`)
 		})
 
 	program
@@ -170,9 +183,10 @@ export const buildProgram = (log = console.log) => {
 				log('')
 			}
 
-			const output = sampleSize(gauntlet ? 3 : 1)(weeklyBosses)
+			const output = sample(weeklyBosses, gauntlet ? 3 : 1)
 				.map(boss => `Random boss: ${(formatWeeklyBoss(boss))}`)
 				.join('\n\n')
+
 			log(output)
 		})
 

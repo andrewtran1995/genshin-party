@@ -938,13 +938,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash@npm:^4.17.16":
-  version: 4.17.16
-  resolution: "@types/lodash@npm:4.17.16"
-  checksum: 10c0/cf017901b8ab1d7aabc86d5189d9288f4f99f19a75caf020c0e2c77b8d4cead4db0d0b842d009b029339f92399f49f34377dd7c2721053388f251778b4c23534
-  languageName: node
-  linkType: hard
-
 "@types/node@npm:*":
   version: 22.9.0
   resolution: "@types/node@npm:22.9.0"
@@ -3484,7 +3477,6 @@ __metadata:
   dependencies:
     "@commander-js/extra-typings": "npm:^13.1.0"
     "@inquirer/select": "npm:^4.1.0"
-    "@types/lodash": "npm:^4.17.16"
     "@types/node": "npm:^22.13.14"
     "@types/xo": "npm:^0"
     chalk: "npm:^5.4.1"
@@ -3493,8 +3485,8 @@ __metadata:
     execa: "npm:^9.5.2"
     genshin-db: "npm:^5.1.12"
     husky: "npm:^9.1.7"
-    lodash: "npm:^4.17.21"
     pinst: "npm:^3.0.0"
+    remeda: "npm:^2.21.2"
     sort-package-json: "npm:^3.0.0"
     ts-pattern: "npm:^5.7.0"
     tsx: "npm:^4.19.3"
@@ -5685,6 +5677,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"remeda@npm:^2.21.2":
+  version: 2.21.2
+  resolution: "remeda@npm:2.21.2"
+  dependencies:
+    type-fest: "npm:^4.37.0"
+  checksum: 10c0/f964ce5ddbefd181e71cd1154b24aa223188cc6b88a55a52b64a6a920377c54113a993f707b8beedb369e8ba76ef07479ad329d8e6ebad8868f0ee9e46ee0ec5
+  languageName: node
+  linkType: hard
+
 "require-from-string@npm:^2.0.2":
   version: 2.0.2
   resolution: "require-from-string@npm:2.0.2"
@@ -6691,6 +6692,13 @@ __metadata:
   version: 3.13.1
   resolution: "type-fest@npm:3.13.1"
   checksum: 10c0/547d22186f73a8c04590b70dcf63baff390078c75ea8acd366bbd510fd0646e348bd1970e47ecf795b7cff0b41d26e9c475c1fedd6ef5c45c82075fbf916b629
+  languageName: node
+  linkType: hard
+
+"type-fest@npm:^4.37.0":
+  version: 4.39.1
+  resolution: "type-fest@npm:4.39.1"
+  checksum: 10c0/f5bf302eb2e2f70658be1757aa578f4a09da3f65699b0b12b7ae5502ccea76e5124521a6e6b69540f442c3dc924c394202a2ab58718d0582725c7ac23c072594
   languageName: node
   linkType: hard
 

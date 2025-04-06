@@ -1,5 +1,5 @@
 import {$, execa} from 'execa'
-import {takeRight} from 'lodash/fp.js'
+import {takeLast} from 'remeda'
 import {beforeAll, describe, it} from 'vitest'
 
 /**
@@ -28,7 +28,7 @@ describe.concurrent('bin.ts', () => {
 		})
 		const {stdout} = await process
 
-		const lastLines = takeRight(5)(stdout.split('\n'))
+		const lastLines = takeLast(stdout.split('\n'), 5)
 		expect(lastLines).toEqual([
 			'Chosen characters are:',
 			expect.stringMatching(/.*: [a-zA-Z]/),
