@@ -47,7 +47,7 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
-    "@types/node": "^22.13.14",
+    "@types/node": "^22.14.0",
     "@types/xo": "^0",
     "execa": "^9.5.2",
     "husky": "^9.1.7",
