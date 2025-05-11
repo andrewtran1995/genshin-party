@@ -5,7 +5,7 @@ import {
 } from 'vitest'
 import {buildProgram} from './build-program.js'
 
-describe('bin.ts', () => {
+describe.concurrent('bin.ts', () => {
 	const runWithInput = async (input: string) => {
 		if (Object.getOwnPropertyDescriptor(process.stdout, 'columns')) {
 			vi.spyOn(process.stdout, 'columns', 'get').mockReturnValue(80)
