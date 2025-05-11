@@ -19,7 +19,6 @@
 		"dist/*"
 	],
 	"scripts": {
-		"biome": "biome",
 		"build": "tsc",
 		"dev": "tsx src/bin.ts",
 		"postinstall": "husky",
