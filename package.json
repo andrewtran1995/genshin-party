@@ -29,7 +29,7 @@
 		"postpack": "pinst --enable",
 		"prepare": "husky",
 		"sort-package-json": "sort-package-json",
-		"test": "vitest --run --typecheck",
+		"test": "vitest --no-color --run --typecheck",
 		"test:watch": "vitest --typecheck"
 	},
 	"dependencies": {
