@@ -34,8 +34,8 @@ export const buildProgram = (log = console.log) => {
 		.command('interactive')
 		.alias('i')
 		.description('Random, interactive party selection, balancing four and five star characters.')
-		.option('--only-teyvat', 'Exclude characters not of Teyvat (Traveller, Aloy).')
-		.option('-u, --unique', 'Only select unique characters (no duplicates).')
+		.option('-t, --only-teyvat', 'Exclude characters not from Teyvat (Traveller, Aloy).', true)
+		.option('-u, --unique', 'Only select unique characters (no duplicates).', true)
 		.action(async ({onlyTeyvat, unique}) => {
 			const actor = createPlayerSelectionStackActor({
 				input: {
