@@ -1,5 +1,5 @@
-import {beforeAll, bench, describe} from 'vitest'
-import {$} from 'execa'
+import { $ } from 'execa'
+import { beforeAll, bench, describe } from 'vitest'
 
 describe('bin', () => {
 	beforeAll(async () => {

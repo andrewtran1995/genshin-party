@@ -1,64 +1,61 @@
 {
-  "name": "genshin-party",
-  "version": "0.2.1",
-  "keywords": [
-    "cli",
-    "genshin",
-    "genshin-impact"
-  ],
-  "repository": {
-    "url": "git+https://github.com/andrewtran1995/genshin-party.git"
-  },
-  "license": "MIT",
-  "type": "module",
-  "exports": {
-    "import": "./dist/index.js"
-  },
-  "bin": "dist/bin.js",
-  "files": [
-    "dist/*"
-  ],
-  "scripts": {
-    "build": "tsc",
-    "dev": "tsx src/bin.ts",
-    "postinstall": "husky",
-    "lint": "xo src",
-    "lint:fix": "xo --fix src",
-    "prepack": "pinst --disable",
-    "postpack": "pinst --enable",
-    "prepare": "husky",
-    "sort-package-json": "sort-package-json",
-    "test": "vitest --run --typecheck",
-    "test:watch": "vitest --typecheck"
-  },
-  "xo": {
-    "semicolon": false
-  },
-  "dependencies": {
-    "@commander-js/extra-typings": "^13.1.0",
-    "@inquirer/select": "^4.2.0",
-    "chalk": "^5.4.1",
-    "commander": "^13.1.0",
-    "dotenv": "^16.5.0",
-    "genshin-db": "^5.2.0",
-    "remeda": "^2.21.3",
-    "ts-pattern": "^5.7.0",
-    "xstate": "^5.19.2",
-    "zod": "^3.24.4"
-  },
-  "devDependencies": {
-    "@types/node": "^22.15.3",
-    "@types/xo": "^0",
-    "execa": "^9.5.2",
-    "husky": "^9.1.7",
-    "pinst": "^3.0.0",
-    "sort-package-json": "^3.2.1",
-    "tsx": "^4.19.4",
-    "type-fest": "^4.40.1",
-    "typescript": "^5.8.3",
-    "vitest": "^3.1.2",
-    "webpack": "^5.99.7",
-    "xo": "^0.60.0"
-  },
-  "packageManager": "yarn@4.5.1"
+	"name": "genshin-party",
+	"version": "0.2.2",
+	"keywords": [
+		"cli",
+		"genshin",
+		"genshin-impact"
+	],
+	"repository": {
+		"url": "git+https://github.com/andrewtran1995/genshin-party.git"
+	},
+	"license": "MIT",
+	"type": "module",
+	"exports": {
+		"import": "./dist/index.js"
+	},
+	"bin": "dist/bin.js",
+	"files": [
+		"dist/*"
+	],
+	"scripts": {
+		"biome": "biome",
+		"build": "tsc",
+		"dev": "tsx src/bin.ts",
+		"postinstall": "husky",
+		"lint": "biome check",
+		"lint:fix": "biome check --write",
+		"prepack": "pinst --disable",
+		"postpack": "pinst --enable",
+		"prepare": "husky",
+		"sort-package-json": "sort-package-json",
+		"test": "vitest --run --typecheck",
+		"test:watch": "vitest --typecheck"
+	},
+	"dependencies": {
+		"@commander-js/extra-typings": "^13.1.0",
+		"@inquirer/select": "^4.2.0",
+		"chalk": "^5.4.1",
+		"commander": "^13.1.0",
+		"dotenv": "^16.5.0",
+		"genshin-db": "^5.2.0",
+		"remeda": "^2.21.3",
+		"ts-pattern": "^5.7.0",
+		"xstate": "^5.19.2",
+		"zod": "^3.24.4"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.4",
+		"@types/node": "^22.15.3",
+		"execa": "^9.5.2",
+		"husky": "^9.1.7",
+		"pinst": "^3.0.0",
+		"sort-package-json": "^3.2.1",
+		"tsx": "^4.19.4",
+		"type-fest": "^4.40.1",
+		"typescript": "^5.8.3",
+		"vitest": "^3.1.2",
+		"webpack": "^5.99.7"
+	},
+	"packageManager": "yarn@4.5.1"
 }

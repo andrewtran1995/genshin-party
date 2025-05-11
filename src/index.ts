@@ -1,32 +1,39 @@
 import fs from 'node:fs'
-import {posix} from 'node:path'
-import {type Character} from 'genshin-db'
-import * as R from 'remeda'
-import genshinDbPackageJson from '../node_modules/genshin-db/package.json' with { type: 'json' }
-import {type Rarity} from './types.js'
-
-export {createPlayerSelectionStackActor, playerSelectionStack} from './player-selection-stack.js'
+import { posix } from 'node:path'
+import type { Character } from 'genshin-db'
+import { once, shuffle } from 'remeda'
+import genshinDbPackageJson from '../node_modules/genshin-db/package.json' with {
+	type: 'json',
+}
+import type { Rarity } from './types.js'
 
 const genshinDatabaseVersion = genshinDbPackageJson.version
 const cacheDirectory = '.cache'
 
-const getAllChars = R.once(async () => getCached(
-	`chars.${genshinDatabaseVersion}`,
-	async () => {
+const getAllChars = once(async () =>
+	getCached(`chars.${genshinDatabaseVersion}`, async () => {
 		const genshinDatabase = await import('genshin-db')
-		return genshinDatabase.default.characters('names', {matchCategories: true, verboseCategories: true})
-	},
-))
+		return genshinDatabase.default.characters('names', {
+			matchCategories: true,
+			verboseCategories: true,
+		})
+	}),
+)
 
-export const getAllEnemies = R.once(async () => getCached(
-	`enemies.${genshinDatabaseVersion}`,
-	async () => {
+export const getAllEnemies = once(async () =>
+	getCached(`enemies.${genshinDatabaseVersion}`, async () => {
 		const genshinDatabase = await import('genshin-db')
-		return genshinDatabase.default.enemies('names', {matchCategories: true, verboseCategories: true})
-	},
-))
+		return genshinDatabase.default.enemies('names', {
+			matchCategories: true,
+			verboseCategories: true,
+		})
+	}),
+)
 
-async function getCached<T>(key: string, deriveValue: () => Promise<T>): Promise<T> {
+async function getCached<T>(
+	key: string,
+	deriveValue: () => Promise<T>,
+): Promise<T> {
 	if (!fs.existsSync(cacheDirectory)) {
 		fs.mkdirSync(cacheDirectory)
 	}
@@ -41,18 +48,18 @@ async function getCached<T>(key: string, deriveValue: () => Promise<T>): Promise
 	return JSON.parse(fs.readFileSync(path).toString()) as T
 }
 
-type GetCharsOptions = {element?: Character['elementType']; rarity?: Rarity}
+type GetCharsOptions = { element?: Character['elementType']; rarity?: Rarity }
 
 /**
  * Get all characters in an array given the criteria.
  * Excludes "Aether" to prevent returning two copies of the traveller (both "Aether" and "Lumine").
  * @param filters - Filters to narrow down the eligible characters returned.
  */
-export const getChars = async ({element, rarity}: GetCharsOptions = {}) => (await getAllChars())
-	// eslint-disable-next-line unicorn/no-await-expression-member
-	.filter(_ => rarity ? _.rarity === Number(rarity) : true)
-	.filter(_ => element ? _.elementType === element : true)
-	.filter(_ => _.name !== 'Aether')
+export const getChars = async ({ element, rarity }: GetCharsOptions = {}) =>
+	(await getAllChars())
+		.filter((_) => (rarity ? _.rarity === Number(rarity) : true))
+		.filter((_) => (element ? _.elementType === element : true))
+		.filter((_) => _.name !== 'Aether')
 
 /**
  * Returns an iterator that steps through characters randomly.
@@ -61,13 +68,12 @@ export const getChars = async ({element, rarity}: GetCharsOptions = {}) => (awai
  * Will iterate infinitely.
  * @param filters - Filters to narrow down the eligible characters returned.
  */
-export async function * randomChars(filters: Parameters<typeof getChars>[0]) {
+export async function* randomChars(filters: Parameters<typeof getChars>[0]) {
 	while (true) {
 		// eslint-disable-next-line no-await-in-loop
 		const chars = await getChars(filters)
-		for (const char of R.shuffle(chars)) {
+		for (const char of shuffle(chars)) {
 			yield char
 		}
 	}
 }
-

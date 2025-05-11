@@ -1,9 +1,12 @@
 import process from 'node:process'
-import {inspect} from 'node:util'
-import {
-	afterEach, describe, expect, it, vi,
-} from 'vitest'
-import {buildProgram} from './build-program.js'
+import { inspect } from 'node:util'
+import { afterEach, describe, expect, it, vi } from 'vitest'
+import { buildProgram } from './build-program.js'
+
+const REGEX = {
+	randomBoss: /Random boss: .*/,
+	randomChar: /Random character: .*/,
+}
 
 describe.concurrent('bin.ts', () => {
 	const runWithInput = async (input: string) => {
@@ -14,7 +17,7 @@ describe.concurrent('bin.ts', () => {
 		let outStream = ''
 		let errorStream = ''
 		try {
-			await buildProgram(arguments_ => {
+			await buildProgram((arguments_) => {
 				outStream += inspect(arguments_)
 			})
 				.exitOverride()
@@ -37,22 +40,34 @@ describe.concurrent('bin.ts', () => {
 		}
 	}
 
-	const whenGivenInput = (input: string, callback: (stream: {errStream: string; outStream: string}) => void): () => void => async () => {
-		expect.hasAssertions()
-		callback(await runWithInput(input))
-	}
+	const whenGivenInput =
+		(
+			input: string,
+			callback: (stream: { errStream: string; outStream: string }) => void,
+		): (() => void) =>
+		async () => {
+			// biome-ignore lint/suspicious/noMisplacedAssertion: Should only be called within tests.
+			expect.hasAssertions()
+			callback(await runWithInput(input))
+		}
 
 	afterEach(vi.restoreAllMocks)
 
-	it('chooses random character', whenGivenInput('char', out => {
-		expect(out.outStream).toMatch(/Random character: .*/)
-	}))
+	it(
+		'chooses random character',
+		whenGivenInput('char', (out) => {
+			expect(out.outStream).toMatch(REGEX.randomChar)
+		}),
+	)
 
-	it('chooses random boss', whenGivenInput('boss', out => {
-		expect(out.outStream).toMatch(/Random boss: .*/)
-	}))
+	it(
+		'chooses random boss',
+		whenGivenInput('boss', (out) => {
+			expect(out.outStream).toMatch(REGEX.randomBoss)
+		}),
+	)
 
-	it('emits help', async ({expect}) => {
+	it('emits help', async ({ expect }) => {
 		const runResult = await runWithInput('--help')
 		expect(runResult.outStream).toMatchInlineSnapshot(`
 			"Usage: genshin-party [options] [command]

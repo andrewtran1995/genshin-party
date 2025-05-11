@@ -1,18 +1,16 @@
 import process from 'node:process'
 import chalk from 'chalk'
-import {type Character, type Enemy} from 'genshin-db'
-import {match, P} from 'ts-pattern'
-import 'dotenv/config' // eslint-disable-line import/no-unassigned-import
-import {type ArrayValues} from 'type-fest'
+import type { Character, Enemy } from 'genshin-db'
+import { P, match } from 'ts-pattern'
+import 'dotenv/config'
+import { Command, Option } from '@commander-js/extra-typings'
 import select from '@inquirer/select'
-import {Command, Option} from '@commander-js/extra-typings'
-import {z} from 'zod'
-import {
-	first, join, map, pipe, sample, shuffle,
-} from 'remeda'
-import {rarities} from './types.js'
-import {createPlayerSelectionStackActor, playerSelectionStack} from './player-selection-stack.js'
-import {randomChars, getChars, getAllEnemies} from './index.js'
+import { join, map, pipe, sample, shuffle } from 'remeda'
+import type { ArrayValues } from 'type-fest'
+import { z } from 'zod'
+import { getAllEnemies, getChars, randomChars } from './index.js'
+import { createPlayerSelectionStackActor } from './player-selection-stack.js'
+import { rarities } from './types.js'
 
 const elements = [
 	'anemo',
@@ -27,59 +25,72 @@ const elements = [
 type ShorthandElement = ArrayValues<typeof elements>
 
 export const buildProgram = (log = console.log) => {
-	const program = new Command('genshin-party')
-		.allowExcessArguments(false)
+	const program = new Command('genshin-party').allowExcessArguments(false)
 
 	program
 		.command('interactive')
 		.alias('i')
-		.description('Random, interactive party selection, balancing four and five star characters.')
-		.option('-t, --only-teyvat', 'Exclude characters not from Teyvat (Traveller, Aloy).', true)
-		.option('-u, --unique', 'Only select unique characters (no duplicates).', true)
-		.action(async ({onlyTeyvat, unique}) => {
+		.description(
+			'Random, interactive party selection, balancing four and five star characters.',
+		)
+		.option(
+			'-t, --only-teyvat',
+			'Exclude characters not from Teyvat (Traveller, Aloy).',
+			true,
+		)
+		.option(
+			'-u, --unique',
+			'Only select unique characters (no duplicates).',
+			true,
+		)
+		// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Main for one action, could break up later.
+		.action(async ({ onlyTeyvat, unique }) => {
 			const actor = createPlayerSelectionStackActor({
 				input: {
 					onNewChoiceFunction(playerNumber) {
 						log(`Now choosing for ${formatPlayer(playerNumber)}.`)
 					},
 				},
-			})
-				.start()
+			}).start()
 			while (actor.getSnapshot().status !== 'done') {
-				const {playerChoices, playerOrder} = actor.getSnapshot().context
+				const { playerChoices, playerOrder } = actor.getSnapshot().context
 				const playerNumber = playerOrder[playerChoices.length]
 
 				const rarity = playerChoices.at(-1)?.isMain ? '4' : '5'
-				// eslint-disable-next-line no-await-in-loop
-				for await (const char of randomChars({rarity})) {
+				for await (const char of randomChars({ rarity })) {
 					if (onlyTeyvat && ['Aloy', 'Lumine'].includes(char.name)) {
 						continue
 					}
 
-					if (unique && playerChoices.map(_ => _.char).includes(char)) {
+					if (unique && playerChoices.map((_) => _.char).includes(char)) {
 						continue
 					}
 
 					log(`Rolled: ${formatChar(char)}`)
+					const lastChoice = playerChoices.at(-1)
 
 					const event = match(
-
 						await select({
 							message: 'Accept character?',
 							choices: [
-								{value: 'Accept'},
+								{ value: 'Accept' },
 								{
-									disabled: playerChoices.length === 3 ? '(choosing last character)' : false,
+									disabled:
+										playerChoices.length === 3
+											? '(choosing last character)'
+											: false,
 									value: 'Accept (and character is a main)',
 								},
-								{value: 'Reroll'},
-								...(playerChoices.length > 0 ? [{value: `Go back to ${formatPlayer(playerChoices.at(-1)!.number)}`}] : []),
+								{ value: 'Reroll' },
+								...(lastChoice
+									? [{ value: `Go back to ${formatPlayer(lastChoice.number)}` }]
+									: []),
 							] as const,
 						}),
 					)
 						.returnType<Parameters<typeof actor.send>[0] | undefined>()
 						.with('Accept', () => ({
-							type: 'PUSH',
+							type: 'push',
 							choice: {
 								char,
 								isMain: false,
@@ -87,7 +98,7 @@ export const buildProgram = (log = console.log) => {
 							},
 						}))
 						.with('Accept (and character is a main)', () => ({
-							type: 'PUSH',
+							type: 'push',
 							choice: {
 								char,
 								isMain: true,
@@ -95,7 +106,7 @@ export const buildProgram = (log = console.log) => {
 							},
 						}))
 						.with(P.string.startsWith('Go back to'), () => ({
-							type: 'POP',
+							type: 'pop',
 						}))
 						.otherwise(() => undefined)
 
@@ -110,8 +121,9 @@ export const buildProgram = (log = console.log) => {
 			}
 
 			log('Chosen characters are:')
-			for (const {char, number} of actor.getSnapshot().context.playerChoices
-				.toSorted((a, b) => a.number - b.number)) {
+			for (const { char, number } of actor
+				.getSnapshot()
+				.context.playerChoices.toSorted((a, b) => a.number - b.number)) {
 				log(`${formatPlayer(number)}: ${formatChar(char)}`)
 			}
 		})
@@ -121,32 +133,37 @@ export const buildProgram = (log = console.log) => {
 		.alias('o')
 		.description('Generate a random order in which to select characters.')
 		.action(() => {
-			log(
-				pipe(
-					[1, 2, 3, 4],
-					shuffle(),
-					map(formatPlayer),
-					join(', '),
-				),
-			)
+			log(pipe([1, 2, 3, 4], shuffle(), map(formatPlayer), join(', ')))
 		})
 
 	program
-		.command('char', {isDefault: true})
+		.command('char', { isDefault: true })
 		.alias('c')
 		.description('Select a random character.')
 		.option('-l, --list', 'List all elegible characters.', false)
-		.addOption(new Option('-r, --rarity <rarity>', 'Rarity of the desired character.').choices(rarities))
-		.addOption(new Option('-e, --element <element>', 'Element of the desired character.').choices(elements))
-		.action(async ({element, list, rarity}) => {
+		.addOption(
+			new Option(
+				'-r, --rarity <rarity>',
+				'Rarity of the desired character.',
+			).choices(rarities),
+		)
+		.addOption(
+			new Option(
+				'-e, --element <element>',
+				'Element of the desired character.',
+			).choices(elements),
+		)
+		.action(async ({ element, list, rarity }) => {
 			const filteredChars = await getChars({
-				element: element ? `ELEMENT_${element.toUpperCase() as Uppercase<ShorthandElement>}` : undefined,
+				element: element
+					? `ELEMENT_${element.toUpperCase() as Uppercase<ShorthandElement>}`
+					: undefined,
 				rarity,
 			})
 
 			if (list) {
 				log('Possible characters include:')
-				log(filteredChars.map(_ => formatChar(_)).join(', '))
+				log(filteredChars.map(formatChar).join(', '))
 			}
 
 			const randomChar = sample(filteredChars, 1).at(0)
@@ -162,61 +179,74 @@ export const buildProgram = (log = console.log) => {
 		.command('boss')
 		.alias('b')
 		.description('Select a random boss.')
-		.option('-g, --gauntlet', 'Select three bosses, per weekly rotation.', false)
+		.option(
+			'-g, --gauntlet',
+			'Select three bosses, per weekly rotation.',
+			false,
+		)
 		.option('-l, --list', 'List all eligible bosses.', false)
 		.option('--weekly', 'Restrict to weekly bosses.', true)
 		.option('--no-weekly', 'Select among all bosses.')
-		.action(async ({gauntlet, list, weekly}) => {
+		.action(async ({ gauntlet, list, weekly }) => {
 			const allEnemies = await getAllEnemies()
 			const weeklyBosses = allEnemies
-				.filter(_ => weekly ? _.categoryType === 'CODEX_SUBTYPE_BOSS' : _.enemyType === 'BOSS')
-				.filter(_ => _.name !== 'Stormterror')
+				.filter((_) =>
+					weekly
+						? _.categoryType === 'CODEX_SUBTYPE_BOSS'
+						: _.enemyType === 'BOSS',
+				)
+				.filter((_) => _.name !== 'Stormterror')
 
-			const formatWeeklyBoss = ({description, name}: Enemy): string => [
-				chalk.bold.italic(name),
-				...description.split('\n')
-					.map(_ => chalk.gray(`> ${_}`)),
-			]
-				.join('\n')
+			const formatWeeklyBoss = ({ description, name }: Enemy): string =>
+				[
+					chalk.bold.italic(name),
+					...description.split('\n').map((_) => chalk.gray(`> ${_}`)),
+				].join('\n')
 
 			if (list) {
 				log('Possible bosses include:')
-				log(weeklyBosses.map(_ => chalk.italic(_.name)).join(', '))
+				log(weeklyBosses.map((_) => chalk.italic(_.name)).join(', '))
 				log('')
 			}
 
 			const output = sample(weeklyBosses, gauntlet ? 3 : 1)
-				.map(boss => `Random boss: ${(formatWeeklyBoss(boss))}`)
+				.map((boss) => `Random boss: ${formatWeeklyBoss(boss)}`)
 				.join('\n\n')
 
 			log(output)
 		})
 
-	program
-		.addHelpText('after', `
+	program.addHelpText(
+		'after',
+		`
 Examples:
   $ genshin-party interactive   Interactively select a random team.
   $ genshin-party i
   $ genshin-party char -r 4     Get a random four-star character.
-  $ genshin-party boss          Select a random weekly boss.`)
+  $ genshin-party boss          Select a random weekly boss.`,
+	)
 
 	return program
 }
 
-const formatChar = (char: Character) => match(char.elementType)
-	.with('ELEMENT_ANEMO', () => chalk.rgb(117, 194, 168))
-	.with('ELEMENT_CRYO', () => chalk.rgb(160, 215, 228))
-	.with('ELEMENT_DENDRO', () => chalk.rgb(165, 200, 56))
-	.with('ELEMENT_ELECTRO', () => chalk.rgb(176, 143, 194))
-	.with('ELEMENT_GEO', () => chalk.rgb(249, 182, 46))
-	.with('ELEMENT_HYDRO', () => chalk.rgb(75, 195, 241))
-	.with('ELEMENT_PYRO', () => chalk.rgb(239, 122, 53))
-	.otherwise(() => chalk.white)(char.name)
+const formatChar = (char: Character) =>
+	match(char.elementType)
+		.with('ELEMENT_ANEMO', () => chalk.rgb(117, 194, 168))
+		.with('ELEMENT_CRYO', () => chalk.rgb(160, 215, 228))
+		.with('ELEMENT_DENDRO', () => chalk.rgb(165, 200, 56))
+		.with('ELEMENT_ELECTRO', () => chalk.rgb(176, 143, 194))
+		.with('ELEMENT_GEO', () => chalk.rgb(249, 182, 46))
+		.with('ELEMENT_HYDRO', () => chalk.rgb(75, 195, 241))
+		.with('ELEMENT_PYRO', () => chalk.rgb(239, 122, 53))
+		.otherwise(() => chalk.white)(char.name)
 
-const playerNames = match(z.string().array().length(4).safeParse(process.env.PLAYERS?.split(',')))
-	.with({success: true}, parsed => parsed.data)
+const playerNames = match(
+	z.string().array().length(4).safeParse(process.env.PLAYERS?.split(',')),
+)
+	.with({ success: true }, (parsed) => parsed.data)
 	.otherwise(() => undefined)
 
-const formatPlayer = (playerNumber: number) => playerNames
-	? chalk.italic.rgb(251, 217, 148)(playerNames[playerNumber - 1])
-	: chalk.italic(`Player ${chalk.rgb(251, 217, 148)(playerNumber)}`)
+const formatPlayer = (playerNumber: number) =>
+	playerNames
+		? chalk.italic.rgb(251, 217, 148)(playerNames[playerNumber - 1])
+		: chalk.italic(`Player ${chalk.rgb(251, 217, 148)(playerNumber)}`)

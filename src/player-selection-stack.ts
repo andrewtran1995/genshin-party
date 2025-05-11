@@ -1,40 +1,40 @@
-import {
-	setup, assign, createActor,
-} from 'xstate'
-import {range, shuffle, take} from 'remeda'
-import {type PlayerChoice} from './types.js'
+import { range, shuffle, take } from 'remeda'
+import { assign, createActor, setup } from 'xstate'
+import type { PlayerChoice } from './types.js'
 
 export const playerSelectionStack = setup({
 	actions: {
 		push: assign({
-			playerChoices: ({context}, choice: PlayerChoice) => [...context.playerChoices, choice],
+			playerChoices: ({ context }, choice: PlayerChoice) => [
+				...context.playerChoices,
+				choice,
+			],
 		}),
 		pop: assign({
-			playerChoices: ({context}) => take(context.playerChoices, context.playerChoices.length - 1),
+			playerChoices: ({ context }) =>
+				take(context.playerChoices, context.playerChoices.length - 1),
 		}),
 	},
 	guards: {
-		isFull: ({context}) => context.playerChoices.length === 4,
+		isFull: ({ context }) => context.playerChoices.length === 4,
 	},
 	types: {
 		// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 		context: {} as {
-			onNewChoiceFunction?: (playerNumber: number) => void;
-			playerChoices: PlayerChoice[];
-			playerOrder: number[];
+			onNewChoiceFunction?: (playerNumber: number) => void
+			playerChoices: PlayerChoice[]
+			playerOrder: number[]
 		},
 		// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-		events: {} as
-			| {type: 'PUSH'; choice: PlayerChoice}
-			| {type: 'POP'},
+		events: {} as { type: 'push'; choice: PlayerChoice } | { type: 'pop' },
 		// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 		input: {} as {
-			onNewChoiceFunction: (playerNumber: number) => void;
+			onNewChoiceFunction: (playerNumber: number) => void
 		},
 	},
 }).createMachine({
 	initial: 'ready',
-	context: ({input: {onNewChoiceFunction}}) => ({
+	context: ({ input: { onNewChoiceFunction } }) => ({
 		onNewChoiceFunction,
 		playerChoices: [],
 		playerOrder: shuffle(range(1, 5)),
@@ -42,30 +42,25 @@ export const playerSelectionStack = setup({
 	states: {
 		ready: {
 			entry: [
-				({context}) => {
-					context.onNewChoiceFunction?.(context.playerOrder[context.playerChoices.length])
+				({ context }) => {
+					context.onNewChoiceFunction?.(
+						context.playerOrder[context.playerChoices.length],
+					)
 				},
 			],
 			on: {
-				// eslint-disable-next-line @typescript-eslint/naming-convention
-				PUSH:
-					{
-						target: 'checkIfDone',
-						actions: {type: 'push', params: ({event}) => event.choice},
-					},
-				// eslint-disable-next-line @typescript-eslint/naming-convention
-				POP:
-					{
-						target: 'checkIfDone',
-						actions: {type: 'pop'},
-					},
+				push: {
+					target: 'checkIfDone',
+					actions: { type: 'push', params: ({ event }) => event.choice },
+				},
+				pop: {
+					target: 'checkIfDone',
+					actions: { type: 'pop' },
+				},
 			},
 		},
 		checkIfDone: {
-			always: [
-				{target: 'done', guard: 'isFull'},
-				{target: 'ready'},
-			],
+			always: [{ target: 'done', guard: 'isFull' }, { target: 'ready' }],
 		},
 		done: {
 			type: 'final',
@@ -73,5 +68,6 @@ export const playerSelectionStack = setup({
 	},
 })
 
-export const createPlayerSelectionStackActor = (options: Parameters<typeof createActor<typeof playerSelectionStack>>[1]) =>
-	createActor(playerSelectionStack, options)
+export const createPlayerSelectionStackActor = (
+	options: Parameters<typeof createActor<typeof playerSelectionStack>>[1],
+) => createActor(playerSelectionStack, options)
