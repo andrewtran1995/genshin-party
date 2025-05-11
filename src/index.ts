@@ -1,27 +1,39 @@
 import fs from 'node:fs'
 import {posix} from 'node:path'
-import genshindb, {type Character} from 'genshin-db'
+import {type Character} from 'genshin-db'
 import * as R from 'remeda'
 import genshinDbPackageJson from '../node_modules/genshin-db/package.json' with { type: 'json' }
 import {type Rarity} from './types.js'
 
 export {createPlayerSelectionStackActor, playerSelectionStack} from './player-selection-stack.js'
 
-const getAllChars = R.once(() => getCached(
-	`chars.${genshinDbPackageJson.version}`,
-	() => genshindb.characters('names', {matchCategories: true, verboseCategories: true}),
-))
-
+const genshinDatabaseVersion = genshinDbPackageJson.version
 const cacheDirectory = '.cache'
 
-function getCached<T>(key: string, deriveValue: () => T): T {
+const getAllChars = R.once(async () => getCached(
+	`chars.${genshinDatabaseVersion}`,
+	async () => {
+		const genshinDatabase = await import('genshin-db')
+		return genshinDatabase.default.characters('names', {matchCategories: true, verboseCategories: true})
+	},
+))
+
+export const getAllEnemies = R.once(async () => getCached(
+	`enemies.${genshinDatabaseVersion}`,
+	async () => {
+		const genshinDatabase = await import('genshin-db')
+		return genshinDatabase.default.enemies('names', {matchCategories: true, verboseCategories: true})
+	},
+))
+
+async function getCached<T>(key: string, deriveValue: () => Promise<T>): Promise<T> {
 	if (!fs.existsSync(cacheDirectory)) {
 		fs.mkdirSync(cacheDirectory)
 	}
 
 	const path = posix.join(cacheDirectory, key)
 	if (!fs.existsSync(path)) {
-		const value = deriveValue()
+		const value = await deriveValue()
 		fs.writeFileSync(path, JSON.stringify(value))
 		return value
 	}
@@ -36,7 +48,8 @@ type GetCharsOptions = {element?: Character['elementType']; rarity?: Rarity}
  * Excludes "Aether" to prevent returning two copies of the traveller (both "Aether" and "Lumine").
  * @param filters - Filters to narrow down the eligible characters returned.
  */
-export const getChars = ({element, rarity}: GetCharsOptions = {}) => getAllChars()
+export const getChars = async ({element, rarity}: GetCharsOptions = {}) => (await getAllChars())
+	// eslint-disable-next-line unicorn/no-await-expression-member
 	.filter(_ => rarity ? _.rarity === Number(rarity) : true)
 	.filter(_ => element ? _.elementType === element : true)
 	.filter(_ => _.name !== 'Aether')
@@ -48,9 +61,11 @@ export const getChars = ({element, rarity}: GetCharsOptions = {}) => getAllChars
  * Will iterate infinitely.
  * @param filters - Filters to narrow down the eligible characters returned.
  */
-export function * randomChars(filters: Parameters<typeof getChars>[0]) {
+export async function * randomChars(filters: Parameters<typeof getChars>[0]) {
 	while (true) {
-		for (const char of R.pipe(filters, getChars, R.shuffle())) {
+		// eslint-disable-next-line no-await-in-loop
+		const chars = await getChars(filters)
+		for (const char of R.shuffle(chars)) {
 			yield char
 		}
 	}

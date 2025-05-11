@@ -6,7 +6,7 @@ import {
 import {buildProgram} from './build-program.js'
 
 describe('bin.ts', () => {
-	const runWithInput = (input: string) => {
+	const runWithInput = async (input: string) => {
 		if (Object.getOwnPropertyDescriptor(process.stdout, 'columns')) {
 			vi.spyOn(process.stdout, 'columns', 'get').mockReturnValue(80)
 		}
@@ -14,7 +14,7 @@ describe('bin.ts', () => {
 		let outStream = ''
 		let errorStream = ''
 		try {
-			buildProgram(arguments_ => {
+			await buildProgram(arguments_ => {
 				outStream += inspect(arguments_)
 			})
 				.exitOverride()
@@ -26,7 +26,7 @@ describe('bin.ts', () => {
 						outStream += string_
 					},
 				})
-				.parse(['', '', ...input.split(' ')])
+				.parseAsync(['', '', ...input.split(' ')])
 		} catch {
 			// Do nothing.
 		}
@@ -39,7 +39,7 @@ describe('bin.ts', () => {
 
 	const whenGivenInput = (input: string, callback: (stream: {errStream: string; outStream: string}) => void): () => void => async () => {
 		expect.hasAssertions()
-		callback(runWithInput(input))
+		callback(await runWithInput(input))
 	}
 
 	afterEach(vi.restoreAllMocks)
@@ -52,8 +52,9 @@ describe('bin.ts', () => {
 		expect(out.outStream).toMatch(/Random boss: .*/)
 	}))
 
-	it('emits help', ({expect}) => {
-		expect(runWithInput('--help').outStream).toMatchInlineSnapshot(`
+	it('emits help', async ({expect}) => {
+		const runResult = await runWithInput('--help')
+		expect(runResult.outStream).toMatchInlineSnapshot(`
 			"Usage: genshin-party [options] [command]
 
 			Options:

@@ -1,6 +1,6 @@
 import process from 'node:process'
 import chalk from 'chalk'
-import genshindb, {type Character, type Enemy} from 'genshin-db'
+import {type Character, type Enemy} from 'genshin-db'
 import {match, P} from 'ts-pattern'
 import 'dotenv/config' // eslint-disable-line import/no-unassigned-import
 import {type ArrayValues} from 'type-fest'
@@ -12,7 +12,7 @@ import {
 } from 'remeda'
 import {rarities} from './types.js'
 import {createPlayerSelectionStackActor, playerSelectionStack} from './player-selection-stack.js'
-import {randomChars, getChars} from './index.js'
+import {randomChars, getChars, getAllEnemies} from './index.js'
 
 const elements = [
 	'anemo',
@@ -50,7 +50,8 @@ export const buildProgram = (log = console.log) => {
 				const playerNumber = playerOrder[playerChoices.length]
 
 				const rarity = playerChoices.at(-1)?.isMain ? '4' : '5'
-				for (const char of randomChars({rarity})) {
+				// eslint-disable-next-line no-await-in-loop
+				for await (const char of randomChars({rarity})) {
 					if (onlyTeyvat && ['Aloy', 'Lumine'].includes(char.name)) {
 						continue
 					}
@@ -62,7 +63,7 @@ export const buildProgram = (log = console.log) => {
 					log(`Rolled: ${formatChar(char)}`)
 
 					const event = match(
-						// eslint-disable-next-line no-await-in-loop
+
 						await select({
 							message: 'Accept character?',
 							choices: [
@@ -137,8 +138,8 @@ export const buildProgram = (log = console.log) => {
 		.option('-l, --list', 'List all elegible characters.', false)
 		.addOption(new Option('-r, --rarity <rarity>', 'Rarity of the desired character.').choices(rarities))
 		.addOption(new Option('-e, --element <element>', 'Element of the desired character.').choices(elements))
-		.action(({element, list, rarity}) => {
-			const filteredChars = getChars({
+		.action(async ({element, list, rarity}) => {
+			const filteredChars = await getChars({
 				element: element ? `ELEMENT_${element.toUpperCase() as Uppercase<ShorthandElement>}` : undefined,
 				rarity,
 			})
@@ -165,8 +166,9 @@ export const buildProgram = (log = console.log) => {
 		.option('-l, --list', 'List all eligible bosses.', false)
 		.option('--weekly', 'Restrict to weekly bosses.', true)
 		.option('--no-weekly', 'Select among all bosses.')
-		.action(({gauntlet, list, weekly}) => {
-			const weeklyBosses = genshindb.enemies('names', {matchCategories: true, verboseCategories: true})
+		.action(async ({gauntlet, list, weekly}) => {
+			const allEnemies = await getAllEnemies()
+			const weeklyBosses = allEnemies
 				.filter(_ => weekly ? _.categoryType === 'CODEX_SUBTYPE_BOSS' : _.enemyType === 'BOSS')
 				.filter(_ => _.name !== 'Stormterror')
 
