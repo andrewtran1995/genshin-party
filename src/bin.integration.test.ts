@@ -1,6 +1,8 @@
 import {$, execa} from 'execa'
 import {takeLast} from 'remeda'
-import {beforeAll, describe, it} from 'vitest'
+import {
+	beforeAll, bench, describe, it,
+} from 'vitest'
 
 /**
  * This should probably be an "integration" test due to invoking a build. Keeping it flat
