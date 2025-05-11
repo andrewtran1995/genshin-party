@@ -7,4 +7,5 @@
 build/
 dist/
 node_modules/
+.cache/
 tsconfig.tsbuildinfo

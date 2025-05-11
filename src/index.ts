@@ -1,10 +1,33 @@
+import fs from 'node:fs'
+import {posix} from 'node:path'
 import genshindb, {type Character} from 'genshin-db'
 import * as R from 'remeda'
+import genshinDbPackageJson from '../node_modules/genshin-db/package.json' with { type: 'json' }
 import {type Rarity} from './types.js'
 
 export {createPlayerSelectionStackActor, playerSelectionStack} from './player-selection-stack.js'
 
-const getAllChars = R.once(() => genshindb.characters('names', {matchCategories: true, verboseCategories: true}))
+const getAllChars = R.once(() => getCached(
+	`chars.${genshinDbPackageJson.version}`,
+	() => genshindb.characters('names', {matchCategories: true, verboseCategories: true}),
+))
+
+const cacheDirectory = '.cache'
+
+function getCached<T>(key: string, deriveValue: () => T): T {
+	if (!fs.existsSync(cacheDirectory)) {
+		fs.mkdirSync(cacheDirectory)
+	}
+
+	const path = posix.join(cacheDirectory, key)
+	if (!fs.existsSync(path)) {
+		const value = deriveValue()
+		fs.writeFileSync(path, JSON.stringify(value))
+		return value
+	}
+
+	return JSON.parse(fs.readFileSync(path).toString()) as T
+}
 
 type GetCharsOptions = {element?: Character['elementType']; rarity?: Rarity}
 
