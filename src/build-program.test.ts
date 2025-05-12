@@ -92,4 +92,39 @@ describe.concurrent('bin.ts', () => {
 			"
 		`)
 	})
+
+	it('emits help for command "interactive"', async ({ expect }) => {
+		const runResult = await runWithInput('interactive --help')
+		expect(runResult.outStream).toMatchInlineSnapshot(`
+			"Usage: genshin-party interactive|i [options]
+
+			Random, interactive party selection, balancing four and five star characters.
+
+			Options:
+			  -t, --only-teyvat  Exclude characters not from Teyvat (Traveller, Aloy).
+			                     (default: true)
+			  -u, --unique       Only select unique characters (no duplicates). (default:
+			                     true)
+			  -h, --help         display help for command
+			"
+		`)
+	})
+
+	it('emits help for command "order"', async ({ expect }) => {
+		const runResult = await runWithInput('char --help')
+		expect(runResult.outStream).toMatchInlineSnapshot(`
+			"Usage: genshin-party char|c [options]
+
+			Select a random character.
+
+			Options:
+			  -l, --list               List all elegible characters. (default: false)
+			  -r, --rarity <rarity>    Rarity of the desired character. (choices: "4", "5")
+			  -e, --element <element>  Element of the desired character. (choices: "anemo",
+			                           "cryo", "dendro", "electro", "geo", "hydro", "none",
+			                           "pyro")
+			  -h, --help               display help for command
+			"
+		`)
+	})
 })
