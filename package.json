@@ -38,7 +38,7 @@
 		"chalk": "^5.4.1",
 		"commander": "^13.1.0",
 		"dotenv": "^16.5.0",
-		"genshin-db": "^5.2.0",
+		"genshin-db": "^5.2.1",
 		"remeda": "^2.21.3",
 		"ts-pattern": "^5.7.0",
 		"xstate": "^5.19.2",
