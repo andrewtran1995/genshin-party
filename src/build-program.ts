@@ -5,7 +5,7 @@ import { P, match } from 'ts-pattern'
 import 'dotenv/config'
 import { Command, Option } from '@commander-js/extra-typings'
 import select from '@inquirer/select'
-import { join, map, pipe, sample, shuffle } from 'remeda'
+import { join, map, pipe, prop, sample, shuffle } from 'remeda'
 import type { ArrayValues } from 'type-fest'
 import { z } from 'zod'
 import { getAllEnemies, getChars, randomChars } from './index.js'
@@ -62,7 +62,7 @@ export const buildProgram = (log = console.log) => {
 						continue
 					}
 
-					if (unique && playerChoices.map((_) => _.char).includes(char)) {
+					if (unique && playerChoices.map(prop('char')).includes(char)) {
 						continue
 					}
 
