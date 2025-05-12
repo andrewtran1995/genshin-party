@@ -1,6 +1,13 @@
 import process from 'node:process'
 import { inspect } from 'node:util'
-import { afterEach, describe, expect, it, vi } from 'vitest'
+import {
+	type TestContext,
+	type TestFunction,
+	afterEach,
+	describe,
+	it,
+	vi,
+} from 'vitest'
 import { buildProgram } from './build-program.js'
 
 const REGEX = {
@@ -41,35 +48,38 @@ describe.concurrent('bin.ts', () => {
 	}
 
 	const whenGivenInput =
-		(
+		<T extends object>(
 			input: string,
-			callback: (stream: { errStream: string; outStream: string }) => void,
-		): (() => void) =>
-		async () => {
-			// biome-ignore lint/suspicious/noMisplacedAssertion: Should only be called within tests.
-			expect.hasAssertions()
-			callback(await runWithInput(input))
+			callback: (
+				stream: { errStream: string; outStream: string },
+				context: TestContext & T,
+			) => void,
+		): TestFunction<TestContext & T> =>
+		async (context) => {
+			context.expect.hasAssertions()
+			callback(await runWithInput(input), context)
 		}
 
 	afterEach(vi.restoreAllMocks)
 
 	it(
 		'chooses random character',
-		whenGivenInput('char', (out) => {
+		whenGivenInput('char', (out, { expect }) => {
 			expect(out.outStream).toMatch(REGEX.randomChar)
 		}),
 	)
 
 	it(
 		'chooses random boss',
-		whenGivenInput('boss', (out) => {
+		whenGivenInput('boss', (out, { expect }) => {
 			expect(out.outStream).toMatch(REGEX.randomBoss)
 		}),
 	)
 
-	it('emits help', async ({ expect }) => {
-		const runResult = await runWithInput('--help')
-		expect(runResult.outStream).toMatchInlineSnapshot(`
+	it(
+		'emits help',
+		whenGivenInput('--help', (out, { expect }) => {
+			expect(out.outStream).toMatchInlineSnapshot(`
 			"Usage: genshin-party [options] [command]
 
 			Options:
@@ -91,11 +101,13 @@ describe.concurrent('bin.ts', () => {
 			  $ genshin-party boss          Select a random weekly boss.
 			"
 		`)
-	})
+		}),
+	)
 
-	it('emits help for command "interactive"', async ({ expect }) => {
-		const runResult = await runWithInput('interactive --help')
-		expect(runResult.outStream).toMatchInlineSnapshot(`
+	it(
+		'emits help for command "interactive"',
+		whenGivenInput('interactive --help', (out, { expect }) => {
+			expect(out.outStream).toMatchInlineSnapshot(`
 			"Usage: genshin-party interactive|i [options]
 
 			Random, interactive party selection, balancing four and five star characters.
@@ -108,11 +120,13 @@ describe.concurrent('bin.ts', () => {
 			  -h, --help         display help for command
 			"
 		`)
-	})
+		}),
+	)
 
-	it('emits help for command "order"', async ({ expect }) => {
-		const runResult = await runWithInput('char --help')
-		expect(runResult.outStream).toMatchInlineSnapshot(`
+	it(
+		'emits help for command "char"',
+		whenGivenInput('char --help', (out, { expect }) => {
+			expect(out.outStream).toMatchInlineSnapshot(`
 			"Usage: genshin-party char|c [options]
 
 			Select a random character.
@@ -126,5 +140,6 @@ describe.concurrent('bin.ts', () => {
 			  -h, --help               display help for command
 			"
 		`)
-	})
+		}),
+	)
 })
