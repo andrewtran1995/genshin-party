@@ -70,7 +70,6 @@ export const getChars = async ({ element, rarity }: GetCharsOptions = {}) =>
  */
 export async function* randomChars(filters: Parameters<typeof getChars>[0]) {
 	while (true) {
-		// eslint-disable-next-line no-await-in-loop
 		const chars = await getChars(filters)
 		for (const char of shuffle(chars)) {
 			yield char

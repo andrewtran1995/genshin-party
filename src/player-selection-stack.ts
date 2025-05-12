@@ -19,15 +19,12 @@ export const playerSelectionStack = setup({
 		isFull: ({ context }) => context.playerChoices.length === 4,
 	},
 	types: {
-		// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 		context: {} as {
 			onNewChoiceFunction?: (playerNumber: number) => void
 			playerChoices: PlayerChoice[]
 			playerOrder: number[]
 		},
-		// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 		events: {} as { type: 'push'; choice: PlayerChoice } | { type: 'pop' },
-		// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 		input: {} as {
 			onNewChoiceFunction: (playerNumber: number) => void
 		},
