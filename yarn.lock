@@ -1881,7 +1881,7 @@ __metadata:
     genshin-db: "npm:^5.2.1"
     husky: "npm:^9.1.7"
     pinst: "npm:^3.0.0"
-    remeda: "npm:^2.21.3"
+    remeda: "npm:^2.21.4"
     sort-package-json: "npm:^3.2.1"
     ts-pattern: "npm:^5.7.0"
     tsx: "npm:^4.19.4"
@@ -2556,12 +2556,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"remeda@npm:^2.21.3":
-  version: 2.21.3
-  resolution: "remeda@npm:2.21.3"
+"remeda@npm:^2.21.4":
+  version: 2.21.4
+  resolution: "remeda@npm:2.21.4"
   dependencies:
-    type-fest: "npm:^4.39.1"
-  checksum: 10c0/ba63d70e95e92cdd843c3497f0a9be1039644d586f56ea62ff3e7736e3981932c6e999c3670c81623bac48944fd03ea52f43566143460924f44b6522759f6e51
+    type-fest: "npm:^4.40.1"
+  checksum: 10c0/ce758951066b9279abe4dadfd8d1d12c8a4fb74fd2d09404bb00a1881805ece0ce24134c5521e03ec3897693fc9d12319fcc2258b9210e07ff5fa15cbf6b48a8
   languageName: node
   linkType: hard
 
@@ -3062,14 +3062,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"type-fest@npm:^4.39.1":
-  version: 4.39.1
-  resolution: "type-fest@npm:4.39.1"
-  checksum: 10c0/f5bf302eb2e2f70658be1757aa578f4a09da3f65699b0b12b7ae5502ccea76e5124521a6e6b69540f442c3dc924c394202a2ab58718d0582725c7ac23c072594
-  languageName: node
-  linkType: hard
-
-"type-fest@npm:^4.41.0":
+"type-fest@npm:^4.40.1, type-fest@npm:^4.41.0":
   version: 4.41.0
   resolution: "type-fest@npm:4.41.0"
   checksum: 10c0/f5ca697797ed5e88d33ac8f1fec21921839871f808dc59345c9cf67345bfb958ce41bd821165dbf3ae591cedec2bf6fe8882098dfdd8dc54320b859711a2c1e4
