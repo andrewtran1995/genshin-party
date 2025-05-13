@@ -29,7 +29,6 @@
 		"prepare": "husky",
 		"sort-package-json": "sort-package-json",
 		"test": "vitest --run --typecheck",
-		"test:ci": "yarn test --no-color",
 		"test:watch": "vitest --typecheck"
 	},
 	"dependencies": {
