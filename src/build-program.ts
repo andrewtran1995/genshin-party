@@ -5,9 +5,9 @@ import { P, match } from 'ts-pattern'
 import 'dotenv/config'
 import { Command, Option } from '@commander-js/extra-typings'
 import select from '@inquirer/select'
-import { join, map, pipe, prop, sample, shuffle } from 'remeda'
+import { type } from 'arktype'
+import { identity, join, map, pipe, prop, sample, shuffle } from 'remeda'
 import type { ArrayValues } from 'type-fest'
-import { z } from 'zod'
 import { getAllEnemies, getChars, randomChars } from './index.js'
 import { createPlayerSelectionStackActor } from './player-selection-stack.js'
 import { rarities } from './types.js'
@@ -25,6 +25,29 @@ const elements = [
 type ShorthandElement = ArrayValues<typeof elements>
 
 export const buildProgram = (log = console.log) => {
+	const PlayerNames = type('string[] <= 4')
+
+	const getParsedPlayerNames = (
+		rawPlayerNames: string = process.env.PLAYERS ?? '',
+	): typeof PlayerNames.infer | undefined => {
+		const playerNames = rawPlayerNames.split(',').map((_) => _.trim())
+		const parsedNames = match(PlayerNames(playerNames))
+			.with(P.instanceOf(type.errors), () => {
+				log(chalk.red('Unable to parse player names:', playerNames))
+				return undefined
+			})
+			.otherwise(identity())
+		if (!parsedNames) {
+			return parsedNames
+		}
+
+		return match(parsedNames)
+			.with([P._], ([a]) => [a, a, a, a])
+			.with([P._, P._], ([a, b]) => [a, a, b, b])
+			.with([P._, P._, P._], ([a, b, c]) => [a, a, b, c])
+			.otherwise(identity())
+	}
+
 	const program = new Command('genshin-party').allowExcessArguments(false)
 
 	program
@@ -32,6 +55,10 @@ export const buildProgram = (log = console.log) => {
 		.alias('i')
 		.description(
 			'Random, interactive party selection, balancing four and five star characters.',
+		)
+		.option(
+			'-p, --players <PLAYERS>',
+			'Specify the player names for the party assignments, separated by commas (e.g., "BestTraveller,Casper,IttoSimp").',
 		)
 		.option(
 			'-t, --only-teyvat',
@@ -44,11 +71,12 @@ export const buildProgram = (log = console.log) => {
 			true,
 		)
 		// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Main for one action, could break up later.
-		.action(async ({ onlyTeyvat, unique }) => {
+		.action(async ({ onlyTeyvat, players, unique }) => {
+			const playerNames = getParsedPlayerNames(players)
 			const actor = createPlayerSelectionStackActor({
 				input: {
 					onNewChoiceFunction(playerNumber) {
-						log(`Now choosing for ${formatPlayer(playerNumber)}.`)
+						log(`Now choosing for ${formatPlayer(playerNumber, playerNames)}.`)
 					},
 				},
 			}).start()
@@ -83,7 +111,11 @@ export const buildProgram = (log = console.log) => {
 								},
 								{ value: 'Reroll' },
 								...(lastChoice
-									? [{ value: `Go back to ${formatPlayer(lastChoice.number)}` }]
+									? [
+											{
+												value: `Go back to ${formatPlayer(lastChoice.number, playerNames)}`,
+											},
+										]
 									: []),
 							] as const,
 						}),
@@ -124,7 +156,7 @@ export const buildProgram = (log = console.log) => {
 			for (const { char, number } of actor
 				.getSnapshot()
 				.context.playerChoices.toSorted((a, b) => a.number - b.number)) {
-				log(`${formatPlayer(number)}: ${formatChar(char)}`)
+				log(`${formatPlayer(number, playerNames)}: ${formatChar(char)}`)
 			}
 		})
 
@@ -133,7 +165,14 @@ export const buildProgram = (log = console.log) => {
 		.alias('o')
 		.description('Generate a random order in which to select characters.')
 		.action(() => {
-			log(pipe([1, 2, 3, 4], shuffle(), map(formatPlayer), join(', ')))
+			log(
+				pipe(
+					[1, 2, 3, 4],
+					shuffle(),
+					map((_) => formatPlayer(_, undefined)),
+					join(', '),
+				),
+			)
 		})
 
 	program
@@ -240,13 +279,10 @@ const formatChar = (char: Character) =>
 		.with('ELEMENT_PYRO', () => chalk.rgb(239, 122, 53))
 		.otherwise(() => chalk.white)(char.name)
 
-const playerNames = match(
-	z.string().array().length(4).safeParse(process.env.PLAYERS?.split(',')),
-)
-	.with({ success: true }, (parsed) => parsed.data)
-	.otherwise(() => undefined)
-
-const formatPlayer = (playerNumber: number) =>
+const formatPlayer = (
+	playerNumber: number,
+	playerNames: string[] | undefined,
+) =>
 	playerNames
 		? chalk.italic.rgb(251, 217, 148)(playerNames[playerNumber - 1])
 		: chalk.italic(`Player ${chalk.rgb(251, 217, 148)(playerNumber)}`)

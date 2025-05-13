@@ -108,18 +108,21 @@ describe.concurrent('bin.ts', () => {
 		'emits help for command "interactive"',
 		whenGivenInput('interactive --help', (out, { expect }) => {
 			expect(out.outStream).toMatchInlineSnapshot(`
-			"Usage: genshin-party interactive|i [options]
+				"Usage: genshin-party interactive|i [options]
 
-			Random, interactive party selection, balancing four and five star characters.
+				Random, interactive party selection, balancing four and five star characters.
 
-			Options:
-			  -t, --only-teyvat  Exclude characters not from Teyvat (Traveller, Aloy).
-			                     (default: true)
-			  -u, --unique       Only select unique characters (no duplicates). (default:
-			                     true)
-			  -h, --help         display help for command
-			"
-		`)
+				Options:
+				  -p, --players <PLAYERS>  Specify the player names for the party assignments,
+				                           separated by commas (e.g.,
+				                           "BestTraveller,Casper,IttoSimp").
+				  -t, --only-teyvat        Exclude characters not from Teyvat (Traveller, Aloy).
+				                           (default: true)
+				  -u, --unique             Only select unique characters (no duplicates).
+				                           (default: true)
+				  -h, --help               display help for command
+				"
+			`)
 		}),
 	)
 
