@@ -1090,13 +1090,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zod/core@npm:0.11.6":
-  version: 0.11.6
-  resolution: "@zod/core@npm:0.11.6"
-  checksum: 10c0/ab63f9bf7f42bb38d8581420ad4a12782c26afea4bb12c62937124e2429a28822a44b059f88e0cb37104f1cc265dd6e82942f9c2e85262ae41da46949d318481
-  languageName: node
-  linkType: hard
-
 "abbrev@npm:^2.0.0":
   version: 2.0.0
   resolution: "abbrev@npm:2.0.0"
@@ -1917,7 +1910,6 @@ __metadata:
     vitest: "npm:^3.1.2"
     webpack: "npm:^5.99.7"
     xstate: "npm:^5.19.2"
-    zod: "npm:^4.0.0-beta.20250505T195954"
   bin:
     genshin-party: dist/bin.js
   languageName: unknown
@@ -3446,14 +3438,5 @@ __metadata:
   version: 2.0.0
   resolution: "yoctocolors@npm:2.0.0"
   checksum: 10c0/994f5d99e7647a1b333331ffecbbf7c4463d9c2823e371b44e21146a4496cad0f14fbe2f73f44383312a6f843d93523f830f1360009f0ac93027b167ef5c63be
-  languageName: node
-  linkType: hard
-
-"zod@npm:^4.0.0-beta.20250505T195954":
-  version: 4.0.0-beta.20250505T195954
-  resolution: "zod@npm:4.0.0-beta.20250505T195954"
-  dependencies:
-    "@zod/core": "npm:0.11.6"
-  checksum: 10c0/b2a1fd520d70a6d961b395c5327a3ecb0f988e7222fe952d2fb59e5f727c4bca7049c25ef565a06e94218d08203e8ca65f6600a6b5c30fcf3e4e155eb33d85e5
   languageName: node
   linkType: hard

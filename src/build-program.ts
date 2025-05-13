@@ -24,9 +24,9 @@ const elements = [
 ] as const
 type ShorthandElement = ArrayValues<typeof elements>
 
-export const buildProgram = (log = console.log) => {
-	const PlayerNames = type('string[] <= 4')
+const PlayerNames = type('string[] <= 4')
 
+export const buildProgram = (log = console.log) => {
 	const getParsedPlayerNames = (
 		rawPlayerNames: string = process.env.PLAYERS ?? '',
 	): typeof PlayerNames.infer | undefined => {
@@ -69,6 +69,12 @@ export const buildProgram = (log = console.log) => {
 			'-u, --unique',
 			'Only select unique characters (no duplicates).',
 			true,
+		)
+		.addHelpText(
+			'after',
+			`
+Examples:
+  $ genshin-party interactive -p BestTraveller,Casper,IttoSimp`,
 		)
 		// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Main for one action, could break up later.
 		.action(async ({ onlyTeyvat, players, unique }) => {

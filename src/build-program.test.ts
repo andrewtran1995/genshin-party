@@ -121,6 +121,9 @@ describe.concurrent('bin.ts', () => {
 				  -u, --unique             Only select unique characters (no duplicates).
 				                           (default: true)
 				  -h, --help               display help for command
+
+				Examples:
+				  $ genshin-party interactive -p BestTraveller,Casper,IttoSimp
 				"
 			`)
 		}),
