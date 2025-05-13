@@ -1,7 +1,9 @@
 import fs from 'node:fs'
 import { posix } from 'node:path'
+// biome-ignore lint/nursery/noRestrictedImports: Only importing type.
 import type { Character } from 'genshin-db'
-import { once, shuffle } from 'remeda'
+import { omit, once, shuffle } from 'remeda'
+import type { ArrayValues } from 'type-fest'
 import genshinDbPackageJson from '../node_modules/genshin-db/package.json' with {
 	type: 'json',
 }
@@ -12,23 +14,29 @@ const cacheDirectory = '.cache'
 
 const getAllChars = once(async () =>
 	getCached(`chars.${genshinDatabaseVersion}`, async () => {
+		// biome-ignore lint/nursery/noRestrictedImports: Dynamically importing when necessary.
 		const genshinDatabase = await import('genshin-db')
-		return genshinDatabase.default.characters('names', {
+		const chars = genshinDatabase.default.characters('names', {
 			matchCategories: true,
 			verboseCategories: true,
 		})
+		return chars.map(omit(['cv', 'costs', 'images', 'url']))
 	}),
 )
 
 export const getAllEnemies = once(async () =>
 	getCached(`enemies.${genshinDatabaseVersion}`, async () => {
+		// biome-ignore lint/nursery/noRestrictedImports: Dynamically importing when necessary.
 		const genshinDatabase = await import('genshin-db')
-		return genshinDatabase.default.enemies('names', {
+		const enemies = genshinDatabase.default.enemies('names', {
 			matchCategories: true,
 			verboseCategories: true,
 		})
+		return enemies.map(omit(['investigation', 'rewardPreview', 'images']))
 	}),
 )
+
+export type Enemy = ArrayValues<Awaited<ReturnType<typeof getAllEnemies>>>
 
 async function getCached<T>(
 	key: string,
@@ -60,6 +68,8 @@ export const getChars = async ({ element, rarity }: GetCharsOptions = {}) =>
 		.filter((_) => (rarity ? _.rarity === Number(rarity) : true))
 		.filter((_) => (element ? _.elementType === element : true))
 		.filter((_) => _.name !== 'Aether')
+
+export type Char = ArrayValues<Awaited<ReturnType<typeof getChars>>>
 
 /**
  * Returns an iterator that steps through characters randomly.

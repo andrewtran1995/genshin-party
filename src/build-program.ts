@@ -1,6 +1,5 @@
 import process from 'node:process'
 import chalk from 'chalk'
-import type { Character, Enemy } from 'genshin-db'
 import { P, match } from 'ts-pattern'
 import 'dotenv/config'
 import { Command, Option } from '@commander-js/extra-typings'
@@ -8,7 +7,13 @@ import select from '@inquirer/select'
 import { type } from 'arktype'
 import { identity, join, map, pipe, prop, sample, shuffle } from 'remeda'
 import type { ArrayValues } from 'type-fest'
-import { getAllEnemies, getChars, randomChars } from './index.js'
+import {
+	type Char,
+	type Enemy,
+	getAllEnemies,
+	getChars,
+	randomChars,
+} from './index.js'
 import { createPlayerSelectionStackActor } from './player-selection-stack.js'
 import { rarities } from './types.js'
 
@@ -274,7 +279,7 @@ Examples:
 	return program
 }
 
-const formatChar = (char: Character) =>
+const formatChar = (char: Char) =>
 	match(char.elementType)
 		.with('ELEMENT_ANEMO', () => chalk.rgb(117, 194, 168))
 		.with('ELEMENT_CRYO', () => chalk.rgb(160, 215, 228))

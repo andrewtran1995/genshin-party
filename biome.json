@@ -26,6 +26,16 @@
 				"all": true,
 				"noNodejsModules": "off"
 			},
+			"nursery": {
+				"noRestrictedImports": {
+					"level": "error",
+					"options": {
+						"paths": {
+							"genshin-db": "Should only be dynamically imported to avoid loading during normal operations."
+						}
+					}
+				}
+			},
 			"performance": {
 				"all": true
 			},
