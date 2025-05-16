@@ -29,13 +29,16 @@ const elements = [
 ] as const
 type ShorthandElement = ArrayValues<typeof elements>
 
-const PlayerNames = type('string[] <= 4')
+const PlayerNames = type('1 <= string[] <= 4')
 
 export const buildProgram = (log = console.log) => {
 	const getParsedPlayerNames = (
 		rawPlayerNames: string = process.env.PLAYERS ?? '',
 	): typeof PlayerNames.infer | undefined => {
-		const playerNames = rawPlayerNames.split(',').map((_) => _.trim())
+		const playerNames = rawPlayerNames
+			.split(',')
+			.map((_) => _.trim())
+			.filter((_) => _.length > 0)
 		const parsedNames = match(PlayerNames(playerNames))
 			.with(P.instanceOf(type.errors), () => {
 				log(chalk.red('Unable to parse player names:', playerNames))
