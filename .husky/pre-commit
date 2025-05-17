@@ -1,5 +1,2 @@
 #!/bin/zsh
-yarn build
-yarn lint
-yarn test
-yarn sort-package-json -c
+yarn pre-commit
