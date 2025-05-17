@@ -5,8 +5,10 @@ import 'dotenv/config'
 import { Command, Option } from '@commander-js/extra-typings'
 import select from '@inquirer/select'
 import { type } from 'arktype'
-import { identity, join, map, pipe, sample, shuffle } from 'remeda'
+import { identity, join, pipe, sample } from 'remeda'
 import type { ArrayValues } from 'type-fest'
+import { formatPlayer } from './commands/helpers.js'
+import { addOrderCommand } from './commands/order.js'
 import {
 	type Char,
 	type Enemy,
@@ -30,6 +32,13 @@ const elements = [
 type ShorthandElement = ArrayValues<typeof elements>
 
 const PlayerNames = type('1 <= string[] <= 4')
+
+interface CommandContext {
+	command: Command
+	log: typeof console.log
+}
+
+export type CommandModifier = (ctx: CommandContext) => CommandContext
 
 export const buildProgram = (log = console.log) => {
 	const getParsedPlayerNames = (
@@ -183,20 +192,22 @@ Examples:
 			}
 		})
 
-	program
-		.command('order')
-		.alias('o')
-		.description('Generate a random order in which to select characters.')
-		.action(() => {
-			log(
-				pipe(
-					[1, 2, 3, 4],
-					shuffle(),
-					map((_) => formatPlayer(_, undefined)),
-					join(', '),
-				),
-			)
-		})
+	pipe({ command: program, log }, addOrderCommand)
+
+	// program
+	// 	.command('order')
+	// 	.alias('o')
+	// 	.description('Generate a random order in which to select characters.')
+	// 	.action(() => {
+	// 		log(
+	// 			pipe(
+	// 				[1, 2, 3, 4],
+	// 				shuffle(),
+	// 				map((_) => formatPlayer(_, undefined)),
+	// 				join(', '),
+	// 			),
+	// 		)
+	// 	})
 
 	program
 		.command('char', { isDefault: true })
@@ -301,11 +312,3 @@ const formatChar = (char: Char) =>
 		.with('ELEMENT_HYDRO', () => chalk.rgb(75, 195, 241))
 		.with('ELEMENT_PYRO', () => chalk.rgb(239, 122, 53))
 		.otherwise(() => chalk.white)(char.name)
-
-const formatPlayer = (
-	playerNumber: number,
-	playerNames: string[] | undefined,
-) =>
-	playerNames
-		? chalk.italic.rgb(251, 217, 148)(playerNames[playerNumber - 1])
-		: chalk.italic(`Player ${chalk.rgb(251, 217, 148)(playerNumber)}`)
