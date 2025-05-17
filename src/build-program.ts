@@ -5,7 +5,7 @@ import 'dotenv/config'
 import { Command, Option } from '@commander-js/extra-typings'
 import select from '@inquirer/select'
 import { type } from 'arktype'
-import { identity, join, map, pipe, prop, sample, shuffle, when } from 'remeda'
+import { identity, join, map, pipe, sample, shuffle } from 'remeda'
 import type { ArrayValues } from 'type-fest'
 import {
 	type Char,
@@ -113,9 +113,7 @@ Examples:
 						continue
 					}
 
-					when()
-
-					if (unique && playerChoices.map(prop('char')).includes(char)) {
+					if (unique && playerChoices.some((_) => _.char === char)) {
 						continue
 					}
 
