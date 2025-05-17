@@ -63,13 +63,6 @@ describe.concurrent('bin.ts', () => {
 	afterEach(vi.restoreAllMocks)
 
 	it(
-		'chooses random character',
-		whenGivenInput('char', (out, { expect }) => {
-			expect(out.outStream).toMatch(REGEX.randomChar)
-		}),
-	)
-
-	it(
 		'chooses random boss',
 		whenGivenInput('boss', (out, { expect }) => {
 			expect(out.outStream).toMatch(REGEX.randomBoss)
@@ -104,35 +97,38 @@ describe.concurrent('bin.ts', () => {
 		}),
 	)
 
-	it(
-		'emits help for command "interactive"',
-		whenGivenInput('interactive --help', (out, { expect }) => {
-			expect(out.outStream).toMatchInlineSnapshot(`
-				"Usage: genshin-party interactive|i [options]
+	describe('interactive', () => {
+		it(
+			'emits help',
+			whenGivenInput('interactive --help', (out, { expect }) => {
+				expect(out.outStream).toMatchInlineSnapshot(`
+					"Usage: genshin-party interactive|i [options]
 
-				Random, interactive party selection, balancing four and five star characters.
+					Random, interactive party selection, balancing four and five star characters.
 
-				Options:
-				  -p, --players <PLAYERS>  Specify the player names for the party assignments,
-				                           separated by commas (e.g.,
-				                           "BestTraveller,Casper,IttoSimp").
-				  -t, --only-teyvat        Exclude characters not from Teyvat (Traveller, Aloy).
-				                           (default: true)
-				  -u, --unique             Only select unique characters (no duplicates).
-				                           (default: true)
-				  -h, --help               display help for command
+					Options:
+					  -p, --players <PLAYERS>  Specify the player names for the party assignments,
+					                           separated by commas (e.g.,
+					                           "BestTraveller,Casper,IttoSimp").
+					  -t, --only-teyvat        Exclude characters not from Teyvat (Traveller, Aloy).
+					                           (default: true)
+					  -u, --unique             Only select unique characters (no duplicates).
+					                           (default: true)
+					  -h, --help               display help for command
 
-				Examples:
-				  $ genshin-party interactive -p BestTraveller,Casper,IttoSimp
-				"
-			`)
-		}),
-	)
+					Examples:
+					  $ genshin-party interactive -p BestTraveller,Casper,IttoSimp
+					"
+				`)
+			}),
+		)
+	})
 
-	it(
-		'emits help for command "char"',
-		whenGivenInput('char --help', (out, { expect }) => {
-			expect(out.outStream).toMatchInlineSnapshot(`
+	describe('char', () => {
+		it(
+			'emits help',
+			whenGivenInput('char --help', (out, { expect }) => {
+				expect(out.outStream).toMatchInlineSnapshot(`
 			"Usage: genshin-party char|c [options]
 
 			Select a random character.
@@ -146,6 +142,14 @@ describe.concurrent('bin.ts', () => {
 			  -h, --help               display help for command
 			"
 		`)
-		}),
-	)
+			}),
+		)
+
+		it(
+			'chooses random character',
+			whenGivenInput('char', (out, { expect }) => {
+				expect(out.outStream).toMatch(REGEX.randomChar)
+			}),
+		)
+	})
 })
