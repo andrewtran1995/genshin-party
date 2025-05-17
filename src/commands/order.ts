@@ -1,8 +1,8 @@
-import { join, map, pipe, shuffle } from 'remeda'
+import { join, map, pipe, shuffle, tap } from 'remeda'
 import type { CommandModifier } from '../build-program.js'
 import { formatPlayer } from './helpers.js'
 
-export const addOrderCommand: CommandModifier = ({ command, log }) => {
+export const addOrderCommand: CommandModifier = tap(({ command, log }) => {
 	command
 		.command('order')
 		.alias('o')
@@ -17,9 +17,4 @@ export const addOrderCommand: CommandModifier = ({ command, log }) => {
 				),
 			)
 		})
-
-	return {
-		command,
-		log,
-	}
-}
+})
