@@ -73,27 +73,27 @@ describe.concurrent('bin.ts', () => {
 		'emits help',
 		whenGivenInput('--help', (out, { expect }) => {
 			expect(out.outStream).toMatchInlineSnapshot(`
-			"Usage: genshin-party [options] [command]
+				"Usage: genshin-party [options] [command]
 
-			Options:
-			  -h, --help               display help for command
+				Options:
+				  -h, --help               display help for command
 
-			Commands:
-			  interactive|i [options]  Random, interactive party selection, balancing four
-			                           and five star characters.
-			  order|o                  Generate a random order in which to select
-			                           characters.
-			  char|c [options]         Select a random character.
-			  boss|b [options]         Select a random boss.
-			  help [command]           display help for command
+				Commands:
+				  interactive|i [options]  Random, interactive party selection, balancing four
+				                           and five star characters.
+				  order|o                  Generate a random order in which to select
+				                           characters.
+				  boss|b [options]         Select a random boss.
+				  char|c [options]         Select a random character.
+				  help [command]           display help for command
 
-			Examples:
-			  $ genshin-party interactive   Interactively select a random team.
-			  $ genshin-party i
-			  $ genshin-party char -r 4     Get a random four-star character.
-			  $ genshin-party boss          Select a random weekly boss.
-			"
-		`)
+				Examples:
+				  $ genshin-party interactive   Interactively select a random team.
+				  $ genshin-party i
+				  $ genshin-party char -r 4     Get a random four-star character.
+				  $ genshin-party boss          Select a random weekly boss.
+				"
+			`)
 		}),
 	)
 
@@ -118,8 +118,8 @@ describe.concurrent('bin.ts', () => {
 					                              (default: true)
 					  -h, --help                  display help for command
 
-					Examples:
-					  $ genshin-party interactive -p BestTraveller Casper IttoSimp
+						Examples:
+							$ genshin-party interactive -p BestTraveller Casper IttoSimp
 					"
 				`)
 			}),

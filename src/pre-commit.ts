@@ -9,6 +9,9 @@ const tasks = new Listr(
 				await $({ stdio: 'inherit' })`yarn build`
 				task.title = 'Compiled successfully!'
 			},
+			rendererOptions: {
+				bottomBar: true,
+			},
 		},
 		{
 			title: 'Linting ...',
@@ -44,6 +47,7 @@ const tasks = new Listr(
 		},
 	],
 	{
+		collectErrors: 'minimal',
 		concurrent: true,
 		exitOnError: false,
 		rendererOptions: {
@@ -55,6 +59,9 @@ const tasks = new Listr(
 
 try {
 	await tasks.run()
+	if (tasks.errors.length > 0) {
+		process.exit(1)
+	}
 } catch (_err) {
 	// biome-ignore lint/suspicious/noConsole: Development log.
 	console.info('Ran into an issue during pre-commit check!')
