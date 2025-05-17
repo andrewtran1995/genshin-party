@@ -81,10 +81,10 @@ describe.concurrent('bin.ts', () => {
 				Commands:
 				  interactive|i [options]  Random, interactive party selection, balancing four
 				                           and five star characters.
+				  char|c [options]         Select a random character.
+				  boss|b [options]         Select a random boss.
 				  order|o                  Generate a random order in which to select
 				                           characters.
-				  boss|b [options]         Select a random boss.
-				  char|c [options]         Select a random character.
 				  help [command]           display help for command
 
 				Examples:

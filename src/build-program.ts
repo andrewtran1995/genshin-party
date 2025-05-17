@@ -21,9 +21,9 @@ export const buildProgram = (log = console.log) => {
 	pipe(
 		{ command: program, log },
 		addInteractiveCommand,
-		addOrderCommand,
-		addBossCommand,
 		addCharCommand,
+		addBossCommand,
+		addOrderCommand,
 	)
 
 	program.addHelpText(
