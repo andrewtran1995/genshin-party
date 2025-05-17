@@ -57,12 +57,7 @@ const tasks = new Listr(
 	},
 )
 
-try {
-	await tasks.run()
-	if (tasks.errors.length > 0) {
-		process.exit(1)
-	}
-} catch (_err) {
-	// biome-ignore lint/suspicious/noConsole: Development log.
-	console.info('Ran into an issue during pre-commit check!')
+await tasks.run()
+if (tasks.errors.length > 0) {
+	process.exit(1)
 }
