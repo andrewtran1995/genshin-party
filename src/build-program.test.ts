@@ -107,17 +107,19 @@ describe.concurrent('bin.ts', () => {
 					Random, interactive party selection, balancing four and five star characters.
 
 					Options:
-					  -p, --players <PLAYERS>  Specify the player names for the party assignments,
-					                           separated by commas (e.g.,
-					                           "BestTraveller,Casper,IttoSimp").
-					  -t, --only-teyvat        Exclude characters not from Teyvat (Traveller, Aloy).
-					                           (default: true)
-					  -u, --unique             Only select unique characters (no duplicates).
-					                           (default: true)
-					  -h, --help               display help for command
+					  -p, --players <PLAYERS...>  Specify the player names for the party assignments
+					                              up to four players. If sourced as an environment
+					                              variable, values must be separated by commas
+					                              (e.g., \`PLAYERS=BestTraveller,Casper,IttoSimp\`).
+					                              (env: PLAYERS)
+					  -t, --only-teyvat           Exclude characters not from Teyvat (Traveller,
+					                              Aloy). (default: true)
+					  -u, --unique                Only select unique characters (no duplicates).
+					                              (default: true)
+					  -h, --help                  display help for command
 
 					Examples:
-					  $ genshin-party interactive -p BestTraveller,Casper,IttoSimp
+					  $ genshin-party interactive -p BestTraveller Casper IttoSimp
 					"
 				`)
 			}),

@@ -64,9 +64,11 @@ export const buildProgram = (log = console.log) => {
 		.description(
 			'Random, interactive party selection, balancing four and five star characters.',
 		)
-		.option(
-			'-p, --players <PLAYERS>',
-			'Specify the player names for the party assignments, separated by commas (e.g., "BestTraveller,Casper,IttoSimp").',
+		.addOption(
+			new Option(
+				'-p, --players <PLAYERS...>',
+				'Specify the player names for the party assignments up to four players. If sourced as an environment variable, values must be separated by commas (e.g., `PLAYERS=BestTraveller,Casper,IttoSimp`).',
+			).env('PLAYERS'),
 		)
 		.option(
 			'-t, --only-teyvat',
@@ -82,11 +84,18 @@ export const buildProgram = (log = console.log) => {
 			'after',
 			`
 Examples:
-  $ genshin-party interactive -p BestTraveller,Casper,IttoSimp`,
+  $ genshin-party interactive -p BestTraveller Casper IttoSimp`,
 		)
 		// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Main for one action, could break up later.
 		.action(async ({ onlyTeyvat, players, unique }) => {
-			const playerNames = getParsedPlayerNames(players)
+			const playerNames = getParsedPlayerNames(
+				// If `players` is sourced from an environment variable, the array should be represented by a comma-separated list.
+				match(players as typeof players | string)
+					.with(P.array(), join(','))
+					.with(P.string, identity())
+					.with(undefined, identity())
+					.exhaustive(),
+			)
 			const actor = createPlayerSelectionStackActor({
 				input: {
 					onNewChoiceFunction(playerNumber) {
