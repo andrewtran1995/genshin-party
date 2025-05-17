@@ -1,50 +1,53 @@
-import { $ } from 'execa'
-import { Listr, PRESET_TIMER } from 'listr2'
+import { execaCommand } from 'execa'
+import {
+	Listr,
+	type ListrDefaultRenderer,
+	type ListrTask,
+	PRESET_TIMER,
+} from 'listr2'
+import type { EmptyObject } from 'type-fest'
+
+const createTask = ({
+	command,
+	titleFinished,
+	titleInitial,
+}: {
+	command: string
+	titleFinished: string
+	titleInitial: string
+}): ListrTask<EmptyObject, ListrDefaultRenderer> => ({
+	rendererOptions: {
+		bottomBar: true,
+	},
+	title: titleInitial,
+	async task(_, task) {
+		await execaCommand(command, { stdio: 'inherit' })
+		task.title = titleFinished
+	},
+})
 
 const tasks = new Listr(
 	[
-		{
-			title: 'Compiling ...',
-			async task(_, task) {
-				await $({ stdio: 'inherit' })`yarn build`
-				task.title = 'Compiled successfully!'
-			},
-			rendererOptions: {
-				bottomBar: true,
-			},
-		},
-		{
-			title: 'Linting ...',
-			async task(_, task) {
-				await $({ stdio: 'inherit' })`yarn lint`
-				task.title = 'Linted successful!'
-			},
-			rendererOptions: {
-				bottomBar: true,
-			},
-		},
-		{
-			title: 'Testing ...',
-			async task(_, task) {
-				await $({ stdio: 'inherit' })`yarn test`
-				task.title = 'Tests passed!'
-			},
-			rendererOptions: {
-				bottomBar: true,
-			},
-		},
-		{
-			title: 'Checking that "package.json" is sorted ...',
-			async task(_, task) {
-				await $({
-					stdio: 'inherit',
-				})`yarn sort-package-json -c`
-				task.title = `"package.json" is sorted!`
-			},
-			rendererOptions: {
-				bottomBar: true,
-			},
-		},
+		createTask({
+			command: 'yarn build',
+			titleFinished: 'Compiled successfully!',
+			titleInitial: 'Compiling TypeScript files ...',
+		}),
+		createTask({
+			command: 'yarn lint',
+			titleFinished: 'Linted successful!',
+			titleInitial: 'Linting files ...',
+		}),
+		createTask({
+			command: 'yarn test',
+			titleFinished: 'Tests passed!',
+			titleInitial: 'Running tests ...',
+		}),
+		createTask({
+			command: 'yarn sort-package-json -c',
+			titleFinished: '"package.json" is sorted!',
+			titleInitial: 'Checking that "package.json" is sorted ...',
+		}),
 	],
 	{
 		collectErrors: 'minimal',
