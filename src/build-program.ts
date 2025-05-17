@@ -194,21 +194,6 @@ Examples:
 
 	pipe({ command: program, log }, addOrderCommand)
 
-	// program
-	// 	.command('order')
-	// 	.alias('o')
-	// 	.description('Generate a random order in which to select characters.')
-	// 	.action(() => {
-	// 		log(
-	// 			pipe(
-	// 				[1, 2, 3, 4],
-	// 				shuffle(),
-	// 				map((_) => formatPlayer(_, undefined)),
-	// 				join(', '),
-	// 			),
-	// 		)
-	// 	})
-
 	program
 		.command('char', { isDefault: true })
 		.alias('c')
