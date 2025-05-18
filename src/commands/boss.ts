@@ -1,4 +1,4 @@
-import chalk from 'chalk'
+import { bold, gray, italic } from 'ansis'
 import { prop, sample, tap } from 'remeda'
 import type { CommandModifier } from '../build-program.js'
 import { type Enemy, getAllEnemies } from '../index.js'
@@ -28,8 +28,8 @@ export const addBossCommand: CommandModifier = tap(({ command, log }) => {
 
 			const formatWeeklyBoss = ({ description, name }: Enemy): string =>
 				[
-					chalk.bold.italic(name),
-					...description.split('\n').map((_) => chalk.gray(`> ${_}`)),
+					bold.italic(name),
+					...description.split('\n').map((_) => gray(`> ${_}`)),
 				].join('\n')
 
 			if (list) {
@@ -37,7 +37,7 @@ export const addBossCommand: CommandModifier = tap(({ command, log }) => {
 				log(
 					weeklyBosses
 						.map(prop('name'))
-						.map((_) => `• ${chalk.italic(_)}`)
+						.map((_) => `• ${italic(_)}`)
 						.join('\n'),
 				)
 				log('')

@@ -1,7 +1,7 @@
 import { Option } from '@commander-js/extra-typings'
 import select from '@inquirer/select'
+import { red } from 'ansis'
 import { type } from 'arktype'
-import chalk from 'chalk'
 import { identity, join, tap } from 'remeda'
 import { P, match } from 'ts-pattern'
 import type { CommandModifier } from '../build-program.js'
@@ -22,7 +22,7 @@ export const addInteractiveCommand: CommandModifier = tap(
 				.filter((_) => _.length > 0)
 			const parsedNames = match(PlayerNames(playerNames))
 				.with(P.instanceOf(type.errors), () => {
-					log(chalk.red('Unable to parse player names:', playerNames))
+					log(red(`Unable to parse player names: ${playerNames}`))
 					return undefined
 				})
 				.otherwise(identity())

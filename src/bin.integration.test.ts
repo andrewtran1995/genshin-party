@@ -1,3 +1,4 @@
+import ansis from 'ansis'
 import { $, execa } from 'execa'
 import { takeLast, times } from 'remeda'
 import { beforeAll, describe, it } from 'vitest'
@@ -33,7 +34,7 @@ describe.concurrent('bin.ts', () => {
 		})
 		const { stdout } = await process
 
-		const lastLines = takeLast(stdout.split('\n'), 5)
+		const lastLines = takeLast(stdout.split('\n'), 5).map(ansis.strip)
 		expect(lastLines).toEqual([
 			'Chosen characters are:',
 			...times(4, () => expect.stringMatching(REGEX.playerAssignment)),
