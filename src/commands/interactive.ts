@@ -62,8 +62,8 @@ export const addInteractiveCommand: CommandModifier = tap(
 			.addHelpText(
 				'after',
 				`
-	Examples:
-		$ genshin-party interactive -p BestTraveller Casper IttoSimp`,
+Examples:
+  $ genshin-party interactive -p BestTraveller Casper IttoSimp`,
 			)
 			// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Main for one action, could break up later.
 			.action(async ({ onlyTeyvat, players, unique }) => {

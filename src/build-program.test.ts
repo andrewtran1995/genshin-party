@@ -119,8 +119,8 @@ describe.concurrent('bin.ts', () => {
 					                              (default: true)
 					  -h, --help                  display help for command
 
-						Examples:
-							$ genshin-party interactive -p BestTraveller Casper IttoSimp
+					Examples:
+					  $ genshin-party interactive -p BestTraveller Casper IttoSimp
 					"
 				`)
 			}),
