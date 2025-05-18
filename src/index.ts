@@ -2,7 +2,7 @@ import fs from 'node:fs'
 import { posix } from 'node:path'
 // biome-ignore lint/nursery/noRestrictedImports: Only importing type.
 import type { Character } from 'genshin-db'
-import { filter, omit, once, pipe, shuffle } from 'remeda'
+import { constant, filter, omit, once, pipe, shuffle } from 'remeda'
 import type { ArrayValues } from 'type-fest'
 import genshinDbPackageJson from '../node_modules/genshin-db/package.json' with {
 	type: 'json',
@@ -66,8 +66,8 @@ type GetCharsOptions = { element?: Character['elementType']; rarity?: Rarity }
 export const getChars = async ({ element, rarity }: GetCharsOptions = {}) =>
 	pipe(
 		await getAllChars(),
-		filter(_ => (rarity ? _.rarity === Number(rarity) : true)),
-		filter(_ => (element ? _.elementType === element : true)),
+		filter(rarity ? _ => _.rarity === Number(rarity) : constant(true)),
+		filter(element ? _ => _.elementType === element : constant(true)),
 		filter(_ => _.name !== 'Aether'),
 	)
 
