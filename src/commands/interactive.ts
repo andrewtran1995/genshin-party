@@ -18,8 +18,8 @@ export const addInteractiveCommand: CommandModifier = tap(
 		): typeof PlayerNames.infer | undefined => {
 			const playerNames = rawPlayerNames
 				.split(',')
-				.map((_) => _.trim())
-				.filter((_) => _.length > 0)
+				.map(_ => _.trim())
+				.filter(_ => _.length > 0)
 			const parsedNames = match(PlayerNames(playerNames))
 				.with(P.instanceOf(type.errors), () => {
 					log(red(`Unable to parse player names: ${playerNames}`))
@@ -94,7 +94,7 @@ Examples:
 							continue
 						}
 
-						if (unique && playerChoices.some((_) => _.char === char)) {
+						if (unique && playerChoices.some(_ => _.char === char)) {
 							continue
 						}
 
@@ -114,6 +114,7 @@ Examples:
 										value: 'Accept (and character is a main)',
 									},
 									{ value: 'Reroll' },
+									// ...(take)
 									...(lastChoice
 										? [
 												{

@@ -12,7 +12,7 @@ export const addOrderCommand: CommandModifier = tap(({ command, log }) => {
 				pipe(
 					[1, 2, 3, 4],
 					shuffle(),
-					map((_) => formatPlayer(_, undefined)),
+					map(_ => formatPlayer(_, undefined)),
 					join(', '),
 				),
 			)

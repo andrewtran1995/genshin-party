@@ -24,7 +24,7 @@ describe.concurrent('bin.ts', () => {
 		let outStream = ''
 		let errorStream = ''
 		try {
-			await buildProgram((arguments_) => {
+			await buildProgram(arguments_ => {
 				outStream += inspect(arguments_)
 			})
 				.exitOverride()
@@ -55,7 +55,7 @@ describe.concurrent('bin.ts', () => {
 				context: TestContext & T,
 			) => void,
 		): TestFunction<TestContext & T> =>
-		async (context) => {
+		async context => {
 			context.expect.hasAssertions()
 			callback(await runWithInput(input), context)
 		}

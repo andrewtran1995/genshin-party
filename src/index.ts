@@ -2,7 +2,7 @@ import fs from 'node:fs'
 import { posix } from 'node:path'
 // biome-ignore lint/nursery/noRestrictedImports: Only importing type.
 import type { Character } from 'genshin-db'
-import { omit, once, shuffle } from 'remeda'
+import { filter, omit, once, pipe, shuffle } from 'remeda'
 import type { ArrayValues } from 'type-fest'
 import genshinDbPackageJson from '../node_modules/genshin-db/package.json' with {
 	type: 'json',
@@ -64,10 +64,12 @@ type GetCharsOptions = { element?: Character['elementType']; rarity?: Rarity }
  * @param filters - Filters to narrow down the eligible characters returned.
  */
 export const getChars = async ({ element, rarity }: GetCharsOptions = {}) =>
-	(await getAllChars())
-		.filter((_) => (rarity ? _.rarity === Number(rarity) : true))
-		.filter((_) => (element ? _.elementType === element : true))
-		.filter((_) => _.name !== 'Aether')
+	pipe(
+		await getAllChars(),
+		filter(_ => (rarity ? _.rarity === Number(rarity) : true)),
+		filter(_ => (element ? _.elementType === element : true)),
+		filter(_ => _.name !== 'Aether'),
+	)
 
 export type Char = ArrayValues<Awaited<ReturnType<typeof getChars>>>
 

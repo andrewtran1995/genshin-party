@@ -19,17 +19,17 @@ export const addBossCommand: CommandModifier = tap(({ command, log }) => {
 		.action(async ({ gauntlet, list, weekly }) => {
 			const allEnemies = await getAllEnemies()
 			const weeklyBosses = allEnemies
-				.filter((_) =>
+				.filter(
 					weekly
-						? _.categoryType === 'CODEX_SUBTYPE_BOSS'
-						: _.enemyType === 'BOSS',
+						? _ => _.categoryType === 'CODEX_SUBTYPE_BOSS'
+						: _ => _.enemyType === 'BOSS',
 				)
-				.filter((_) => _.name !== 'Stormterror')
+				.filter(_ => _.name !== 'Stormterror')
 
 			const formatWeeklyBoss = ({ description, name }: Enemy): string =>
 				[
 					bold.italic(name),
-					...description.split('\n').map((_) => gray(`> ${_}`)),
+					...description.split('\n').map(_ => gray(`> ${_}`)),
 				].join('\n')
 
 			if (list) {
@@ -37,14 +37,14 @@ export const addBossCommand: CommandModifier = tap(({ command, log }) => {
 				log(
 					weeklyBosses
 						.map(prop('name'))
-						.map((_) => `• ${italic(_)}`)
+						.map(_ => `• ${italic(_)}`)
 						.join('\n'),
 				)
 				log('')
 			}
 
 			const output = sample(weeklyBosses, gauntlet ? 3 : 1)
-				.map((boss) => `Random boss: ${formatWeeklyBoss(boss)}`)
+				.map(boss => `Random boss: ${formatWeeklyBoss(boss)}`)
 				.join('\n\n')
 
 			log(output)
