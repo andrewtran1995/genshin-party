@@ -76,6 +76,7 @@ describe.concurrent('bin.ts', () => {
 				"Usage: genshin-party [options] [command]
 
 				Options:
+				  -V, --version            output the version number
 				  -h, --help               display help for command
 
 				Commands:

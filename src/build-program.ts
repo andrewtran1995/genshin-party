@@ -1,6 +1,7 @@
 import 'dotenv/config'
 import { Command } from '@commander-js/extra-typings'
 import { pipe } from 'remeda'
+import packageJson from '../package.json' with { type: 'json' }
 import { addBossCommand } from './commands/boss.js'
 import { addCharCommand } from './commands/char.js'
 
@@ -16,7 +17,9 @@ interface CommandContext {
 export type CommandModifier = (ctx: CommandContext) => CommandContext
 
 export const buildProgram = (log = console.log) => {
-	const program = new Command('genshin-party').allowExcessArguments(false)
+	const program = new Command('genshin-party')
+		.allowExcessArguments(false)
+		.version(packageJson.version)
 
 	pipe(
 		{ command: program, log },
