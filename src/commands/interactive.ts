@@ -114,7 +114,6 @@ Examples:
 										value: 'Accept (and character is a main)',
 									},
 									{ value: 'Reroll' },
-									// ...(take)
 									...(lastChoice
 										? [
 												{

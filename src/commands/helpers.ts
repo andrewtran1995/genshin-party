@@ -2,14 +2,13 @@ import { italic, rgb, white } from 'ansis'
 import { match } from 'ts-pattern'
 import type { Char } from '../index.js'
 
-export function formatPlayer(
+export const formatPlayer = (
 	playerNumber: number,
 	playerNames: string[] | undefined,
-) {
-	return playerNames
+) =>
+	playerNames
 		? italic.rgb(251, 217, 148)(playerNames[playerNumber - 1])
 		: italic(`Player ${rgb(251, 217, 148)(playerNumber)}`)
-}
 
 export const formatChar = (char: Char) =>
 	match(char.elementType)

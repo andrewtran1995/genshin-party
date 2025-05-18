@@ -1,6 +1,5 @@
 import { Option } from '@commander-js/extra-typings'
-import { sample, tap } from 'remeda'
-import type { ArrayValues } from 'type-fest'
+import { sample, tap, toUpperCase } from 'remeda'
 import type { CommandModifier } from '../build-program.js'
 import { getChars } from '../index.js'
 import { rarities } from '../types.js'
@@ -16,7 +15,6 @@ const elements = [
 	'none',
 	'pyro',
 ] as const
-type ShorthandElement = ArrayValues<typeof elements>
 
 export const addCharCommand: CommandModifier = tap(({ command, log }) => {
 	command
@@ -38,9 +36,7 @@ export const addCharCommand: CommandModifier = tap(({ command, log }) => {
 		)
 		.action(async ({ element, list, rarity }) => {
 			const filteredChars = await getChars({
-				element: element
-					? `ELEMENT_${element.toUpperCase() as Uppercase<ShorthandElement>}`
-					: undefined,
+				element: element ? `ELEMENT_${toUpperCase(element)}` : undefined,
 				rarity,
 			})
 
