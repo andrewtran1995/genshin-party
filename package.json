@@ -23,7 +23,7 @@
 		"dev": "tsx src/bin.ts",
 		"postinstall": "husky",
 		"lint": "biome check --error-on-warnings",
-		"lint:fix": "biome check --write",
+		"lint:fix": "yarn lint --write",
 		"prepack": "pinst --disable",
 		"postpack": "pinst --enable",
 		"pre-commit": "tsx src/pre-commit.ts",
