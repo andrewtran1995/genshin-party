@@ -37,7 +37,7 @@
 		"@inquirer/select": "^4.2.1",
 		"ansis": "^4.0.0",
 		"arktype": "^2.1.20",
-		"commander": "^13.1.0",
+		"commander": "^14.0.0",
 		"dotenv": "^16.5.0",
 		"genshin-db": "^5.2.1",
 		"remeda": "^2.21.6",
