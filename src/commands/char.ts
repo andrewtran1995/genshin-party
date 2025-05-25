@@ -43,6 +43,7 @@ export const addCharCommand: CommandModifier = tap(({ command, log }) => {
 			if (list) {
 				log('List of playable characters:')
 				log(filteredChars.map(formatChar).join(', '))
+				log('')
 			}
 
 			const randomChar = sample(filteredChars, 1).at(0)
