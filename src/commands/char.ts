@@ -41,7 +41,7 @@ export const addCharCommand: CommandModifier = tap(({ command, log }) => {
 			})
 
 			if (list) {
-				log('Possible characters include:')
+				log('List of playable characters:')
 				log(filteredChars.map(formatChar).join(', '))
 			}
 

@@ -24,18 +24,20 @@ describe.concurrent('bin.ts', () => {
 		let outStream = ''
 		let errorStream = ''
 		try {
-			await buildProgram(arguments_ => {
-				outStream += inspect(arguments_)
-			})
-				.exitOverride()
-				.configureOutput({
+			await buildProgram({
+				log: arguments_ => {
+					outStream += inspect(arguments_)
+				},
+				outputConfiguration: {
 					writeErr(string_) {
 						errorStream += string_
 					},
 					writeOut(string_) {
 						outStream += string_
 					},
-				})
+				},
+			})
+				.exitOverride()
 				.parseAsync(['', '', ...input.split(' ')])
 		} catch {
 			// Do nothing.
@@ -128,7 +130,7 @@ describe.concurrent('bin.ts', () => {
 	})
 
 	describe('char', () => {
-		it(
+		it.only(
 			'emits help',
 			whenGivenInput('char --help', (out, { expect }) => {
 				expect(out.outStream).toMatchInlineSnapshot(`

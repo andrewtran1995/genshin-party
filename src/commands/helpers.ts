@@ -1,5 +1,7 @@
-import { italic, rgb, white } from 'ansis'
+import { italic, rgb, white, yellow } from 'ansis'
+import { tap } from 'remeda'
 import { match } from 'ts-pattern'
+import type { CommandModifier } from '../build-program.js'
 import type { Char } from '../index.js'
 
 export const formatPlayer = (
@@ -20,3 +22,18 @@ export const formatChar = (char: Char) =>
 		.with('ELEMENT_HYDRO', () => rgb(75, 195, 241))
 		.with('ELEMENT_PYRO', () => rgb(239, 122, 53))
 		.otherwise(() => white)(char.name)
+
+export const configureHelp: CommandModifier = tap(({ command }) => {
+	command
+		.configureHelp({
+			styleOptionTerm: yellow,
+			styleSubcommandTerm: yellow,
+			styleTitle: rgb(...titleRgbValues),
+		})
+		.showHelpAfterError()
+})
+
+export const fmtTitle = (strings: TemplateStringsArray) =>
+	rgb(12, 103, 176)`${strings}`
+
+export const titleRgbValues = [12, 103, 176] as const

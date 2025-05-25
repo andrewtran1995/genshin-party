@@ -33,7 +33,7 @@ export const addBossCommand: CommandModifier = tap(({ command, log }) => {
 				].join('\n')
 
 			if (list) {
-				log('Possible bosses include:')
+				log('List of bosses:')
 				log(
 					weeklyBosses
 						.map(prop('name'))
