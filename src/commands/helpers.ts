@@ -28,12 +28,9 @@ export const configureHelp: CommandModifier = tap(({ command }) => {
 		.configureHelp({
 			styleOptionTerm: yellow,
 			styleSubcommandTerm: yellow,
-			styleTitle: rgb(...titleRgbValues),
+			styleTitle: title => fmtTitle`${title}`,
 		})
 		.showHelpAfterError()
 })
 
-export const fmtTitle = (strings: TemplateStringsArray) =>
-	rgb(12, 103, 176)`${strings}`
-
-export const titleRgbValues = [12, 103, 176] as const
+export const fmtTitle = rgb(12, 103, 176)
