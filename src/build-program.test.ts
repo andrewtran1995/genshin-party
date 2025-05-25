@@ -77,6 +77,9 @@ describe.concurrent('bin.ts', () => {
 			expect(out.outStream).toMatchInlineSnapshot(`
 				"Usage: genshin-party [options] [command]
 
+				Utility for randomly choosing Genshin Impact entities, especially with
+				multiplayer sessions in mind.
+
 				Options:
 				  -V, --version            output the version number
 				  -h, --help               display help for command
@@ -90,7 +93,7 @@ describe.concurrent('bin.ts', () => {
 				                           characters.
 				  help [command]           display help for command
 
-				Examples:
+				More Examples:
 				  $ genshin-party interactive   Interactively select a random team.
 				  $ genshin-party i
 				  $ genshin-party char -r 4     Get a random four-star character.
@@ -130,7 +133,7 @@ describe.concurrent('bin.ts', () => {
 	})
 
 	describe('char', () => {
-		it.only(
+		it(
 			'emits help',
 			whenGivenInput('char --help', (out, { expect }) => {
 				expect(out.outStream).toMatchInlineSnapshot(`
