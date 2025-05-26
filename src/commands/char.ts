@@ -20,7 +20,7 @@ export const addCharCommand: CommandModifier = tap(({ command, log }) => {
 	command
 		.command('char', { isDefault: true })
 		.alias('c')
-		.description('Select a random character.')
+		.description('select a random character')
 		.option('-l, --list', 'List all elegible characters.', false)
 		.addOption(
 			new Option(

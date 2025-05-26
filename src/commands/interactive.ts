@@ -41,7 +41,7 @@ export const addInteractiveCommand: CommandModifier = tap(
 			.command('interactive')
 			.alias('i')
 			.description(
-				'Random, interactive party selection, balancing four and five star characters.',
+				'Rrndom, interactive party selection, balancing four and five star characters',
 			)
 			.addOption(
 				new Option(
@@ -51,12 +51,12 @@ export const addInteractiveCommand: CommandModifier = tap(
 			)
 			.option(
 				'-t, --only-teyvat',
-				'Exclude characters not from Teyvat (Traveller, Aloy).',
+				'exclude characters not from Teyvat (i.e., Traveller, Aloy)',
 				true,
 			)
 			.option(
 				'-u, --unique',
-				'Only select unique characters (no duplicates).',
+				'only select unique characters (no duplicates)',
 				true,
 			)
 			.addHelpText(

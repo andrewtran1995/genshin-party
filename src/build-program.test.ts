@@ -85,12 +85,11 @@ describe.concurrent('bin.ts', () => {
 				  -h, --help               display help for command
 
 				Commands:
-				  interactive|i [options]  Random, interactive party selection, balancing four
-				                           and five star characters.
-				  char|c [options]         Select a random character.
-				  boss|b [options]         Select a random boss.
-				  order|o                  Generate a random order in which to select
-				                           characters.
+				  interactive|i [options]  Rrndom, interactive party selection, balancing four
+				                           and five star characters
+				  char|c [options]         select a random character
+				  boss|b [options]         select a random boss
+				  order|o                  generate a random order in which to select characters
 				  help [command]           display help for command
 
 				More Examples:
@@ -110,7 +109,7 @@ describe.concurrent('bin.ts', () => {
 				expect(out.outStream).toMatchInlineSnapshot(`
 					"Usage: genshin-party interactive|i [options]
 
-					Random, interactive party selection, balancing four and five star characters.
+					Rrndom, interactive party selection, balancing four and five star characters
 
 					Options:
 					  -p, --players <PLAYERS...>  Specify the player names for the party assignments
@@ -118,9 +117,9 @@ describe.concurrent('bin.ts', () => {
 					                              variable, values must be separated by commas
 					                              (e.g., \`PLAYERS=BestTraveller,Casper,IttoSimp\`).
 					                              (env: PLAYERS)
-					  -t, --only-teyvat           Exclude characters not from Teyvat (Traveller,
-					                              Aloy). (default: true)
-					  -u, --unique                Only select unique characters (no duplicates).
+					  -t, --only-teyvat           exclude characters not from Teyvat (i.e.,
+					                              Traveller, Aloy) (default: true)
+					  -u, --unique                only select unique characters (no duplicates)
 					                              (default: true)
 					  -h, --help                  display help for command
 
@@ -137,19 +136,19 @@ describe.concurrent('bin.ts', () => {
 			'emits help',
 			whenGivenInput('char --help', (out, { expect }) => {
 				expect(out.outStream).toMatchInlineSnapshot(`
-			"Usage: genshin-party char|c [options]
+					"Usage: genshin-party char|c [options]
 
-			Select a random character.
+					select a random character
 
-			Options:
-			  -l, --list               List all elegible characters. (default: false)
-			  -r, --rarity <rarity>    Rarity of the desired character. (choices: "4", "5")
-			  -e, --element <element>  Element of the desired character. (choices: "anemo",
-			                           "cryo", "dendro", "electro", "geo", "hydro", "none",
-			                           "pyro")
-			  -h, --help               display help for command
-			"
-		`)
+					Options:
+					  -l, --list               List all elegible characters. (default: false)
+					  -r, --rarity <rarity>    Rarity of the desired character. (choices: "4", "5")
+					  -e, --element <element>  Element of the desired character. (choices: "anemo",
+					                           "cryo", "dendro", "electro", "geo", "hydro", "none",
+					                           "pyro")
+					  -h, --help               display help for command
+					"
+				`)
 			}),
 		)
 

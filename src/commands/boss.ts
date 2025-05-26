@@ -7,15 +7,11 @@ export const addBossCommand: CommandModifier = tap(({ command, log }) => {
 	command
 		.command('boss')
 		.alias('b')
-		.description('Select a random boss.')
-		.option(
-			'-g, --gauntlet',
-			'Select three bosses, per weekly rotation.',
-			false,
-		)
-		.option('-l, --list', 'List all eligible bosses.', false)
-		.option('--weekly', 'Restrict to weekly bosses.', true)
-		.option('--no-weekly', 'Select among all bosses.')
+		.description('select a random boss')
+		.option('-g, --gauntlet', 'select three bosses, per weekly rotation', false)
+		.option('-l, --list', 'list all eligible bosses', false)
+		.option('--weekly', 'restrict to weekly bosses', true)
+		.option('--no-weekly', 'select among all bosses')
 		.action(async ({ gauntlet, list, weekly }) => {
 			const allEnemies = await getAllEnemies()
 			const weeklyBosses = allEnemies
