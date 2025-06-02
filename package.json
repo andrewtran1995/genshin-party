@@ -40,7 +40,7 @@
 		"commander": "^14.0.0",
 		"dotenv": "^16.5.0",
 		"genshin-db": "^5.2.1",
-		"remeda": "^2.22.1",
+		"remeda": "^2.22.5",
 		"ts-pattern": "^5.7.1",
 		"xstate": "^5.19.4"
 	},
