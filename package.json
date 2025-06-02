@@ -46,7 +46,7 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
-		"@types/node": "^22.15.21",
+		"@types/node": "^22.15.29",
 		"execa": "^9.5.3",
 		"husky": "^9.1.7",
 		"listr2": "^8.3.3",
