@@ -22,7 +22,10 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: corepack enable
-    - run: yarn install
+    - run: YARN_ENABLE_HARDENED_MODE=0 yarn install
+      if: matrix.node-version == '20.x'
+    - run: YARN_ENABLE_HARDENED_MODE=1 yarn install
+      if: matrix.node-version != '20.x'
     - run: yarn biome ci
     - run: yarn test
 
