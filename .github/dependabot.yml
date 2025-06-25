@@ -3,4 +3,12 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
+      interval: "monthly"
+    allow:
+      - dependency-type: "all"
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
       interval: "weekly"
+    allow:
+      - dependency-name: "genshin-db"
