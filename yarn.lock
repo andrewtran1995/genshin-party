@@ -1562,7 +1562,7 @@ __metadata:
     listr2: "npm:^8.3.3"
     pinst: "npm:^3.0.0"
     remeda: "npm:^2.23.1"
-    sort-package-json: "npm:^3.2.1"
+    sort-package-json: "npm:^3.3.1"
     ts-pattern: "npm:^5.7.1"
     tsx: "npm:^4.20.3"
     type-fest: "npm:^4.41.0"
@@ -2435,9 +2435,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sort-package-json@npm:^3.2.1":
-  version: 3.2.1
-  resolution: "sort-package-json@npm:3.2.1"
+"sort-package-json@npm:^3.3.1":
+  version: 3.3.1
+  resolution: "sort-package-json@npm:3.3.1"
   dependencies:
     detect-indent: "npm:^7.0.1"
     detect-newline: "npm:^4.0.1"
@@ -2448,7 +2448,7 @@ __metadata:
     tinyglobby: "npm:^0.2.12"
   bin:
     sort-package-json: cli.js
-  checksum: 10c0/383a62dbea96a030e90f9c3ac42fa4fb7700904f125a50700a1f75b048bb319d4104c57a989ef8f7b7a8f1553fe7b10e49ebcfd13a5ca08658541fd0bdcd202f
+  checksum: 10c0/ea2839b46f6f78ba41515a3d77d81aa29ec450270d3d3480480a3a2ac8a0fd1c43b55d267d138a07f9850dc62dcfbdeeebd391a2a6048e9706b9962f5bf20d8a
   languageName: node
   linkType: hard
 
