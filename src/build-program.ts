@@ -1,11 +1,10 @@
 import 'dotenv/config'
 import { Command } from '@commander-js/extra-typings'
+import type { OutputConfiguration } from 'commander'
 import { pipe } from 'remeda'
 import packageJson from '../package.json' with { type: 'json' }
 import { addBossCommand } from './commands/boss.js'
 import { addCharCommand } from './commands/char.js'
-
-import type { OutputConfiguration } from 'commander'
 import { configureHelp, fmtTitle } from './commands/helpers.js'
 import { addInteractiveCommand } from './commands/interactive.js'
 import { addOrderCommand } from './commands/order.js'

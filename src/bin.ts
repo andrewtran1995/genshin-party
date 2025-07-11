@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
+import process from 'node:process'
 import { doNothing } from 'remeda'
-import { P, match } from 'ts-pattern'
+import { match, P } from 'ts-pattern'
 import { buildProgram } from './build-program.js'
 import { throwError } from './throw-error.js'
 

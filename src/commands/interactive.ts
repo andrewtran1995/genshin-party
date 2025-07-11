@@ -1,9 +1,10 @@
+import process from 'node:process'
 import { Option } from '@commander-js/extra-typings'
 import select from '@inquirer/select'
 import { red } from 'ansis'
 import { type } from 'arktype'
 import { identity, join, tap } from 'remeda'
-import { P, match } from 'ts-pattern'
+import { match, P } from 'ts-pattern'
 import type { CommandModifier } from '../build-program.js'
 import { randomChars } from '../index.js'
 import { createPlayerSelectionStackActor } from '../player-selection-stack.js'
@@ -65,7 +66,7 @@ export const addInteractiveCommand: CommandModifier = tap(
 Examples:
   $ genshin-party interactive -p BestTraveller Casper IttoSimp`,
 			)
-			// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Main for one action, could break up later.
+			// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Not worth breaking out.
 			.action(async ({ onlyTeyvat, players, unique }) => {
 				const playerNames = getParsedPlayerNames(
 					// If `players` is sourced from an environment variable, the array should be represented by a comma-separated list.

@@ -1,3 +1,4 @@
+import process from 'node:process'
 import { execaCommand } from 'execa'
 import {
 	Listr,

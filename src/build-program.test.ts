@@ -1,11 +1,11 @@
 import process from 'node:process'
 import { inspect } from 'node:util'
 import {
-	type TestContext,
-	type TestFunction,
 	afterEach,
 	describe,
 	it,
+	type TestContext,
+	type TestFunction,
 	vi,
 } from 'vitest'
 import { buildProgram } from './build-program.js'

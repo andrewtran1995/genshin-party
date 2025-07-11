@@ -7,27 +7,31 @@
 	},
 	"files": {
 		"ignoreUnknown": false,
-		"ignore": ["./dist", "./.vscode", "package.json"],
-		"include": ["**/*.ts", "**/*.json"]
+		"includes": [
+			"**/*.ts",
+			"**/*.json",
+			"!dist",
+			"!.vscode",
+			"!**/package.json"
+		]
 	},
 	"formatter": {
 		"enabled": true,
 		"indentStyle": "tab"
 	},
-	"organizeImports": {
-		"enabled": true
-	},
+	"assist": { "actions": { "source": { "organizeImports": "on" } } },
 	"linter": {
+		"domains": {
+			"project": "all",
+			"test": "all"
+		},
 		"enabled": true,
 		"rules": {
-			"complexity": {
-				"all": true
-			},
-			"correctness": {
-				"all": true,
-				"noNodejsModules": "off"
-			},
-			"nursery": {
+			"complexity": "error",
+			"performance": "error",
+			"recommended": true,
+			"security": "error",
+			"style": {
 				"noRestrictedImports": {
 					"level": "error",
 					"options": {
@@ -36,16 +40,6 @@
 						}
 					}
 				}
-			},
-			"performance": {
-				"all": true
-			},
-			"recommended": true,
-			"style": {
-				"all": true
-			},
-			"suspicious": {
-				"all": true
 			}
 		}
 	},

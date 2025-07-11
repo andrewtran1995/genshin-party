@@ -1,6 +1,6 @@
 import fs from 'node:fs'
 import { posix } from 'node:path'
-// biome-ignore lint/nursery/noRestrictedImports: Only importing type.
+// biome-ignore lint/style/noRestrictedImports: Only loading type.
 import type { Character } from 'genshin-db'
 import { constant, filter, omit, once, pipe, shuffle } from 'remeda'
 import type { ArrayValues } from 'type-fest'
@@ -14,7 +14,7 @@ const cacheDirectory = '.cache'
 
 const getAllChars = once(async () =>
 	getCached(`chars.${genshinDatabaseVersion}`, async () => {
-		// biome-ignore lint/nursery/noRestrictedImports: Dynamically importing when necessary.
+		// biome-ignore lint/style/noRestrictedImports: Only loaded when missing from cache.
 		const genshinDatabase = await import('genshin-db')
 		const chars = genshinDatabase.default.characters('names', {
 			matchCategories: true,
@@ -26,7 +26,7 @@ const getAllChars = once(async () =>
 
 export const getAllEnemies = once(async () =>
 	getCached(`enemies.${genshinDatabaseVersion}`, async () => {
-		// biome-ignore lint/nursery/noRestrictedImports: Dynamically importing when necessary.
+		// biome-ignore lint/style/noRestrictedImports: Only loaded when missing from cache.
 		const genshinDatabase = await import('genshin-db')
 		const enemies = genshinDatabase.default.enemies('names', {
 			matchCategories: true,
