@@ -1,7 +1,7 @@
 # genshin-party
 
 [![NPM](https://img.shields.io/npm/v/genshin-party?style=flat-square)](https://www.npmjs.com/package/genshin-party)
-[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/andrewtran1995/genshin-party/node.js.yml?style=flat-square)](https://github.com/andrewtran1995/genshin-party/actions)
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/andrewtran1995/genshin-party/validate.yml?style=flat-square)](https://github.com/andrewtran1995/genshin-party/actions)
 ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white)
 ![Node](https://img.shields.io/badge/Node%20js-339933?style=flat-square&logo=nodedotjs&logoColor=white)
 ![Biome](https://img.shields.io/badge/-Biome-60A5FA?logo=biome&logoColor=white)
