@@ -7,9 +7,14 @@
 		"genshin-impact"
 	],
 	"repository": {
+		"type": "git",
 		"url": "git+https://github.com/andrewtran1995/genshin-party.git"
 	},
 	"license": "MIT",
+	"author": {
+		"name": "Andrew Tran",
+		"email": "andrew.tran345@gmail.com"
+	},
 	"type": "module",
 	"exports": {
 		"import": "./dist/index.js"
@@ -57,5 +62,8 @@
 		"typescript": "^5.8.3",
 		"vitest": "^3.2.4"
 	},
-	"packageManager": "yarn@4.9.2"
+	"packageManager": "yarn@4.9.2",
+	"engines": {
+		"node": ">=22"
+	}
 }
