@@ -44,7 +44,7 @@
 		"arktype": "^2.1.20",
 		"commander": "^14.0.0",
 		"dotenv": "^17.2.0",
-		"genshin-db": "^5.2.2",
+		"genshin-db": "^5.2.3",
 		"remeda": "^2.28.0",
 		"ts-pattern": "^5.7.1",
 		"xstate": "^5.20.1"
