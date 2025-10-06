@@ -43,7 +43,7 @@
 		"ansis": "^4.2.0",
 		"arktype": "^2.1.22",
 		"commander": "^14.0.1",
-		"dotenv": "^17.2.2",
+		"dotenv": "^17.2.3",
 		"genshin-db": "^5.2.5",
 		"remeda": "^2.32.0",
 		"ts-pattern": "^5.8.0",
