@@ -104,7 +104,6 @@ Examples:
 
 						const event = match(
 							await select({
-								message: 'Accept character?',
 								choices: [
 									{ value: 'Accept' },
 									{
@@ -123,24 +122,25 @@ Examples:
 											]
 										: []),
 								] as const,
+								message: 'Accept character?',
 							}),
 						)
 							.returnType<Parameters<typeof actor.send>[0] | undefined>()
 							.with('Accept', () => ({
-								type: 'push',
 								choice: {
 									char,
 									isMain: false,
 									number: playerNumber,
 								},
+								type: 'push',
 							}))
 							.with('Accept (and character is a main)', () => ({
-								type: 'push',
 								choice: {
 									char,
 									isMain: true,
 									number: playerNumber,
 								},
+								type: 'push',
 							}))
 							.with(P.string.startsWith('Go back to'), () => ({
 								type: 'pop',

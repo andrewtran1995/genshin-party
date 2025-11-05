@@ -4,15 +4,15 @@ import type { PlayerChoice } from './types.js'
 
 export const playerSelectionStack = setup({
 	actions: {
+		pop: assign({
+			playerChoices: ({ context }) =>
+				take(context.playerChoices, context.playerChoices.length - 1),
+		}),
 		push: assign({
 			playerChoices: ({ context }, choice: PlayerChoice) => [
 				...context.playerChoices,
 				choice,
 			],
-		}),
-		pop: assign({
-			playerChoices: ({ context }) =>
-				take(context.playerChoices, context.playerChoices.length - 1),
 		}),
 	},
 	guards: {
@@ -30,13 +30,19 @@ export const playerSelectionStack = setup({
 		},
 	},
 }).createMachine({
-	initial: 'ready',
 	context: ({ input: { onNewChoiceFunction } }) => ({
 		onNewChoiceFunction,
 		playerChoices: [],
 		playerOrder: shuffle(range(1, 5)),
 	}),
+	initial: 'ready',
 	states: {
+		checkIfDone: {
+			always: [{ guard: 'isFull', target: 'done' }, { target: 'ready' }],
+		},
+		done: {
+			type: 'final',
+		},
 		ready: {
 			entry: [
 				({ context }) => {
@@ -46,21 +52,15 @@ export const playerSelectionStack = setup({
 				},
 			],
 			on: {
-				push: {
-					target: 'checkIfDone',
-					actions: { type: 'push', params: ({ event }) => event.choice },
-				},
 				pop: {
-					target: 'checkIfDone',
 					actions: { type: 'pop' },
+					target: 'checkIfDone',
+				},
+				push: {
+					actions: { params: ({ event }) => event.choice, type: 'push' },
+					target: 'checkIfDone',
 				},
 			},
-		},
-		checkIfDone: {
-			always: [{ target: 'done', guard: 'isFull' }, { target: 'ready' }],
-		},
-		done: {
-			type: 'final',
 		},
 	},
 })

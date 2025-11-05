@@ -20,11 +20,11 @@ const createTask = ({
 	rendererOptions: {
 		bottomBar: true,
 	},
-	title: titleInitial,
 	async task(_, task) {
 		await execaCommand(command, { stdio: 'inherit' })
 		task.title = titleFinished
 	},
+	title: titleInitial,
 })
 
 const tasks = new Listr(
