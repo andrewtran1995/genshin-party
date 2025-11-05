@@ -27,8 +27,22 @@
 		},
 		"enabled": true,
 		"rules": {
-			"complexity": "error",
-			"performance": "error",
+			"complexity": {
+				"noExcessiveLinesPerFunction": "off",
+				"recommended": true
+			},
+			"correctness": {
+				"useImportExtensions": {
+					"level": "error",
+					"options": {
+						"forceJsExtensions": true
+					}
+				}
+			},
+			"performance": {
+				"noAwaitInLoops": "off",
+				"recommended": true
+			},
 			"recommended": true,
 			"security": "error",
 			"style": {

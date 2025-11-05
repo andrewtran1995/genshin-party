@@ -4,6 +4,7 @@ import { posix } from 'node:path'
 import type { Character } from 'genshin-db'
 import { constant, filter, omit, once, pipe, shuffle } from 'remeda'
 import type { ArrayValues } from 'type-fest'
+// biome-ignore lint/correctness/useImportExtensions: JSON required.
 import genshinDbPackageJson from '../node_modules/genshin-db/package.json' with {
 	type: 'json',
 }

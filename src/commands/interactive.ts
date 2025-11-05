@@ -47,6 +47,7 @@ export const addInteractiveCommand: CommandModifier = tap(
 			.addOption(
 				new Option(
 					'-p, --players <PLAYERS...>',
+					// biome-ignore lint/security/noSecrets: Long explanatory string.
 					'Specify the player names for the party assignments up to four players. If sourced as an environment variable, values must be separated by commas (e.g., `PLAYERS=BestTraveller,Casper,IttoSimp`).',
 				).env('PLAYERS'),
 			)
@@ -66,7 +67,6 @@ export const addInteractiveCommand: CommandModifier = tap(
 Examples:
   $ genshin-party interactive -p BestTraveller Casper IttoSimp`,
 			)
-			// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Not worth breaking out.
 			.action(async ({ onlyTeyvat, players, unique }) => {
 				const playerNames = getParsedPlayerNames(
 					// If `players` is sourced from an environment variable, the array should be represented by a comma-separated list.
