@@ -2,6 +2,7 @@ import 'dotenv/config'
 import { Command } from '@commander-js/extra-typings'
 import type { OutputConfiguration } from 'commander'
 import { pipe } from 'remeda'
+// biome-ignore lint/correctness/useImportExtensions: JSON required.
 import packageJson from '../package.json' with { type: 'json' }
 import { addBossCommand } from './commands/boss.js'
 import { addCharCommand } from './commands/char.js'
