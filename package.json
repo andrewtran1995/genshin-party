@@ -41,7 +41,7 @@
 		"@commander-js/extra-typings": "^14.0.0",
 		"@inquirer/select": "^4.4.0",
 		"ansis": "^4.2.0",
-		"arktype": "^2.1.23",
+		"arktype": "^2.1.25",
 		"commander": "^14.0.2",
 		"dotenv": "^17.2.3",
 		"genshin-db": "^5.2.5",
