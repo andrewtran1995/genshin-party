@@ -5,28 +5,19 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
-"@ark/regex@npm:0.0.0":
-  version: 0.0.0
-  resolution: "@ark/regex@npm:0.0.0"
+"@ark/schema@npm:0.53.0":
+  version: 0.53.0
+  resolution: "@ark/schema@npm:0.53.0"
   dependencies:
-    "@ark/util": "npm:0.50.0"
-  checksum: 10c0/bd9af71e0c0d0f9ab2d90b9389b12c455584a771782437a96e9007c99741610214fc2a573f178dcbbba8a30eb5e7a9e2a65ce012fc9bf68ff9339d9358b11127
+    "@ark/util": "npm:0.53.0"
+  checksum: 10c0/2c5b0d4e748956610fe01f6d5fed5cc440994819bc49708796cb6e80ae7fa1c28f1ff17f49bd313c478d5fcf9a651da17de7ed97da8699a64aa34ec5d73ef924
   languageName: node
   linkType: hard
 
-"@ark/schema@npm:0.50.0":
-  version: 0.50.0
-  resolution: "@ark/schema@npm:0.50.0"
-  dependencies:
-    "@ark/util": "npm:0.50.0"
-  checksum: 10c0/bf9e5f4f34d21eb8d9cf2cbc3bd1171ec6e3a79a827382911078ee1ee4be140ce6a086165bc3789de22f4b8b2763c2de5c844c7b8448a1658d3a084c2766f34a
-  languageName: node
-  linkType: hard
-
-"@ark/util@npm:0.50.0":
-  version: 0.50.0
-  resolution: "@ark/util@npm:0.50.0"
-  checksum: 10c0/5ea1669cfe708dde970a51f5f6ed86805092be5bc7499ab2c7ac913fa832b904a7a88668d3677d984eedafcb4adb2c17b34392c0e538c9247382d677b8cb2f76
+"@ark/util@npm:0.53.0":
+  version: 0.53.0
+  resolution: "@ark/util@npm:0.53.0"
+  checksum: 10c0/a3fb8f3c7ad0815de3e0eb33463944f21c666a6d646eac4c1897eeb55e160f0ded3c54dafe02a9209298e93a2869368118aff31028dcf4ee87a254b99496959f
   languageName: node
   linkType: hard
 
@@ -943,14 +934,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"arktype@npm:^2.1.23":
-  version: 2.1.23
-  resolution: "arktype@npm:2.1.23"
+"arkregex@npm:0.0.2":
+  version: 0.0.2
+  resolution: "arkregex@npm:0.0.2"
   dependencies:
-    "@ark/regex": "npm:0.0.0"
-    "@ark/schema": "npm:0.50.0"
-    "@ark/util": "npm:0.50.0"
-  checksum: 10c0/943e1dbe0de1a5e846573d4c3f0d10d0e6ee926d20d2d3db183fff6315d7372ed13c55ebc5095a2c336c7c03ee7becf8d60f304184c98d9227848e379196df67
+    "@ark/util": "npm:0.53.0"
+  checksum: 10c0/e3f4572058b3136b5d882b38105a50f726f22ea06222d1e3fd46f6d82954f7c7a2b24e516359a2d3b6970f91b78096bf33d1999bf507fd55a1aaea491961e435
+  languageName: node
+  linkType: hard
+
+"arktype@npm:^2.1.25":
+  version: 2.1.25
+  resolution: "arktype@npm:2.1.25"
+  dependencies:
+    "@ark/schema": "npm:0.53.0"
+    "@ark/util": "npm:0.53.0"
+    arkregex: "npm:0.0.2"
+  checksum: 10c0/dd3176364a6d5801c8be7b85f52d033401fb2aa8f669703b2eb9342e7a3ab034407f82aa3d2613492636a06191d17c5d62c04f810adb235bf4e3d3cdd40ab50b
   languageName: node
   linkType: hard
 
@@ -1561,7 +1561,7 @@ __metadata:
     "@inquirer/select": "npm:^4.4.0"
     "@types/node": "npm:^24.9.1"
     ansis: "npm:^4.2.0"
-    arktype: "npm:^2.1.23"
+    arktype: "npm:^2.1.25"
     commander: "npm:^14.0.2"
     dotenv: "npm:^17.2.3"
     execa: "npm:^9.6.0"
