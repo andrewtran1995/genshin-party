@@ -39,7 +39,7 @@
 	},
 	"dependencies": {
 		"@commander-js/extra-typings": "^14.0.0",
-		"@inquirer/select": "^4.4.1",
+		"@inquirer/select": "^5.0.1",
 		"ansis": "^4.2.0",
 		"arktype": "^2.1.25",
 		"commander": "^14.0.2",
