@@ -957,23 +957,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"arkregex@npm:0.0.4":
-  version: 0.0.4
-  resolution: "arkregex@npm:0.0.4"
+"arkregex@npm:0.0.5":
+  version: 0.0.5
+  resolution: "arkregex@npm:0.0.5"
   dependencies:
     "@ark/util": "npm:0.56.0"
-  checksum: 10c0/5cb89ac6482e0ce15aa93e6fa791b22e43b35419ff91965762a33a4cc4a92a039c71e9adf9a2e700b3819074e4b9df04245e38c4010a2baa5f3bcb38a6c66f0b
+  checksum: 10c0/1a39510e04d69b9287b9b53d3965afcc4ef27bdd9ff9c21a78092fcb841f35c11227d8476be66d2f76347deccfd10c202f395bd871383c328057ad004ffe7ebd
   languageName: node
   linkType: hard
 
-"arktype@npm:^2.1.28":
-  version: 2.1.28
-  resolution: "arktype@npm:2.1.28"
+"arktype@npm:^2.1.29":
+  version: 2.1.29
+  resolution: "arktype@npm:2.1.29"
   dependencies:
     "@ark/schema": "npm:0.56.0"
     "@ark/util": "npm:0.56.0"
-    arkregex: "npm:0.0.4"
-  checksum: 10c0/5ca424ecb7acdf426785f95ddb1cf4b6c10123a44b16b71d8a13b0bb1e2573ae91949d2254421cdda0e6b815b603519a5631eeb707ee238bb7fceed1594e5dd0
+    arkregex: "npm:0.0.5"
+  checksum: 10c0/c89cd5cc9eee7a5e14df0f32b228c06760b99440dabf2ed2d9272877a1607d7f27641d4105d1466b70fc620007fe864ddd826acee11c07102388c8dd301a20fe
   languageName: node
   linkType: hard
 
@@ -1529,7 +1529,7 @@ __metadata:
     "@inquirer/select": "npm:^5.0.3"
     "@types/node": "npm:^24.10.1"
     ansis: "npm:^4.2.0"
-    arktype: "npm:^2.1.28"
+    arktype: "npm:^2.1.29"
     commander: "npm:^14.0.2"
     dotenv: "npm:^17.2.3"
     execa: "npm:^9.6.1"
