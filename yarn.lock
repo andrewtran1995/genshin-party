@@ -1537,7 +1537,7 @@ __metadata:
     husky: "npm:^9.1.7"
     listr2: "npm:^9.0.5"
     pinst: "npm:^3.0.0"
-    remeda: "npm:^2.32.0"
+    remeda: "npm:^2.33.1"
     sort-package-json: "npm:^3.6.0"
     ts-pattern: "npm:^5.9.0"
     tsx: "npm:^4.21.0"
@@ -2169,12 +2169,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"remeda@npm:^2.32.0":
-  version: 2.32.0
-  resolution: "remeda@npm:2.32.0"
-  dependencies:
-    type-fest: "npm:^4.41.0"
-  checksum: 10c0/890ce245dac492eacffc657d6976680a6de8c9f96a5a1e86c37d91795e5209a62e6912dceeda20685f03d26bb5d54805c8c7a9ad0e91b16f1fcfacd70452ab00
+"remeda@npm:^2.33.1":
+  version: 2.33.1
+  resolution: "remeda@npm:2.33.1"
+  checksum: 10c0/60c624ef8208f3ab38548b715033738534089f2edaf48c36b9ae7d51b1ffb7d2836a53f2c994a0f76c132753d91524d73ec368aef323a15c05075e9cfdfe71da
   languageName: node
   linkType: hard
 
@@ -2586,13 +2584,6 @@ __metadata:
   bin:
     tsx: dist/cli.mjs
   checksum: 10c0/f5072923cd8459a1f9a26df87823a2ab5754641739d69df2a20b415f61814322b751fa6be85db7c6ec73cf68ba8fac2fd1cfc76bdb0aa86ded984d84d5d2126b
-  languageName: node
-  linkType: hard
-
-"type-fest@npm:^4.41.0":
-  version: 4.41.0
-  resolution: "type-fest@npm:4.41.0"
-  checksum: 10c0/f5ca697797ed5e88d33ac8f1fec21921839871f808dc59345c9cf67345bfb958ce41bd821165dbf3ae591cedec2bf6fe8882098dfdd8dc54320b859711a2c1e4
   languageName: node
   linkType: hard
 
