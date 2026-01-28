@@ -8,6 +8,7 @@ import { match, P } from 'ts-pattern'
 import type { CommandModifier } from '../build-program.js'
 import { randomChars } from '../index.js'
 import { createPlayerSelectionStackActor } from '../player-selection-stack.js'
+import type { PlayerChoice } from '../types.js'
 import { formatChar, formatPlayer } from './helpers.js'
 
 const PlayerNames = type('1 <= string[] <= 4')
@@ -85,12 +86,17 @@ Examples:
 						},
 					},
 				}).start()
+				let discardedChoice: PlayerChoice | undefined
+
 				while (actor.getSnapshot().status !== 'done') {
 					const { playerChoices, playerOrder } = actor.getSnapshot().context
 					const playerNumber = playerOrder[playerChoices.length]
 
 					const rarity = playerChoices.at(-1)?.isMain ? '4' : '5'
-					for await (const char of randomChars({ rarity })) {
+					for await (const char of chainAsyncIterables(
+						asAsyncIterator(discardedChoice ? [discardedChoice.char] : []),
+						randomChars({ rarity }),
+					)) {
 						if (onlyTeyvat && ['Aloy', 'Lumine'].includes(char.name)) {
 							continue
 						}
@@ -151,6 +157,8 @@ Examples:
 							continue
 						}
 
+						discardedChoice = event.type === 'pop' ? lastChoice : undefined
+
 						log('')
 						actor.send(event)
 						break
@@ -166,3 +174,19 @@ Examples:
 			})
 	},
 )
+
+async function* chainAsyncIterables<T>(
+	...iterators: AsyncIterable<T>[]
+): AsyncIterable<T> {
+	for (const iterator of iterators) {
+		for await (const iterable of iterator) {
+			yield iterable
+		}
+	}
+}
+
+async function* asAsyncIterator<T>(iterator: Iterable<T>): AsyncIterable<T> {
+	for (const item of iterator) {
+		yield item
+	}
+}
