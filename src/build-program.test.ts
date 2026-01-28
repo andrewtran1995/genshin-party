@@ -15,7 +15,7 @@ const REGEX = {
 	randomChar: /Random character: .*/,
 }
 
-describe.concurrent('bin.ts', () => {
+describe.concurrent('build-program.ts', () => {
 	const runWithInput = async (input: string) => {
 		if (Object.getOwnPropertyDescriptor(process.stdout, 'columns')) {
 			vi.spyOn(process.stdout, 'columns', 'get').mockReturnValue(80)

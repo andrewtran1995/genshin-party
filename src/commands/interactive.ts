@@ -3,7 +3,7 @@ import { Option } from '@commander-js/extra-typings'
 import select from '@inquirer/select'
 import { red } from 'ansis'
 import { type } from 'arktype'
-import { identity, join, tap } from 'remeda'
+import { filter, identity, isDefined, join, tap } from 'remeda'
 import { match, P } from 'ts-pattern'
 import type { CommandModifier } from '../build-program.js'
 import { randomChars } from '../index.js'
@@ -94,7 +94,7 @@ Examples:
 
 					const rarity = playerChoices.at(-1)?.isMain ? '4' : '5'
 					for await (const char of chainAsyncIterables(
-						asAsyncIterator(discardedChoice ? [discardedChoice.char] : []),
+						asAsyncIterator(filter([discardedChoice?.char], isDefined)),
 						randomChars({ rarity }),
 					)) {
 						if (onlyTeyvat && ['Aloy', 'Lumine'].includes(char.name)) {
