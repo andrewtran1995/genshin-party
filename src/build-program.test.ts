@@ -85,7 +85,7 @@ describe.concurrent('build-program.ts', () => {
 				  -h, --help               display help for command
 
 				Commands:
-				  interactive|i [options]  Rrndom, interactive party selection, balancing four
+				  interactive|i [options]  random, interactive party selection, balancing four
 				                           and five star characters
 				  char|c [options]         select a random character
 				  boss|b [options]         select a random boss
@@ -109,7 +109,7 @@ describe.concurrent('build-program.ts', () => {
 				expect(out.outStream).toMatchInlineSnapshot(`
 					"Usage: genshin-party interactive|i [options]
 
-					Rrndom, interactive party selection, balancing four and five star characters
+					random, interactive party selection, balancing four and five star characters
 
 					Options:
 					  -p, --players <PLAYERS...>  Specify the player names for the party assignments

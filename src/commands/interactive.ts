@@ -43,7 +43,7 @@ export const addInteractiveCommand: CommandModifier = tap(
 			.command('interactive')
 			.alias('i')
 			.description(
-				'Rrndom, interactive party selection, balancing four and five star characters',
+				'random, interactive party selection, balancing four and five star characters',
 			)
 			.addOption(
 				new Option(
