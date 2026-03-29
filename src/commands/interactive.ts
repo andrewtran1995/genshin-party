@@ -2,6 +2,7 @@ import process from 'node:process'
 import { Option } from '@commander-js/extra-typings'
 import select from '@inquirer/select'
 import { red } from 'ansis'
+// biome-ignore lint/correctness/noUnresolvedImports: arktype exports `type` but Biome cannot resolve it.
 import { type } from 'arktype'
 import { filter, identity, isDefined, join, tap } from 'remeda'
 import { match, P } from 'ts-pattern'

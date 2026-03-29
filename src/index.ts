@@ -1,6 +1,7 @@
 import fs from 'node:fs'
 import { posix } from 'node:path'
 // biome-ignore lint/style/noRestrictedImports: Only loading type.
+// biome-ignore lint/correctness/noUnresolvedImports: genshin-db exports `Character` but Biome cannot resolve it.
 import type { Character } from 'genshin-db'
 import { constant, filter, omit, once, pipe, shuffle } from 'remeda'
 import type { ArrayValues } from 'type-fest'
