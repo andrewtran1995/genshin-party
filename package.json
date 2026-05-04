@@ -47,7 +47,7 @@
 		"genshin-db": "^5.2.10",
 		"remeda": "^2.33.7",
 		"ts-pattern": "^5.9.0",
-		"xstate": "^5.30.0"
+		"xstate": "^5.31.0"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.4.13",
