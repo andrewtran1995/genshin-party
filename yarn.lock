@@ -1332,7 +1332,7 @@ __metadata:
     type-fest: "npm:^5.6.0"
     typescript: "npm:^5.9.3"
     vitest: "npm:^4.1.5"
-    xstate: "npm:^5.30.0"
+    xstate: "npm:^5.31.0"
   bin:
     genshin-party: dist/bin.js
   languageName: unknown
@@ -2770,10 +2770,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"xstate@npm:^5.30.0":
-  version: 5.30.0
-  resolution: "xstate@npm:5.30.0"
-  checksum: 10c0/4c41be815bea6c62492952f813f363d8c630364010fdfd3be73b43b4eecaa9da3548e0b30d058c28f861c386d705b024815692ae654555cd1048dbba0ca5184f
+"xstate@npm:^5.31.0":
+  version: 5.31.0
+  resolution: "xstate@npm:5.31.0"
+  checksum: 10c0/0762c62161e66441c57ab9c4c5a304179f7320e96de9059b9e98df0df24c142825dde2aeb8aab3dd1d12cba435d937fbc647f1be9fc0de595b067616111b0cc7
   languageName: node
   linkType: hard
 
