@@ -106,9 +106,7 @@
 
 		/* Language and Environment */
 		"target": "ESNext" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
-		"types": [
-			"node"
-		] /* TypeScript 6.0 changed the default from auto-discovering all @types packages to an empty array. */
+		"types": ["node"]
 	},
 	"exclude": ["src/**/*.test.ts"],
 	"include": ["src/**/*"]
