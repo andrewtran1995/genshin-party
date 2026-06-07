@@ -105,7 +105,10 @@
 		// "disableReferencedProjectLoad": true,             /* Reduce the number of projects loaded automatically by TypeScript. */
 
 		/* Language and Environment */
-		"target": "ESNext" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
+		"target": "ESNext" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
+		"types": [
+			"node"
+		] /* TypeScript 6.0 changed the default from auto-discovering all @types packages to an empty array. */
 	},
 	"exclude": ["src/**/*.test.ts"],
 	"include": ["src/**/*"]
