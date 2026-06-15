@@ -60,7 +60,7 @@
 		"tsx": "^4.22.4",
 		"type-fest": "^5.7.0",
 		"typescript": "^6.0.3",
-		"vitest": "^4.1.8"
+		"vitest": "^4.1.9"
 	},
 	"packageManager": "yarn@4.13.0",
 	"engines": {
