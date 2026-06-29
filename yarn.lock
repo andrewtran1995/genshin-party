@@ -1326,7 +1326,7 @@ __metadata:
     execa: "npm:^9.6.1"
     genshin-db: "npm:^5.2.11"
     husky: "npm:^9.1.7"
-    listr2: "npm:^10.2.1"
+    listr2: "npm:^10.2.2"
     pinst: "npm:^3.0.0"
     remeda: "npm:^2.39.0"
     sort-package-json: "npm:^4.0.0"
@@ -1678,16 +1678,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"listr2@npm:^10.2.1":
-  version: 10.2.1
-  resolution: "listr2@npm:10.2.1"
+"listr2@npm:^10.2.2":
+  version: 10.2.2
+  resolution: "listr2@npm:10.2.2"
   dependencies:
     cli-truncate: "npm:^5.2.0"
     eventemitter3: "npm:^5.0.4"
     log-update: "npm:^6.1.0"
     rfdc: "npm:^1.4.1"
     wrap-ansi: "npm:^10.0.0"
-  checksum: 10c0/a381a7aaef2e8625e6e882835ef446d14306c8fa371b56c4499cf23ece86f84922008af11962bfba5411b51589e02d280bea2b820451a2efad89ebf78bbe68a4
+  checksum: 10c0/537f453fae217b8d33aa6b8edc49fbc981aa0e0d82e4e05d705bead086ff1e81d372435f1f3c473055dbbf91ff04dc044a90f9b60dba6cca4d22671b319f4d6a
   languageName: node
   linkType: hard
 
