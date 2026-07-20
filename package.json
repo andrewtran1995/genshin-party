@@ -50,7 +50,7 @@
 		"xstate": "^5.32.5"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.5.3",
+		"@biomejs/biome": "^2.5.4",
 		"@types/node": "^26.1.1",
 		"execa": "^9.6.1",
 		"husky": "^9.1.7",
