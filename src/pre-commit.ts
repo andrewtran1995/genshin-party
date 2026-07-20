@@ -1,5 +1,5 @@
 import process from 'node:process'
-import { execaCommand } from 'execa'
+import { execa, parseCommandString } from 'execa'
 import {
 	Listr,
 	type ListrDefaultRenderer,
@@ -21,7 +21,8 @@ const createTask = ({
 		bottomBar: true,
 	},
 	async task(_, task) {
-		await execaCommand(command, { stdio: 'inherit' })
+		const [file, ...commandArguments] = parseCommandString(command)
+		await execa(file, commandArguments, { stdio: 'inherit' })
 		task.title = titleFinished
 	},
 	title: titleInitial,
