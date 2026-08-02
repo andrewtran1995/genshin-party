@@ -52,7 +52,7 @@ const tasks = new Listr(
 		}),
 	],
 	{
-		collectErrors: 'minimal',
+		collectErrors: true,
 		concurrent: true,
 		exitOnError: false,
 		rendererOptions: {
@@ -63,6 +63,6 @@ const tasks = new Listr(
 )
 
 await tasks.run()
-if (tasks.errors.length > 0) {
+if ((tasks.errors?.length ?? 0) > 0) {
 	process.exit(1)
 }
