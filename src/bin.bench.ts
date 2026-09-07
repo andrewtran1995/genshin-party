@@ -1,5 +1,5 @@
 import { $ } from 'execa'
-import { beforeAll, bench, describe } from 'vitest'
+import { beforeAll, describe, test } from 'vitest'
 
 describe('bin', () => {
 	beforeAll(async () => {
@@ -7,7 +7,9 @@ describe('bin', () => {
 		await $`chmod +x dist/bin.js`
 	})
 
-	bench('bin', async () => {
-		await $`./dist/bin.js`
+	test('bin', async ({ bench }) => {
+		await bench('bin', async () => {
+			await $`./dist/bin.js`
+		}).run()
 	})
 })
