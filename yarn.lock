@@ -1212,7 +1212,7 @@ __metadata:
     execa: "npm:^10.0.1"
     genshin-db: "npm:^5.2.14"
     husky: "npm:^9.1.7"
-    listr2: "npm:^11.1.0"
+    listr2: "npm:^11.1.1"
     pinst: "npm:^3.0.0"
     remeda: "npm:^2.50.0"
     sort-package-json: "npm:^4.0.0"
@@ -1549,14 +1549,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"listr2@npm:^11.1.0":
-  version: 11.1.0
-  resolution: "listr2@npm:11.1.0"
+"listr2@npm:^11.1.1":
+  version: 11.1.1
+  resolution: "listr2@npm:11.1.1"
   dependencies:
     cli-truncate: "npm:^6.1.1"
     log-update: "npm:^8.0.0"
-    wrap-ansi: "npm:^10.0.1"
-  checksum: 10c0/a3f318dd52c6d3bfb1e9c821611404dfa2c1a5f2196e44021594a0ccf6bbb88b6962d9e9f6735db4f5067d7ab4812e9cb457503ce399f061b9f7715c6cd509e6
+    wrap-ansi: "npm:^10.0.2"
+  checksum: 10c0/ae4bccfe2d553c78963e9c08ae1ff7271d6c18f4df82ec4b56a6f89b9dd7dff2fcd2b1ea31a1d8193750ccc6c438027af8ec99bb0ce4d6448cb1e2df2211b0a0
   languageName: node
   linkType: hard
 
@@ -2566,13 +2566,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wrap-ansi@npm:^10.0.1":
-  version: 10.0.1
-  resolution: "wrap-ansi@npm:10.0.1"
+"wrap-ansi@npm:^10.0.2":
+  version: 10.0.2
+  resolution: "wrap-ansi@npm:10.0.2"
   dependencies:
     ansi-styles: "npm:^6.2.3"
     string-width: "npm:^8.2.0"
-  checksum: 10c0/7f5c74b63fc68f02e6bee8bf1e807775c240d18c1f41c4343fc886ccece0c5cd7ec8d4a814aa197c5f6258660192e91838b59901f3aaefb113939fbc27470144
+  checksum: 10c0/b9f7be64b91cf4b4e5bc74df6e280cb4e1fed438ce38ac8cc433705cf3371fe9cdcd2e4bb7f508d73f1f4cf302dbc6c7b5e8bed5ce47cb82d22bef256a79fc0b
   languageName: node
   linkType: hard
 
