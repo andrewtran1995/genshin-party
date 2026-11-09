@@ -1227,7 +1227,7 @@ __metadata:
     husky: "npm:^9.1.7"
     listr2: "npm:^11.4.0"
     pinst: "npm:^3.0.0"
-    remeda: "npm:^2.52.0"
+    remeda: "npm:^2.58.0"
     sort-package-json: "npm:^4.1.0"
     ts-pattern: "npm:^5.9.2"
     tsx: "npm:^4.23.15"
@@ -1962,10 +1962,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"remeda@npm:^2.52.0":
-  version: 2.52.0
-  resolution: "remeda@npm:2.52.0"
-  checksum: 10c0/9961eabe5e950c2f1e9defd36c323168a344525869f6f85a08e8d76fe91e4a50b28522f8fe8e92c01e40bc8e739f0ed211c489ba14d7aee841bdee5b390ef146
+"remeda@npm:^2.58.0":
+  version: 2.58.0
+  resolution: "remeda@npm:2.58.0"
+  checksum: 10c0/533314a84928e5bd23c22d9d679fcc033c09b5af439f905955b2930e89a235c31dd2516cce2f2f6c0dafd638c1217879a345b482c9ac773c8b5aac94a09c6eae
   languageName: node
   linkType: hard
 
