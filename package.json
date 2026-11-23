@@ -45,7 +45,7 @@
 		"commander": "^15.1.0",
 		"dotenv": "^18.0.9",
 		"genshin-db": "^5.2.15",
-		"remeda": "^2.60.0",
+		"remeda": "^2.62.2",
 		"ts-pattern": "^5.9.2",
 		"xstate": "^5.33.4"
 	},
