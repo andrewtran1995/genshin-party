@@ -351,66 +351,66 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@inquirer/ansi@npm:^2.0.10":
-  version: 2.0.10
-  resolution: "@inquirer/ansi@npm:2.0.10"
-  checksum: 10c0/a67e7a47d5036efed5a776043ebbabaa951a15a47cd14111a791c8ed0481c88fa6b5894bc1ae93704830ea500ca0e92594ad481684378c9338a274b9a707bdcc
+"@inquirer/ansi@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "@inquirer/ansi@npm:2.1.0"
+  checksum: 10c0/e3712ba46f4141ef5fc3418773ad25a597494246f90e02d1264636f0ec76e478488b86b2db24ddcc17b9bcae0e1c95c16c1b779bd8e86f668cffb643a27be70d
   languageName: node
   linkType: hard
 
-"@inquirer/core@npm:^12.0.6":
-  version: 12.0.6
-  resolution: "@inquirer/core@npm:12.0.6"
+"@inquirer/core@npm:^12.1.0":
+  version: 12.1.0
+  resolution: "@inquirer/core@npm:12.1.0"
   dependencies:
-    "@inquirer/ansi": "npm:^2.0.10"
-    "@inquirer/figures": "npm:^2.0.10"
-    "@inquirer/type": "npm:4.2.1"
+    "@inquirer/ansi": "npm:^2.1.0"
+    "@inquirer/figures": "npm:^2.1.0"
+    "@inquirer/type": "npm:4.3.0"
     cli-width: "npm:^4.1.0"
     fast-wrap-ansi: "npm:^0.2.0"
-    mute-stream: "npm:^3.0.0"
+    mute-stream: "npm:^4.0.0"
     signal-exit: "npm:^4.1.0"
   peerDependencies:
     "@types/node": ">=18"
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: 10c0/1a967b2e0a4ae1b76e0d5e2cbe819eb509e5a2258f56fac2e35d38fb7ec5f755db5a4ef1e0b71e65f872a8d8ce1ac0694b8bf8c4a800b763878dca00028c2730
+  checksum: 10c0/72c719eddd441f5c788e99654fbd63f4bf464ab1792fcd4cec160992ccfe95589abd180b6ca0812e8a953027534d42710db17ebb66a78e6dc84d25c827a9ee1d
   languageName: node
   linkType: hard
 
-"@inquirer/figures@npm:^2.0.10":
-  version: 2.0.10
-  resolution: "@inquirer/figures@npm:2.0.10"
-  checksum: 10c0/62ffe3f935a8191a53ba7244dc9f18d40b229ea0ccbc718b48cc10a87d3970270ae7cd12abe968882df30ff866208a83fabb0ec4eb69d422b0a217593e6e194f
+"@inquirer/figures@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "@inquirer/figures@npm:2.1.0"
+  checksum: 10c0/56c069a6e1dfa713befddc1c174b097181d5573ac165ef0c959fb344de9e07da8d320a2bba5401db1791392dfdbc3a09cff7220095aefa4f0ee7b48857dbf0e0
   languageName: node
   linkType: hard
 
-"@inquirer/select@npm:^5.2.8":
-  version: 5.2.8
-  resolution: "@inquirer/select@npm:5.2.8"
+"@inquirer/select@npm:^5.3.0":
+  version: 5.3.0
+  resolution: "@inquirer/select@npm:5.3.0"
   dependencies:
-    "@inquirer/ansi": "npm:^2.0.10"
-    "@inquirer/core": "npm:^12.0.6"
-    "@inquirer/figures": "npm:^2.0.10"
-    "@inquirer/type": "npm:4.2.1"
+    "@inquirer/ansi": "npm:^2.1.0"
+    "@inquirer/core": "npm:^12.1.0"
+    "@inquirer/figures": "npm:^2.1.0"
+    "@inquirer/type": "npm:4.3.0"
   peerDependencies:
     "@types/node": ">=18"
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: 10c0/a63be21ad080cbbedd47e80d17e067807fcb2ea7a92b988d5a26212192267a1fefe2b3886962236ac301367395859e02ea03e926a46802d8da03c408a23c14bf
+  checksum: 10c0/9fa85d460b24ee5efeb9d17d289e63c2d5a865f8b59f74f09c8cb785b31952ed951ce754e4bf45704cb140cbef8ee7acc287d89e6df66a5239321256583ae7e4
   languageName: node
   linkType: hard
 
-"@inquirer/type@npm:4.2.1":
-  version: 4.2.1
-  resolution: "@inquirer/type@npm:4.2.1"
+"@inquirer/type@npm:4.3.0":
+  version: 4.3.0
+  resolution: "@inquirer/type@npm:4.3.0"
   peerDependencies:
     "@types/node": ">=18"
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: 10c0/381b1a1af19b70c6b870a551bc2c896984dc7c61ebcdec515d521f7d2e81d6fca2765cc8b302730e855d3d1d813ccaebf8f9539f55d51a106f99391f87889d8e
+  checksum: 10c0/7d8732bf25189845676797ec0a17107f0935ac96d3a1165f974b06ec190e19d15ec9655ff27b81f5d37c7a5e44c22c81e4a1f181bfec45cc5aa6d9e77a8939f5
   languageName: node
   linkType: hard
 
@@ -1283,7 +1283,7 @@ __metadata:
   dependencies:
     "@biomejs/biome": "npm:^2.6.7"
     "@commander-js/extra-typings": "npm:^15.1.0"
-    "@inquirer/select": "npm:^5.2.8"
+    "@inquirer/select": "npm:^5.3.0"
     "@types/node": "npm:^26.6.6"
     ansis: "npm:^4.5.0"
     arktype: "npm:^2.2.10"
@@ -1828,10 +1828,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mute-stream@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "mute-stream@npm:3.0.0"
-  checksum: 10c0/12cdb36a101694c7a6b296632e6d93a30b74401873cf7507c88861441a090c71c77a58f213acadad03bc0c8fa186639dec99d68a14497773a8744320c136e701
+"mute-stream@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "mute-stream@npm:4.0.0"
+  checksum: 10c0/2c7c9a3da0534ff74d335ed64f5d76165773504d6c8ad6237639cf90f42103ab80b578c54318d869f5ae8bc7e9e2a65f1c11597892946090835969f1a42543bb
   languageName: node
   linkType: hard
 
